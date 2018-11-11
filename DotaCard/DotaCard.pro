@@ -91,6 +91,4 @@ RESOURCES += \
 
 TRANSLATIONS += dc_zh_cn.ts
 
-#LIBS += -L$$PWD/../lib/lua/ -llua
-
-#INCLUDEPATH += $$PWD/../lib/lua
+win32-msvc*:QMAKE_CXXFLAGS += /wd"4819"
