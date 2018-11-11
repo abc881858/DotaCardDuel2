@@ -1,4 +1,4 @@
-#include "dota.h"
+﻿#include "dota.h"
 
 Q_GLOBAL_STATIC(Dota, dota)
 
@@ -29,6 +29,36 @@ void Dota::initialize()
     }
 
     room = new Room;
+}
+
+void Dota::setSearchReason(Dota::ReasonFlag flag)
+{
+    searchReason = flag;
+
+    if(flag == Dota::No_Reason)
+    {
+        authenticateCardAreaList.clear();
+        authenticateCardActive = false; //不再寻找攻击目标
+    }
+    else if(flag==Dota::BeAttacked_Reason)
+    {
+        addAuthenticateCardArea(Card::EnemyFieldyard_Area);
+    }
+    else if(flag==Dota::ChainDeclared_Reason)
+    {
+        addAuthenticateCardArea(Card::Fieldyard_Area);
+        addAuthenticateCardArea(Card::Fieldground_Area);
+        needAuthenticateCardActive();
+    }
+    else if(flag==Dota::BeEquiped_Reason)
+    {
+        addAuthenticateCardArea(Card::Fieldyard_Area);
+    }
+}
+
+Dota::ReasonFlag Dota::getSearchReason()
+{
+    return searchReason;
 }
 
 bool Dota::isSearchingTargetCard()
@@ -199,32 +229,6 @@ int Dota::getCardIndexOfArea(Card* card, Card::AreaFlag flag)
         }
     }
     return -1;
-}
-
-void Dota::setSearchReason(Dota::ReasonFlag flag)
-{
-    searchReason = flag;
-
-    if(flag == Dota::No_Reason)
-    {
-        authenticateCardAreaList.clear();
-        authenticateCardActive = false; //不再寻找攻击目标
-    }
-    if(flag==Dota::BeAttacked_Reason)
-    {
-        addAuthenticateCardArea(Card::EnemyFieldyard_Area);
-    }
-    if(flag==Dota::ChainDeclared_Reason)
-    {
-        addAuthenticateCardArea(Card::Fieldyard_Area);
-        addAuthenticateCardArea(Card::Fieldground_Area);
-        needAuthenticateCardActive();
-    }
-}
-
-Dota::ReasonFlag Dota::getSearchReason()
-{
-    return searchReason;
 }
 
 //////////////////////

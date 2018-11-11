@@ -1,4 +1,4 @@
-#include "carditem.h"
+﻿#include "carditem.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QStyleOptionGraphicsItem>
 #include <QImage>
@@ -75,7 +75,6 @@ QString CardItem::getDescription()
 {
     return card->description;
 }
-
 
 void CardItem::hoverEnterEvent(QGraphicsSceneHoverEvent *)
 {

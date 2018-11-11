@@ -1,4 +1,4 @@
-#include "equipspellcard.h"
+﻿#include "equipspellcard.h"
 #include "dota.h"
 #include <QMessageBox>
 #include <QDebug>
@@ -81,6 +81,5 @@ void EquipSpellCard::active()
     {
         qDebug() << "selectOneMonsterToEquip";
     }
-//    qDota->selectOneMonsterToEquip();
     qDota->setSearchReason(Dota::BeEquiped_Reason);
 }

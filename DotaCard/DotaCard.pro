@@ -91,4 +91,4 @@ RESOURCES += \
 
 TRANSLATIONS += dc_zh_cn.ts
 
-win32-msvc*:QMAKE_CXXFLAGS += /wd"4819"
+win32:QMAKE_CXXFLAGS += /wd"4819"
