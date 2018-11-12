@@ -1,4 +1,4 @@
-#ifndef CENTAURWARRUNNER_H
+﻿#ifndef CENTAURWARRUNNER_H
 #define CENTAURWARRUNNER_H
 
 #include "effectmonstercard.h"
@@ -25,7 +25,6 @@ public:
     Q_INVOKABLE CentaurWarrunner();
     virtual int testEffectFromFieldyard();
     virtual void standby();
-    virtual void activeEffect();
 private:
     bool oneTurnEffect2;
 };

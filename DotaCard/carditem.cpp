@@ -223,7 +223,6 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
                 qDebug() << "currentTargetReason";
                 emit beEquiped();
             }
-
         }
         else
         {

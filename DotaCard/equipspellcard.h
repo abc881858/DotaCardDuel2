@@ -1,4 +1,4 @@
-#ifndef EQUIPSPELLCARD_H
+﻿#ifndef EQUIPSPELLCARD_H
 #define EQUIPSPELLCARD_H
 
 #include "card.h"
@@ -16,7 +16,6 @@ public:
     virtual bool testEffectFromHand();
     virtual int testEffectFromFieldyard();
     virtual void standby();
-    virtual void activeEffect();
     virtual void active();
 private:
     bool oneTurnEffect3;

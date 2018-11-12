@@ -1,4 +1,4 @@
-#ifndef HELMOFTHEDOMINATOR_H
+﻿#ifndef HELMOFTHEDOMINATOR_H
 #define HELMOFTHEDOMINATOR_H
 
 #include "equipspellcard.h"
@@ -22,7 +22,6 @@ class HelmOfTheDominator : public EquipSpellCard
 public:
     Q_INVOKABLE HelmOfTheDominator();
     virtual void standby();
-    virtual void activeEffect();
 };
 
 #endif // HELMOFTHEDOMINATOR_H

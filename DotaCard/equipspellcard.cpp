@@ -69,11 +69,6 @@ void EquipSpellCard::standby()
     oneTurnEffect3 = true;
 }
 
-void EquipSpellCard::activeEffect()
-{
-
-}
-
 void EquipSpellCard::active()
 {
     //先到场地，发光，弹出对话框，点确定，选择卡，装备卡动画

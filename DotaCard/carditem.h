@@ -1,4 +1,4 @@
-#ifndef CARDITEM_H
+﻿#ifndef CARDITEM_H
 #define CARDITEM_H
 
 #include <QObject>
@@ -70,6 +70,7 @@ signals:
     void hoverEnter();
     void beAttacked();
     void chainDeclared();
+    void beEquiped();
 };
 
 #endif // CARDITEM_H

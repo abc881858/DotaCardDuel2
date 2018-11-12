@@ -1,4 +1,4 @@
-#ifndef URNOFSHADOWS_H
+﻿#ifndef URNOFSHADOWS_H
 #define URNOFSHADOWS_H
 
 #include "equipspellcard.h"
@@ -23,7 +23,6 @@ class UrnOfShadows : public EquipSpellCard
 public:
     Q_INVOKABLE UrnOfShadows();
     virtual void standby();
-    virtual void activeEffect();
 };
 
 #endif // URNOFSHADOWS_H

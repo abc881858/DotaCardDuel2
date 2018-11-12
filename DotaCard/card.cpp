@@ -1,4 +1,4 @@
-#include "card.h"
+﻿#include "card.h"
 #include "dota.h"
 
 Card::Card()
@@ -88,10 +88,6 @@ bool Card::testFlipSummon()
 bool Card::testAttack()
 {
     return false;
-}
-
-void Card::activeEffect()
-{
 }
 
 bool Card::testEffectFromFieldground()

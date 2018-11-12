@@ -92,8 +92,6 @@ public:
     virtual bool testEffectFromFieldground();
     virtual bool testAttack();
 
-    virtual void activeEffect();
-
     int getISDN() const;
     KindFlag getKind() const;
 

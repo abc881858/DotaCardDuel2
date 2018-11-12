@@ -1,4 +1,4 @@
-#include "room.h"
+﻿#include "room.h"
 #include "dota.h"
 #include <QDebug>
 #include "net.h"
@@ -794,7 +794,7 @@ void Room::response_finishChain()
 
     if(flag == Dota::ChainDeclared_Reason) // 这里应该有个while循环，response_finishChain();
     {
-        qDota->chainCard->activeEffect();
+        qDota->chainCard->active();
         qDota->chainCard = nullptr;
     }
     else if(flag == Dota::BeAttacked_Reason)

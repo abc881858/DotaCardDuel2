@@ -1,4 +1,4 @@
-#ifndef GEMOFTRUESIGHT_H
+﻿#ifndef GEMOFTRUESIGHT_H
 #define GEMOFTRUESIGHT_H
 
 #include "equipspellcard.h"
@@ -18,7 +18,6 @@ class GemOfTrueSight : public EquipSpellCard
 public:
     Q_INVOKABLE GemOfTrueSight();
     virtual void standby();
-    virtual void activeEffect();
 };
 
 #endif // GEMOFTRUESIGHT_H

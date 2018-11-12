@@ -1,4 +1,4 @@
-#ifndef FORCESTAFF_H
+﻿#ifndef FORCESTAFF_H
 #define FORCESTAFF_H
 
 #include "equipspellcard.h"
@@ -22,7 +22,6 @@ class ForceStaff : public EquipSpellCard
 public:
     Q_INVOKABLE ForceStaff();
     virtual void standby();
-    virtual void activeEffect();
     virtual void active();
 };
 
