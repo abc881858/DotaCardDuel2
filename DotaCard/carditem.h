@@ -21,7 +21,8 @@ public:
         AttackPosition_Finger, //可以攻击表示
         FlipSummon_Finger, //可以翻转召唤
         EffectFromFieldground_Finger,
-        Attack_Finger
+        Attack_Finger,
+        Select_Finger //可以选择（作为装备魔法卡目标）
     };
     explicit CardItem(Card *_card);
     void setFingerCursor(CardItem::FingerFlag flag);
@@ -39,6 +40,7 @@ public:
     void response_summon();
     void set();
     void response_set();
+    void attack();
     void active();
     void response_active();
 
@@ -48,6 +50,7 @@ public:
     void response_enemyDestroyFieldyard();
 
     void changeImage();
+    void clearFinger();
 
 protected:
     void hoverEnterEvent(QGraphicsSceneHoverEvent*);

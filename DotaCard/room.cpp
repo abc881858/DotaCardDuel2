@@ -518,6 +518,7 @@ void Room::setupConnect(QList<Card*> list, bool enemy)
 
         connect(item, &CardItem::moveCardItem, [=](Card::AreaFlag from,Card::AreaFlag to){
             item->changeImage();
+            item->clearFinger();
             switch (from)
             {
             case Card::Deck_Area:

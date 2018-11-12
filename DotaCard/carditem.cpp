@@ -18,6 +18,7 @@
 #define cursorDefencePosition QCursor(QPixmap(":/cursor/cur6"), 14, 21)
 #define cursorAttackPosition QCursor(QPixmap(":/cursor/cur8"), 14, 21)
 #define cursorAttack QCursor(QPixmap(":/cursor/cur7"), 14, 19)
+#define cursorSelect QCursor(QPixmap(":/cursor/cur3"), 31, 15)
 
 CardItem::CardItem(Card* _card) : card(_card)
 {
@@ -63,7 +64,11 @@ void CardItem::setFingerCursor(CardItem::FingerFlag flag)
     case CardItem::Attack_Finger:
         setCursor(cursorAttack);
         break;
+    case CardItem::Select_Finger:
+        setCursor(cursorSelect);
+        break;
     }
+    update();
 }
 
 QString CardItem::getName()
@@ -103,8 +108,14 @@ void CardItem::hoverEnterEvent(QGraphicsSceneHoverEvent *)
 //          高亮hover的卡牌
             if(qDota->getSearchReason()==Dota::ChainDeclared_Reason)
             {
-                qDebug() << "currentTargetReason";
+                qDebug() << "currentTargetReason ChainDeclared_Reason";
                 setCursor(cursorEffect);
+            }
+            if(qDota->getSearchReason()==Dota::BeEquiped_Reason)
+            {
+                qDebug() << "currentTargetReason BeEquiped_Reason";
+                finger = CardItem::Select_Finger;
+                setFingerCursor(finger);
             }
         }
         return; //只要是正在选择目标状态，都return
@@ -151,13 +162,13 @@ void CardItem::hoverEnterEvent(QGraphicsSceneHoverEvent *)
     {
         fingerList << Attack_Finger;
     }
+
     if(fingerList.isEmpty())
     {
         return;
     }
     finger = fingerList.first();
     setFingerCursor(finger);
-    update();
 }
 
 void CardItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *)
@@ -171,10 +182,7 @@ void CardItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *)
         setY(-71);
     }
 
-    fingerList.clear();
-    finger = FingerFlag::No_Finger;
-    setFingerCursor(finger);
-    update();
+    clearFinger();
 
     if(!qDota->whoIsDoing)
     {
@@ -214,8 +222,7 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
             {
                 qDebug() << "currentTargetReason == Dota::ChainDeclared_Reason";
                 qDota->chainCard = card;
-                setCursor(cursorNoFlag);
-                update();
+                clearFinger();
                 emit chainDeclared();
             }
             else if(flag == Dota::BeEquiped_Reason)
@@ -269,21 +276,13 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 //            card->attackPosition();
             break;
         case CardItem::Attack_Finger:
-            qDota->attackSourceCard = card;
-            if(qDota->hasEnemyMonster())
-            {
-                qDota->setSearchReason(Dota::BeAttacked_Reason);
-            }
-            else
-            {
-                emit beAttacked();
-            }
+            attack();
+            break;
+        default:
             break;
         }
-        fingerList.clear();
-        finger = FingerFlag::No_Finger;
-        setFingerCursor(finger);
-        update();
+
+        clearFinger();
     }
     else if(event->button() == Qt::RightButton)
     {
@@ -294,8 +293,14 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
         int index = fingerList.indexOf(finger);
         finger = finger == fingerList.last() ? fingerList.first() : fingerList.at(index + 1);
         setFingerCursor(finger);
-        update();
     }
+}
+
+void CardItem::clearFinger()
+{
+    fingerList.clear();
+    finger = FingerFlag::No_Finger;
+    setFingerCursor(finger);
 }
 
 void CardItem::setup()
@@ -380,6 +385,19 @@ void CardItem::response_set()
 {
     card->enemySetCard();
     emit moveCardItem(Card::EnemyHand_Area,Card::EnemyFieldyard_Area);
+}
+
+void CardItem::attack()
+{
+    qDota->attackSourceCard = card;
+    if(qDota->hasEnemyMonster())
+    {
+        qDota->setSearchReason(Dota::BeAttacked_Reason);
+    }
+    else
+    {
+        emit beAttacked();
+    }
 }
 
 void CardItem::battleSource()
@@ -500,7 +518,7 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
         return;
     }
 
-    if(finger!=No_Finger) //qDota->authenticateCard(card)
+    if(finger!=No_Finger)
     {
         painter->drawPixmap(0, 0, lighterPixmap);
     }
