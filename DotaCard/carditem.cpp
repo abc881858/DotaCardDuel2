@@ -218,7 +218,11 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
                 update();
                 emit chainDeclared();
             }
-
+            else if(flag == Dota::BeEquiped_Reason)
+            {
+                qDebug() << "currentTargetReason";
+                emit beEquiped();
+            }
 
         }
         else
@@ -497,7 +501,7 @@ void CardItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidge
         return;
     }
 
-    if(finger!=No_Finger)
+    if(finger!=No_Finger) //qDota->authenticateCard(card)
     {
         painter->drawPixmap(0, 0, lighterPixmap);
     }
