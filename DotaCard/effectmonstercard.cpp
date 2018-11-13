@@ -1,4 +1,4 @@
-#include "effectmonstercard.h"
+﻿#include "effectmonstercard.h"
 #include "dota.h"
 
 EffectMonsterCard::EffectMonsterCard()
@@ -39,6 +39,11 @@ bool EffectMonsterCard::testAttack()
         }
     }
     return false;
+}
+
+int EffectMonsterCard::testEffectFromFieldyard()
+{
+    return 0;
 }
 
 bool EffectMonsterCard::testSetCard()

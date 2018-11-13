@@ -32,35 +32,9 @@ bool EquipSpellCard::testEffectFromHand()
     return true;
 }
 
-int EquipSpellCard::testEffectFromFieldyard()
+int EquipSpellCard::testEffectFromFieldground()
 {
-    if(area != Card::Fieldyard_Area)
-    {
-        return 0;
-    }
-
-    int result = 0;
-    if (qDota->phase == Dota::EnemyBattle_Phase) //在对方战斗流程连锁
-    {
-//        qDota->whoIsDoing 能进 test 的流程，说明一定是 我在行动
-        result += 1;
-    }
-    if (qDota->phase == Dota::Main1_Phase ||
-            qDota->phase == Dota::Main2_Phase ||
-            qDota->phase == Dota::EnemyMain1_Phase ||
-            qDota->phase == Dota::EnemyBattle_Phase ||
-            qDota->phase == Dota::EnemyMain2_Phase)
-    {
-        if (oneTurnEffect3) //一回合一次
-        {
-            //一般是M1、M2的request可能为Positive，对方的M1、BP、M2可能为Negative
-            if (area == Card::Fieldyard_Area)
-            {
-                result += 2;
-            }
-        }
-    }
-    return result;
+    return 0;
 }
 
 void EquipSpellCard::standby()

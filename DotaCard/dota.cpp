@@ -27,8 +27,6 @@ void Dota::initialize()
         enemyFieldyardCards[i] = nullptr;
         enemyFieldgroundCards[i] = nullptr;
     }
-
-    room = new Room;
 }
 
 void Dota::setSearchReason(Dota::ReasonFlag flag)

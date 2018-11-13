@@ -89,7 +89,7 @@ public:
     virtual bool testDefencePosition();
     virtual bool testAttackPosition();
     virtual bool testFlipSummon();
-    virtual bool testEffectFromFieldground();
+    virtual int testEffectFromFieldground();
     virtual bool testAttack();
 
     int getISDN() const;

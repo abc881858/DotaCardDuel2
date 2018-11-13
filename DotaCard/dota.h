@@ -1,4 +1,4 @@
-#ifndef DOTA_H
+﻿#ifndef DOTA_H
 #define DOTA_H
 
 //给单例 Dota 设置一个宏，方便使用
@@ -60,7 +60,6 @@ public:
 
     static Dota* instance();
     void initialize();
-    Room *room;
 
     PhaseFlag phase; //我处于什么阶段
 

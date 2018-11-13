@@ -14,7 +14,7 @@ class EquipSpellCard : public Card
 public:
     Q_INVOKABLE EquipSpellCard();
     virtual bool testEffectFromHand();
-    virtual int testEffectFromFieldyard();
+    virtual int testEffectFromFieldground();
     virtual void standby();
     virtual void active();
 private:

@@ -1,4 +1,4 @@
-#ifndef EFFECTMONSTERCARD_H
+﻿#ifndef EFFECTMONSTERCARD_H
 #define EFFECTMONSTERCARD_H
 
 #include "card.h"
@@ -18,6 +18,7 @@ public:
     virtual bool testSetCard();
     virtual bool testFlipSummon();
     virtual void standby();
+    virtual int testEffectFromFieldyard();
 private:
     bool oneTurnOneAttack;
 };

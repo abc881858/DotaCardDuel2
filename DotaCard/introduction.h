@@ -1,4 +1,4 @@
-#ifndef INTRODUCTION_H
+﻿#ifndef INTRODUCTION_H
 #define INTRODUCTION_H
 
 #include <QtMultimedia/QSound>
@@ -7,6 +7,7 @@
 #include "pixmap.h"
 #include "menuscene.h"
 #include "deckscene.h"
+#include "room.h"
 
 class WelcomeScene : public QGraphicsScene
 {
@@ -56,6 +57,7 @@ private:
     Welcome2Scene *welcome2;
     Welcome3Scene *welcome3;
     DeckScene *deckscene;
+    Room *room;
 public slots:
     void changeScene();
     void changeScene2();

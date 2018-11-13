@@ -39,6 +39,7 @@
 Room::Room(QObject* parent)
     : QGraphicsScene(parent)
 {
+    qDota->initialize();
     qNet->initialize();
     connect(qNet, SIGNAL(request_enemyDrawFirst()), this, SLOT(response_enemyDrawFirst()));
     connect(qNet, SIGNAL(request_enemySpecialSummon(QJsonObject)), this, SLOT(response_enemySpecialSummon(QJsonObject)));

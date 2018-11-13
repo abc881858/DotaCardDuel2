@@ -1,5 +1,4 @@
-#include "engine.h"
-#include "card/centaurwarrunner.h"
+﻿#include "engine.h"
 #include "card/centaurwarrunner.h"
 #include "card/keeperofthelight.h"
 #include "card/lion.h"

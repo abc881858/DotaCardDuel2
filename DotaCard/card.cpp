@@ -90,9 +90,9 @@ bool Card::testAttack()
     return false;
 }
 
-bool Card::testEffectFromFieldground()
+int Card::testEffectFromFieldground()
 {
-    return false;
+    return 0;
 }
 
 int Card::getISDN() const

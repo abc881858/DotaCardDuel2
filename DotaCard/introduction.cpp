@@ -1,4 +1,4 @@
-#include "introduction.h"
+﻿#include "introduction.h"
 #include <QTime>
 #include "net.h"
 #include "dota.h"
@@ -132,8 +132,8 @@ Introduction::Introduction()
 //    welcome->fade();
 
 //    测试用，直接进roomScene
-    qDota->initialize();
-    setScene(qDota->room);
+    room = new Room;
+    setScene(room);
 
     setCursor(QCursor(QPixmap(":/cursor/cur3"), 31, 15));
 }
@@ -158,7 +158,7 @@ void Introduction::changeScene2()
 
     connect(menuscene, &MenuScene::duel_mode, [=](){
         qNet->initialize();
-        setScene(qDota->room);
+        setScene(room);
     });
 
     connect(menuscene, &MenuScene::card_check, [=](){
