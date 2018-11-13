@@ -3,7 +3,7 @@
 
 EffectMonsterCard::EffectMonsterCard()
 {
-
+    oneTurnOneAttack = false;
 }
 
 bool EffectMonsterCard::testNormalSummon()
