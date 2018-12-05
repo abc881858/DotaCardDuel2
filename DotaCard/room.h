@@ -1,4 +1,4 @@
-#ifndef ROOM_H
+﻿#ifndef ROOM_H
 #define ROOM_H
 
 #include <QGraphicsScene>
@@ -11,6 +11,7 @@
 #include "carditem.h"
 #include <QJsonArray>
 #include <QJsonObject>
+#include "structs.h"
 
 class Room : public QGraphicsScene
 {
@@ -20,7 +21,7 @@ public:
 
     Pixmap *sword[10];
     Pixmap *item_shine;
-    Pixmap *item_enemy_shine;
+//    Pixmap *item_enemy_shine;
 
 //    QGraphicsTextItem word[10];
 //    GraphicsPixmapObject* duifangxingdong;
@@ -65,46 +66,35 @@ public:
 
     void adjustHandItems();
     void adjustEnemyHandItems();
-    int testPlace(Card::AreaFlag flag);
-    void setupConnect(QList<Card *> list, bool enemy);
     void chain(int number);
 
+    void hideSwords();
+
+    CardItem* getCardItemFromIndex(int targetIndex, int areaIndex);
 protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
 
 public slots:
-    void bp_clicked();
-    void m2_clicked();
-    void ep_clicked();
+    void moveCardItem(CardMoveStruct);
+    void goBattlePhase(QList<int> list);
+    void goMain2Phase();
+    void goEndPhase();
+    void goDrawPhase();
+    void goStartGame();
+    void goStandbyPhase();
+    void goMain1Phase();
 
-    void response_setupDeck();
-    void response_startGame(QJsonObject json);
-    void response_enemyStartGame();
-    void response_drawPhase();
-    void response_standbyPhase();
-    void response_main1Phase();
-    void response_endPhase();
-    void response_enemySetupDeck(QJsonObject json);
-    void response_enemyDrawPhase();
-    void response_enemyStandbyPhase();
-    void response_enemyMain1Phase();
-    void response_enemyBattlePhase();
-    void response_enemyMain2Phase();
-    void response_enemyEndPhase();
-    void response_enemyDrawFirst();
-    void response_enemySpecialSummon(QJsonObject json);
-    void response_enemySummon(QJsonObject json);
-    void response_enemyActive(QJsonObject json);
-    void response_enemySet(QJsonObject json);
-    void response_enemyDeclared(QJsonObject json);
-    void response_finishChain();
-    void response_destroyFieldyard(QJsonObject json);
-    void response_enemyDestroyFieldyard(QJsonObject json);
-    void response_enemyChained(QJsonObject json);
+    void createCardItem(int index);
+    void createEnemyCardItem(int index);
 
-signals:
-    void hover(QString, QString);
+    void hoverEnter();
+//    void hoverLeave();
+//    void mousePress();
+
+    void showAttackAnimation(int sourceIndex, int targetIndex);
+    void showChainAnimation(int targetIndex, int areaIndex);
+    void showEnemyAttackAnimation(int sourceIndex, int targetIndex);
 };
 
 #endif // ROOM_H

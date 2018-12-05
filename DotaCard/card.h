@@ -122,6 +122,11 @@ public:
     void setStand(bool value);
 
     virtual void active();
+    int getATK() const;
+    void setATK(int value);
+
+    bool canAttack;
+
 protected:
     bool face; //表侧 里侧
     bool stand; //攻击 防守

@@ -37,7 +37,7 @@ void WelcomeScene::fade()
     fadeOut->setEndValue(1);
     fadeOut->setDuration(2000);
 
-    QSequentialAnimationGroup *group = new QSequentialAnimationGroup;
+    auto *group = new QSequentialAnimationGroup;
     group->addAnimation(fadeIn);
     group->addAnimation(fadeOut);
 
@@ -70,7 +70,7 @@ void Welcome2Scene::fade()
     fadeOut->setEndValue(1);
     fadeOut->setDuration(2000);
 
-    QSequentialAnimationGroup *group = new QSequentialAnimationGroup;
+    auto *group = new QSequentialAnimationGroup;
     group->addAnimation(fadeIn);
     group->addAnimation(fadeOut);
 
@@ -103,7 +103,7 @@ void Welcome3Scene::fade()
     fadeOut->setEndValue(1);
     fadeOut->setDuration(2000);
 
-    QSequentialAnimationGroup *group = new QSequentialAnimationGroup;
+    auto *group = new QSequentialAnimationGroup;
     group->addAnimation(fadeIn);
     group->addAnimation(fadeOut);
 

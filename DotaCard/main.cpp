@@ -12,7 +12,7 @@ int main(int argc, char *argv[])
     QTranslator translator;
     if (translator.load("dc_zh_cn"))
     {
-        a.installTranslator(&translator);
+        QApplication::installTranslator(&translator);
     }
     Engine::instance()->loadAllClass();
     Introduction introduction;
@@ -21,5 +21,5 @@ int main(int argc, char *argv[])
 //    introduction.move(900,100);
     introduction.show();
 
-    return a.exec();
+    return QApplication::exec();
 }

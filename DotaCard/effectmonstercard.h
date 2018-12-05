@@ -19,8 +19,7 @@ public:
     virtual bool testFlipSummon();
     virtual void standby();
     virtual int testEffectFromFieldyard();
-private:
-    bool oneTurnOneAttack;
+    bool canAttack;
 };
 
 #endif // EFFECTMONSTERCARD_H

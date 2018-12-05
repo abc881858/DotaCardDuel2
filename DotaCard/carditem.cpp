@@ -173,6 +173,8 @@ void CardItem::hoverEnterEvent(QGraphicsSceneHoverEvent *)
 
 void CardItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *)
 {
+    emit hoverLeave();
+
     if (card->area == Card::Hand_Area)
     {
         setY(529);
@@ -192,11 +194,8 @@ void CardItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *)
 
 void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 {
-    qDebug() << "mousePressEvent";
-    if(!qDota->whoIsDoing)
-    {
-        return;
-    }
+//    emit mousePress();
+
 
     if(qDota->isSearchingTargetCard()) //如果正在选择目标
     {
@@ -216,19 +215,20 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
             {
                 qDebug() << "currentTargetReason == Dota::BeAttacked_Reason";
                 qDota->attackDestinationCard = card;
-                emit beAttacked();
+                qDota->attackSourceCard->canAttack = false;
+                qDota->beAttacked();
             }
             else if(flag == Dota::ChainDeclared_Reason)
             {
                 qDebug() << "currentTargetReason == Dota::ChainDeclared_Reason";
                 qDota->chainCard = card;
                 clearFinger();
-                emit chainDeclared();
+                qDota->chainDeclared();
             }
             else if(flag == Dota::BeEquiped_Reason)
             {
                 qDebug() << "currentTargetReason";
-                emit beEquiped();
+//                qDota->beEquiped();
             }
         }
         else
@@ -250,7 +250,7 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
         case CardItem::No_Finger:
             return;
         case CardItem::EffectFromHand_Finger://暂时没过滤怪兽卡,发动魔法卡
-            active();
+            qDota->activeSpellCard(card);//active();
             break;
         case CardItem::EffectFromFieldyard_Finger:
             //card->effectFromFieldyard();
@@ -258,13 +258,13 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
         case CardItem::EffectFromFieldground_Finger:
             break;
         case CardItem::SpecialSummon_Finger:
-            specialSummon();
+            qDota->specialSummonCard(card);
             break;
         case CardItem::NormalSummon_Finger:
-            summon();
+            qDota->summonCard(card);
             break;
         case CardItem::SetCard_Finger:
-            set();
+            qDota->setCard(card);
             break;
         case CardItem::FlipSummon_Finger:
 //            card->flipSummon();
@@ -276,7 +276,7 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
 //            card->attackPosition();
             break;
         case CardItem::Attack_Finger:
-            attack();
+            qDota->attack(card);
             break;
         default:
             break;
@@ -301,145 +301,6 @@ void CardItem::clearFinger()
     fingerList.clear();
     finger = FingerFlag::No_Finger;
     setFingerCursor(finger);
-}
-
-void CardItem::setup()
-{
-    card->setupCard();
-    emit moveCardItem(Card::No_Area,Card::Deck_Area);
-}
-
-void CardItem::enemySetup()
-{
-    card->enemySetupCard();
-    emit moveCardItem(Card::No_Area,Card::EnemyDeck_Area);
-}
-
-void CardItem::draw()
-{
-    card->drawCard();
-    emit moveCardItem(Card::Deck_Area,Card::Hand_Area);
-    qNet->sendDraw();
-}
-
-void CardItem::response_drawFirst()
-{
-    card->enemyDrawCard();
-    emit moveCardItem(Card::EnemyDeck_Area,Card::EnemyHand_Area);
-}
-
-void CardItem::specialSummon()
-{
-    int index = qDota->handCards.indexOf(card);
-    //先card.area 再item.pos 最后qDota.list,省去了很多emit
-    card->specialSummonCard();
-    emit moveCardItem(Card::Hand_Area,Card::Fieldyard_Area);
-    qNet->sendSpecialSummon(index);
-}
-
-void CardItem::response_specialSummon()
-{
-    card->enemySpecialSummonCard();
-    emit moveCardItem(Card::EnemyHand_Area,Card::EnemyFieldyard_Area);
-}
-
-void CardItem::active()
-{
-    int index = qDota->handCards.indexOf(card);
-    card->activeCard();
-    emit moveCardItem(Card::Hand_Area,Card::Fieldground_Area);
-    qNet->sendActive(index);
-
-    card->active();
-}
-
-void CardItem::response_active()
-{
-    card->enemyActiveCard();
-    emit moveCardItem(Card::EnemyHand_Area,Card::EnemyFieldground_Area);
-}
-
-void CardItem::summon()
-{
-    int index = qDota->handCards.indexOf(card);
-    card->summonCard();
-    emit moveCardItem(Card::Hand_Area,Card::Fieldyard_Area);
-    qNet->sendSummon(index);
-}
-
-void CardItem::response_summon()
-{
-    card->enemySummonCard();
-    emit moveCardItem(Card::EnemyHand_Area,Card::EnemyFieldyard_Area);
-}
-
-void CardItem::set()
-{
-    int index = qDota->handCards.indexOf(card);
-    card->setCard();
-    emit moveCardItem(Card::Hand_Area,Card::Fieldyard_Area);
-    qNet->sendSet(index);
-}
-
-void CardItem::response_set()
-{
-    card->enemySetCard();
-    emit moveCardItem(Card::EnemyHand_Area,Card::EnemyFieldyard_Area);
-}
-
-void CardItem::attack()
-{
-    qDota->attackSourceCard = card;
-    if(qDota->hasEnemyMonster())
-    {
-        qDota->setSearchReason(Dota::BeAttacked_Reason);
-    }
-    else
-    {
-        emit beAttacked();
-    }
-}
-
-void CardItem::battleSource()
-{
-    int index = qDota->getCardIndexOfFieldyard(card);
-    Card* targetCard = qDota->attackDestinationCard;
-    if(targetCard->stand) //被攻击者攻击表示
-    {
-        if(card->ATK <= targetCard->ATK)
-        {
-            card->destroyCard();
-            emit moveCardItem(Card::Fieldyard_Area,Card::Graveyard_Area);
-            qNet->sendDestroyFieldyard(index);
-        }
-    }
-}
-
-void CardItem::battleTarget()
-{
-    int index = qDota->getCardIndexOfEnemyFieldyard(card);
-    Card* sourceCard = qDota->attackSourceCard;
-    if(sourceCard->stand) //被攻击者攻击表示
-    {
-        if(card->ATK <= sourceCard->ATK)
-        {
-            card->enemyDestroyCard();
-            emit moveCardItem(Card::EnemyFieldyard_Area,Card::EnemyGraveyard_Area);
-            qNet->sendDestroyEnemyFieldyard(index);
-        }
-    }
-}
-
-void CardItem::response_enemyDestroyFieldyard()
-{
-    card->enemyDestroyCard();
-    emit moveCardItem(Card::EnemyFieldyard_Area,Card::EnemyGraveyard_Area);
-}
-
-void CardItem::response_destroyFieldyard()
-{
-    card->destroyCard();
-    emit moveCardItem(Card::Fieldyard_Area,Card::Graveyard_Area);
 }
 
 void CardItem::changeImage()

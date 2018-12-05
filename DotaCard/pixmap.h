@@ -1,4 +1,4 @@
-#ifndef PIXMAP_H
+﻿#ifndef PIXMAP_H
 #define PIXMAP_H
 
 #include <QGraphicsObject>
@@ -37,9 +37,7 @@ private:
     int id;
 
 signals:
-    void finishedEffect();
     void finishedDoShineAnimation();
-    void finishedChangePhaseAnimation();
     void finishedActionAnimation();
     void finishedSwordAnimation();
 

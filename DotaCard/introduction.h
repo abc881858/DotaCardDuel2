@@ -50,13 +50,13 @@ class Introduction : public QGraphicsView
     Q_OBJECT
 public:
     Introduction();
-    QSound *music;
+    QSound *music{};
 private:
-    MenuScene *menuscene;
+    MenuScene *menuscene{};
     WelcomeScene *welcome;
     Welcome2Scene *welcome2;
     Welcome3Scene *welcome3;
-    DeckScene *deckscene;
+    DeckScene *deckscene{};
     Room *room;
 public slots:
     void changeScene();

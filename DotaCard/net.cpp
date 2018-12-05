@@ -1,4 +1,4 @@
-#include "net.h"
+﻿#include "net.h"
 #include <QHostAddress>
 #include <QJsonArray>
 #include <QJsonDocument>
@@ -25,7 +25,6 @@ void Net::write(QJsonObject jsonObject)
     QJsonDocument jsonDoucment(jsonObject);
     QByteArray byteArray = jsonDoucment.toJson(QJsonDocument::Compact); //压缩的json
     client->sendBinaryMessage(byteArray);
-//    qDebug() << "write: " << jsonObject;
 }
 
 void Net::connected()
@@ -39,7 +38,6 @@ void Net::readFromServer(QByteArray json)
 {
     QJsonDocument jsonDoucment = QJsonDocument::fromJson(json);
     QJsonObject object = jsonDoucment.object();
-//    qDebug() << "Net's readFromServer" << object;
 
     QString request = object["request"].toString();
     if (request.isEmpty())
@@ -86,52 +84,15 @@ void Net::sendEnemyDeck(QVariantList allISDN)
     write(jsonObject);
 }
 
-void Net::sendDraw()
+///////////
+void Net::moveCard(QJsonObject json)
 {
     QJsonObject jsonObject;
-    jsonObject.insert("request", QString("enemyDrawFirst"));
+    jsonObject.insert("request", QString("moveCard"));
+    jsonObject.insert("parameter", json);
     write(jsonObject);
 }
-
-void Net::sendSpecialSummon(int index)
-{
-    QJsonObject jsonObject;
-    jsonObject.insert("request", QString("enemySpecialSummon"));
-    QJsonObject parameter;
-    parameter.insert("index", index);
-    jsonObject.insert("parameter", parameter);
-    write(jsonObject);
-}
-
-void Net::sendSummon(int index)
-{
-    QJsonObject jsonObject;
-    jsonObject.insert("request", QString("enemySummon"));
-    QJsonObject parameter;
-    parameter.insert("index", index);
-    jsonObject.insert("parameter", parameter);
-    write(jsonObject);
-}
-
-void Net::sendActive(int index)
-{
-    QJsonObject jsonObject;
-    jsonObject.insert("request", QString("enemyActive"));
-    QJsonObject parameter;
-    parameter.insert("index", index);
-    jsonObject.insert("parameter", parameter);
-    write(jsonObject);
-}
-
-void Net::sendSet(int index)
-{
-    QJsonObject jsonObject;
-    jsonObject.insert("request", QString("enemySet"));
-    QJsonObject parameter;
-    parameter.insert("index", index);
-    jsonObject.insert("parameter", parameter);
-    write(jsonObject);
-}
+///////////
 
 void Net::sendDeclared(int sourceIndex, int targetIndex)
 {
@@ -159,25 +120,5 @@ void Net::sendFinishChain()
 {
     QJsonObject jsonObject;
     jsonObject.insert("request", QString("finishChain"));
-    write(jsonObject);
-}
-
-void Net::sendDestroyEnemyFieldyard(int index)
-{
-    QJsonObject jsonObject;
-    jsonObject.insert("request", QString("destroyFieldyard"));
-    QJsonObject parameter;
-    parameter.insert("index", index);
-    jsonObject.insert("parameter", parameter);
-    write(jsonObject);
-}
-
-void Net::sendDestroyFieldyard(int index)
-{
-    QJsonObject jsonObject;
-    jsonObject.insert("request", QString("enemyDestroyFieldyard"));
-    QJsonObject parameter;
-    parameter.insert("index", index);
-    jsonObject.insert("parameter", parameter);
     write(jsonObject);
 }

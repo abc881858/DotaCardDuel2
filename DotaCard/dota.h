@@ -11,6 +11,7 @@
 #include "card.h"
 #include "room.h"
 #include <QStack>
+#include "structs.h"
 
 class Dota : public QObject
 {
@@ -58,6 +59,22 @@ public:
 
 //    QSound *music;
 
+
+    enum AreaFlag
+    {
+        No_Area,
+        Deck_Area,
+        Hand_Area,
+        Fieldyard_Area,
+        Fieldground_Area,
+        Graveyard_Area,
+        EnemyDeck_Area,
+        EnemyHand_Area,
+        EnemyFieldyard_Area,
+        EnemyFieldground_Area,
+        EnemyGraveyard_Area
+    };
+
     static Dota* instance();
     void initialize();
 
@@ -66,8 +83,8 @@ public:
     bool firstTurn;
     bool oneTurnOneNormalSummon;
 
-    QList<Card*> allCards;
-    QList<Card*> enemyAllCards;
+//    QList<Card*> allCards;
+//    QList<Card*> allEnemyCards;
     QList<Card*> deckCards;
     QList<Card*> handCards;
     Card* fieldyardCards[5];
@@ -84,6 +101,7 @@ public:
     Card* attackSourceCard; //攻击来源的卡牌
     Card* attackDestinationCard; //攻击目标的卡牌
     Card* chainCard; //连锁的卡牌
+    Card* hoverCard;
 
     enum ReasonFlag //搜寻卡牌的原因
     {
@@ -99,11 +117,7 @@ public:
     void setSearchReason(Dota::ReasonFlag flag); //同时设置检索条件
     Dota::ReasonFlag getSearchReason();
 
-    int getCardIndexOfFieldyard(Card *card);
-    int getCardIndexOfEnemyFieldyard(Card *card);
-    int getCardIndexOfFieldground(Card *card);
-    int getCardIndexOfEnemyFieldground(Card *card);
-    int getCardIndexOfArea(Card *card, Card::AreaFlag flag);
+    int getCardIndex(Card *card);
 
     bool isSearchingTargetCard();
     bool authenticateCard(Card *card); //鉴权卡牌的总函数
@@ -124,6 +138,66 @@ private:
     QSet<Card::AreaFlag> authenticateCardAreaList; // 鉴权 area
     bool authenticateCardActive; //需要 Card 能发动效果
 
+public slots:
+    void response_setupDeck();
+    void response_startGame(QJsonObject json);
+    void response_enemyStartGame();
+    void response_drawPhase();
+    void response_standbyPhase();
+    void response_main1Phase();
+    void response_endPhase();
+    void response_enemySetupDeck(QJsonObject json);
+    void response_enemyDrawPhase();
+    void response_enemyStandbyPhase();
+    void response_enemyMain1Phase();
+    void response_enemyBattlePhase();
+    void response_enemyMain2Phase();
+    void response_enemyEndPhase();
+
+    void response_enemyDeclared(QJsonObject json);
+    void response_finishChain();
+
+    void response_enemyChained(QJsonObject json);
+
+    void response_moveCard(QJsonObject json);
+
+    void beAttacked();
+    void chainDeclared();
+
+signals:
+    void moveCardItem(CardMoveStruct);
+    void goBattlePhase(QList<int>);
+    void goMain2Phase();
+    void goEndPhase();
+    void goDrawPhase();
+    void goStartGame();
+    void goStandbyPhase();
+    void goMain1Phase();
+
+    void createCardItem(int);
+    void createEnemyCardItem(int);
+
+    void showAttackAnimation(int, int);
+    void showEnemyAttackAnimation(int, int);
+    void showChainAnimation(int, int);
+
+public:
+    void setupConnect(QList<Card *> list, bool enemy);
+    int testPlace(Card::AreaFlag flag);
+    void moveCard(CardMoveStruct move);
+    void goStartPhase();
+    void activeSpellCard(Card *card);
+    void specialSummonCard(Card *card);
+    void summonCard(Card *card);
+    void setCard(Card *card);
+
+    void tryGoBattlePhase();
+    void tryGoMain2Phase();
+    void tryGoEndPhase();
+    Card *getCardFromIndex(int index);
+    Card *getEnemyCardFromIndex(int index);
+    void chain(int number);
+    void attack(Card *card);
 };
 
 #endif // DOTA_H

@@ -1,9 +1,10 @@
 ﻿#include "effectmonstercard.h"
 #include "dota.h"
+#include <QDebug>
 
 EffectMonsterCard::EffectMonsterCard()
 {
-    oneTurnOneAttack = false;
+    canAttack = false;
 }
 
 bool EffectMonsterCard::testNormalSummon()
@@ -32,7 +33,7 @@ bool EffectMonsterCard::testAttack()
     {
         if(qDota->phase == Dota::Battle_Phase)
         {
-            if(stand && face && oneTurnOneAttack)
+            if(stand && face)
             {
                 return true;
             }
@@ -77,5 +78,5 @@ bool EffectMonsterCard::testFlipSummon()
 
 void EffectMonsterCard::standby()
 {
-    oneTurnOneAttack = true;
+    canAttack = true;
 }

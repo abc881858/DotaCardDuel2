@@ -30,25 +30,6 @@ public:
     QString getName();
     QString getDescription();
 
-    void setup();
-    void enemySetup();
-    void draw();
-    void response_drawFirst();
-    void specialSummon();
-    void response_specialSummon();
-    void summon();
-    void response_summon();
-    void set();
-    void response_set();
-    void attack();
-    void active();
-    void response_active();
-
-    void battleSource();
-    void battleTarget();
-    void response_destroyFieldyard();
-    void response_enemyDestroyFieldyard();
-
     void changeImage();
     void clearFinger();
 
@@ -69,11 +50,10 @@ private:
     QImage frameImage;
 
 signals:
-    void moveCardItem(Card::AreaFlag, Card::AreaFlag);
     void hoverEnter();
-    void beAttacked();
-    void chainDeclared();
-    void beEquiped();
+    void hoverLeave();
+    void mousePress();
+
 };
 
 #endif // CARDITEM_H

@@ -54,7 +54,8 @@ SOURCES += \
     card/gemoftruesight.cpp \
     card/urnofshadows.cpp \
     equipspellcard.cpp \
-    effectmonstercard.cpp
+    effectmonstercard.cpp \
+    structs.cpp
 
 HEADERS += \
     card.h \
@@ -84,7 +85,8 @@ HEADERS += \
     card/gemoftruesight.h \
     card/urnofshadows.h \
     equipspellcard.h \
-    effectmonstercard.h
+    effectmonstercard.h \
+    structs.h
 
 RESOURCES += \
     dotacard.qrc

@@ -1,4 +1,4 @@
-#ifndef NET_H
+﻿#ifndef NET_H
 #define NET_H
 
 #include <QJsonObject>
@@ -23,17 +23,12 @@ public:
     void sendDeck(QVariantList allISDN);
     void sendEnemyDeck(QVariantList allISDN);
     void sendDeclared(int sourceIndex, int targetIndex);
-    void sendDraw();
-    void sendSpecialSummon(int index);
-    void sendSummon(int index);
-    void sendActive(int index);
-    void sendSet(int index);
     void sendFinishChain();
 
-    void sendDestroyEnemyFieldyard(int index);
-    void sendDestroyFieldyard(int index);
     void sendBattleAnimationFinished();
     void sendChained(int targetIndex, int areaIndex);
+
+    void moveCard(QJsonObject json);
 private:
     QWebSocket* client;
 
@@ -42,6 +37,8 @@ public slots:
     void connected();
 
 signals:
+    Q_INVOKABLE void request_moveCard(QJsonObject);
+
     Q_INVOKABLE void request_setupDeck();
     Q_INVOKABLE void request_enemySetupDeck(QJsonObject);
     Q_INVOKABLE void request_startGame(QJsonObject);
@@ -56,15 +53,10 @@ signals:
     Q_INVOKABLE void request_enemyEndPhase();
     Q_INVOKABLE void request_enemyBattlePhase();
     Q_INVOKABLE void request_enemyMain2Phase();
-    Q_INVOKABLE void request_enemyDrawFirst();
-    Q_INVOKABLE void request_enemySpecialSummon(QJsonObject);
-    Q_INVOKABLE void request_enemySummon(QJsonObject);
-    Q_INVOKABLE void request_enemyActive(QJsonObject);
-    Q_INVOKABLE void request_enemySet(QJsonObject);
+
     Q_INVOKABLE void request_enemyDeclared(QJsonObject);
     Q_INVOKABLE void request_finishChain();
-    Q_INVOKABLE void request_destroyFieldyard(QJsonObject);
-    Q_INVOKABLE void request_enemyDestroyFieldyard(QJsonObject);
+
     Q_INVOKABLE void request_enemyChained(QJsonObject);
 };
 

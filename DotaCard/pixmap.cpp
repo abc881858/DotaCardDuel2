@@ -1,4 +1,4 @@
-#include "pixmap.h"
+﻿#include "pixmap.h"
 #include <QDebug>
 
 Pixmap::Pixmap(const QString &filename, bool center_as_origin)
@@ -13,7 +13,9 @@ Pixmap::Pixmap(const QString &filename, bool center_as_origin)
     hide_pix->setStartValue(1);
     hide_pix->setEndValue(0);
     hide_pix->setDuration(200);
-    connect(hide_pix, &QPropertyAnimation::finished, this, &Pixmap::finishedChangePhaseAnimation);
+    connect(hide_pix, &QPropertyAnimation::finished, [=](){
+        this->hide();
+    });
 
 //    setTransformationMode(Qt::SmoothTransformation);
     z = 1;
@@ -99,13 +101,13 @@ void Pixmap::timerEvent(QTimerEvent *)
     {
         z = 1;
         killTimer(id);
-        setVisible(false);
-        emit finishedEffect();
+        hide();
     }
 }
 
 void Pixmap::effect()
 {
+    show();
     id = startTimer(100);
 }
 

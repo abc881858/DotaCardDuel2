@@ -1,4 +1,4 @@
-#include "phase.h"
+﻿#include "phase.h"
 #include <QPainter>
 #include <QTimerEvent>
 #include <QGraphicsSceneMouseEvent>

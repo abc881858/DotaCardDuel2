@@ -23,6 +23,8 @@ Card::Card()
     associatedCard = nullptr;
     count_turn = 0;
 
+    canAttack = false;
+
 }
 
 void Card::standby()
@@ -181,6 +183,16 @@ void Card::activeCard()
 void Card::active()
 {
 
+}
+
+int Card::getATK() const
+{
+    return ATK;
+}
+
+void Card::setATK(int value)
+{
+    ATK = value;
 }
 
 void Card::enemyActiveCard()
