@@ -94,13 +94,13 @@ void Net::moveCard(QJsonObject json)
 }
 ///////////
 
-void Net::sendDeclared(int sourceIndex, int targetIndex)
+void Net::sendBeAttacked(int sourceIndex, int targetIndex)
 {
     QJsonObject parameter;
     parameter.insert("sourceIndex", sourceIndex);
     parameter.insert("targetIndex", targetIndex);
     QJsonObject object;
-    object.insert("request", QString("enemyDeclared"));
+    object.insert("request", QString("enemyBeAttack"));
     object.insert("parameter", parameter);
     Net::instance()->write(object);
 }
@@ -121,4 +121,15 @@ void Net::sendFinishChain()
     QJsonObject jsonObject;
     jsonObject.insert("request", QString("finishChain"));
     write(jsonObject);
+}
+
+void Net::sendBeEquiped(int equipSpellCardIndex, int equipMonsterCardIndex)
+{
+    QJsonObject parameter;
+    parameter.insert("equipSpellCardIndex", equipSpellCardIndex);
+    parameter.insert("equipMonsterCardIndex", equipMonsterCardIndex);
+    QJsonObject object;
+    object.insert("request", QString("enemyBeEquiped"));
+    object.insert("parameter", parameter);
+    Net::instance()->write(object);
 }

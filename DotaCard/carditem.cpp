@@ -138,7 +138,7 @@ void CardItem::hoverEnterEvent(QGraphicsSceneHoverEvent *)
     {
         fingerList << SetCard_Finger;
     }
-    if(card->testEffectFromFieldyard() > 0)
+    if(card->testEffectFromFieldyard())
     {
         fingerList << EffectFromFieldyard_Finger;
     }
@@ -227,8 +227,9 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
             }
             else if(flag == Dota::BeEquiped_Reason)
             {
-                qDebug() << "currentTargetReason";
-//                qDota->beEquiped();
+                qDebug() << "currentTargetReason == Dota::BeEquiped_Reason";
+                qDota->equipMonsterCard = card;
+                qDota->beEquiped();
             }
         }
         else
@@ -253,9 +254,10 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
             qDota->activeSpellCard(card);//active();
             break;
         case CardItem::EffectFromFieldyard_Finger:
-            //card->effectFromFieldyard();
+            card->active();
             break;
         case CardItem::EffectFromFieldground_Finger:
+            card->active();
             break;
         case CardItem::SpecialSummon_Finger:
             qDota->specialSummonCard(card);
@@ -343,7 +345,7 @@ void CardItem::changeImage()
     }
 //    if(card->face)
 //    {
-        setPixmap(QPixmap(QString(":/%1/%2").arg(prefix).arg(card->name)));
+        setPixmap(QPixmap(QString(":/%1/%2").arg(prefix, card->name)));
 //    }
 //    else
 //    {

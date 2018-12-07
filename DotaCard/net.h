@@ -22,13 +22,14 @@ public:
 //    void doAddYourLP(int value);
     void sendDeck(QVariantList allISDN);
     void sendEnemyDeck(QVariantList allISDN);
-    void sendDeclared(int sourceIndex, int targetIndex);
+    void sendBeAttacked(int sourceIndex, int targetIndex);
     void sendFinishChain();
 
     void sendBattleAnimationFinished();
     void sendChained(int targetIndex, int areaIndex);
 
     void moveCard(QJsonObject json);
+    void sendBeEquiped(int equipSpellCardIndex, int equipMonsterCardIndex);
 private:
     QWebSocket* client;
 
@@ -54,10 +55,11 @@ signals:
     Q_INVOKABLE void request_enemyBattlePhase();
     Q_INVOKABLE void request_enemyMain2Phase();
 
-    Q_INVOKABLE void request_enemyDeclared(QJsonObject);
+    Q_INVOKABLE void request_enemyBeAttack(QJsonObject);
     Q_INVOKABLE void request_finishChain();
 
     Q_INVOKABLE void request_enemyChained(QJsonObject);
+    Q_INVOKABLE void request_enemyBeEquiped(QJsonObject);
 };
 
 #endif // NET_H

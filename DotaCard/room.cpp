@@ -421,6 +421,7 @@ void Room::moveCardItem(CardMoveStruct move)
     case Card::Graveyard_Area:
         graveyardItems << item;
         item->setPos(GraveyardPos);
+        item->setZValue(graveyardItems.size());
         break;
     case Card::EnemyDeck_Area:
         enemyDeckItems << item;
@@ -448,6 +449,7 @@ void Room::moveCardItem(CardMoveStruct move)
     case Card::EnemyGraveyard_Area:
         enemyGraveyardItems << item;
         item->setPos(EnemyGraveyardPos);
+        item->setZValue(enemyGraveyardItems.size());
         break;
     default:
         // for No_Area

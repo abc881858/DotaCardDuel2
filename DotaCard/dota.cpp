@@ -16,7 +16,8 @@ void Dota::initialize()
     qNet->initialize();
     connect(qNet, &Net::request_moveCard, this, &Dota::response_moveCard);
 
-    connect(qNet, SIGNAL(request_enemyDeclared(QJsonObject)), this, SLOT(response_enemyDeclared(QJsonObject)));
+    connect(qNet, SIGNAL(request_enemyBeEquiped(QJsonObject)), this, SLOT(response_enemyBeEquiped(QJsonObject)));
+    connect(qNet, SIGNAL(request_enemyBeAttack(QJsonObject)), this, SLOT(response_enemyBeAttack(QJsonObject)));
     connect(qNet, SIGNAL(request_finishChain()), this, SLOT(response_finishChain()));
     connect(qNet, SIGNAL(request_enemyChained(QJsonObject)), this, SLOT(response_enemyChained(QJsonObject)));
     connect(qNet, SIGNAL(request_setupDeck()), this, SLOT(response_setupDeck()));
@@ -37,10 +38,13 @@ void Dota::initialize()
     phase = No_Phase;
     whoIsDoing = true;
 
-    oneTurnOneNormalSummon = false;
+    oneTurnOneNormalSummon = false; //一回合一次普通召唤
     firstTurn = true;
 
     attackSourceCard = nullptr;
+    attackDestinationCard = nullptr;
+    equipSpellCard = nullptr;
+    equipMonsterCard = nullptr;
 
     authenticateCardAreaList.clear(); //初始化鉴权
     authenticateCardActive = false;
@@ -121,7 +125,7 @@ bool Dota::authenticateCard(Card *card)
     {
         if(card->getArea() == Card::Fieldyard_Area)
         {
-            if(card->testEffectFromFieldyard() == 0)
+            if(card->testEffectFromFieldyard())
             {
                 return false;
             }
@@ -299,6 +303,7 @@ int Dota::testPlace(Card::AreaFlag flag)
     }
     return -1;
 }
+
 void Dota::activeSpellCard(Card *card)
 {
     CardMoveStruct move;
@@ -308,7 +313,49 @@ void Dota::activeSpellCard(Card *card)
     move.indexTo = testPlace(Card::Fieldground_Area);
     move.reason = CardMoveStruct::REASON_activeSpellCard;
     moveCard(move);
+
+    emit showChainAnimation(move.indexTo, Card::Fieldground_Area);
+//    qNet->sendChained(move.indexTo, Card::Fieldground_Area); // 考虑下提前发送Net连锁动画
+
+    if(card->getKind() == Card::EquipSpell_Kind)
+    {
+        //先到场地，发光，弹出对话框，点确定，选择卡，装备卡动画
+        if(QMessageBox::information(nullptr, "title", "please select one monster to equip.", QMessageBox::Yes))
+        {
+            qDebug() << "selectOneMonsterToEquip";
+        }
+        equipSpellCard = card;
+        setSearchReason(Dota::BeEquiped_Reason);
+    }
 }
+
+void Dota::beEquiped()
+{
+    //动画
+    //chain's monster == pressCard
+    //qNet equip
+    equipSpellCard->equipMonsterCard = equipMonsterCard;
+    equipMonsterCard->equipSpellCards << equipSpellCard;
+
+    qNet->sendBeEquiped(getCardIndex(equipSpellCard), getCardIndex(equipMonsterCard));
+
+    equipSpellCard = nullptr;
+    equipMonsterCard = nullptr;
+}
+
+void Dota::response_enemyBeEquiped(QJsonObject json)
+{
+    //装备卡牌的动画
+    int equipSpellCardIndex = json["equipSpellCardIndex"].toInt();
+    int equipMonsterCardIndex = json["equipMonsterCardIndex"].toInt();
+    equipSpellCard = enemyFieldgroundCards[equipSpellCardIndex];
+    equipMonsterCard = enemyFieldyardCards[equipMonsterCardIndex];
+    equipSpellCard->equipMonsterCard = equipMonsterCard;
+    equipMonsterCard->equipSpellCards << equipSpellCard;
+    equipSpellCard = nullptr;
+    equipMonsterCard = nullptr;
+}
+
 void Dota::specialSummonCard(Card *card)
 {
     CardMoveStruct move;
@@ -541,9 +588,22 @@ void Dota::response_finishChain()
                 move.indexTo = -1;
                 move.reason = CardMoveStruct::REASON_destroyCard;
                 moveCard(move);
-
-//                emit moveCardItem(move);
-//                qNet->moveCard(move.toJson());
+                if(attackSourceCard->getKind()==Card::EffectMonster_Kind && !attackSourceCard->equipSpellCards.isEmpty())
+                {
+                    for(Card* spell : attackSourceCard->equipSpellCards)
+                    {
+                        if(spell->getArea() == Card::Fieldground_Area)
+                        {
+                            CardMoveStruct move;
+                            move.areaFrom = Card::Fieldground_Area;
+                            move.areaTo = Card::Graveyard_Area;
+                            move.indexFrom = getCardIndex(spell);
+                            move.indexTo = -1;
+                            move.reason = CardMoveStruct::REASON_destroyCard;
+                            moveCard(move);
+                        }
+                    }
+                }
             }
         }
 
@@ -558,10 +618,24 @@ void Dota::response_finishChain()
                 move.indexTo = -1;
                 move.reason = CardMoveStruct::REASON_destroyEnemyCard;
                 moveCard(move);
-
-//                emit moveCardItem(move);
-//                qNet->moveCard(move.toJson());
+                if(attackDestinationCard->getKind()==Card::EffectMonster_Kind && !attackDestinationCard->equipSpellCards.isEmpty())
+                {
+                    for(Card* spell : attackDestinationCard->equipSpellCards)
+                    {
+                        if(spell->getArea() == Card::EnemyFieldground_Area)
+                        {
+                            CardMoveStruct move;
+                            move.areaFrom = Card::EnemyFieldground_Area;
+                            move.areaTo = Card::EnemyGraveyard_Area;
+                            move.indexFrom = getCardIndex(spell);
+                            move.indexTo = -1;
+                            move.reason = CardMoveStruct::REASON_destroyEnemyCard;
+                            moveCard(move);
+                        }
+                    }
+                }
             }
+
         }
 
         attackSourceCard = nullptr;
@@ -575,42 +649,6 @@ void Dota::response_finishChain()
 
 ///////////////////////
 ///////////////////////
-
-void Dota::chain(int number)
-{
-    bool can_do = false;
-    for(auto & fieldgroundCard : fieldgroundCards)
-    {
-//        if(myFieldyard[i]!=NULL)
-//        {
-//            if(myFieldyard[i]->testEffectFromFieldyard())
-//            {
-//                can_do = true;
-//                break;
-//            }
-//        }
-        if(fieldgroundCard!=nullptr)
-        {
-            if(fieldgroundCard->testEffectFromFieldground())
-            {
-                can_do = true;
-                break;
-            }
-        }
-    }
-
-    if(can_do)
-    {
-        if(QMessageBox::question(nullptr, QString(tr("Warning")), QString(tr("Active Effect")), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
-        {
-            whoIsDoing = true;
-            return;
-        }
-    }
-
-    qNet->sendMessage(number);
-}
-
 ///////////////////////
 ///////////////////////
 
@@ -692,10 +730,10 @@ void Dota::beAttacked()
     emit showAttackAnimation(sourceIndex, targetIndex);
 
     whoIsDoing = false;
-    qNet->sendDeclared(sourceIndex, targetIndex);
+    qNet->sendBeAttacked(sourceIndex, targetIndex);
 }
 
-void Dota::response_enemyDeclared(QJsonObject json)
+void Dota::response_enemyBeAttack(QJsonObject json)
 {
     int sourceIndex = json["sourceIndex"].toInt();
     int targetIndex = json["targetIndex"].toInt();
@@ -713,13 +751,8 @@ void Dota::response_enemyDeclared(QJsonObject json)
     qNet->sendFinishChain(); //目前没处理
 }
 
-
 void Dota::chainDeclared()
 {
-    auto *item = qobject_cast<CardItem *>(sender());
-
-    qDebug() << "CardItem::chainDeclared" << item->pos();
-
     whoIsDoing = false; //????
 
     int targetIndex = getCardIndex(chainCard);
@@ -728,6 +761,41 @@ void Dota::chainDeclared()
     emit showChainAnimation(targetIndex, areaIndex);
 
     qNet->sendChained(targetIndex, areaIndex); // 考虑下提前发送Net连锁动画
+}
+
+void Dota::chain(int number)
+{
+    bool can_do = false;
+    for(auto & fieldgroundCard : fieldgroundCards)
+    {
+//        if(myFieldyard[i]!=NULL)
+//        {
+//            if(myFieldyard[i]->testEffectFromFieldyard())
+//            {
+//                can_do = true;
+//                break;
+//            }
+//        }
+        if(fieldgroundCard!=nullptr)
+        {
+            if(fieldgroundCard->testEffectFromFieldground())
+            {
+                can_do = true;
+                break;
+            }
+        }
+    }
+
+    if(can_do)
+    {
+        if(QMessageBox::question(nullptr, QString(tr("Warning")), QString(tr("Active Effect")), QMessageBox::Yes, QMessageBox::No) == QMessageBox::Yes)
+        {
+            whoIsDoing = true;
+            return;
+        }
+    }
+
+    qNet->sendMessage(number);
 }
 
 void Dota::response_enemyChained(QJsonObject json)

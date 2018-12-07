@@ -1,4 +1,4 @@
-#include "deckscene.h"
+﻿#include "deckscene.h"
 
 //#include <QIcon>
 //#include <QFile>
@@ -36,10 +36,10 @@ DeckScene::DeckScene(QObject* parent)
 //        QListWidgetItem *item = new QListWidgetItem;
 //        item->setBackground(QBrush(QPixmap(":/png/png/list_item2.png")));
 //        item->setSizeHint(QSize(79,52));
-//        item->setIcon(QIcon(QPixmap(QString(":/allcards/%1.jpg").arg(card->getName()))));
+//        item->setIcon(QIcon(QPixmap(QString(":/allcards/%1.jpg", card->getName()))));
 //        if(card->isMonstor())
 //        {
-//            item->setText(QString("%1\n%2").arg(card->getATK()).arg(card->getDEF()));
+//            item->setText(QString("%1\n%2").arg(card->getATK(), card->getDEF()));
 //            item->setTextAlignment(Qt::AlignRight|Qt::AlignVCenter);
 //        }
 //        listwidget->addItem(item);

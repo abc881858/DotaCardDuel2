@@ -20,7 +20,7 @@ Card::Card()
 
     currentATK = -1;
     currentDEF = -1;
-    associatedCard = nullptr;
+    equipMonsterCard = nullptr;
     count_turn = 0;
 
     canAttack = false;
@@ -59,9 +59,9 @@ bool Card::testSetCard()
     return false;
 }
 
-int Card::testEffectFromFieldyard()
+bool Card::testEffectFromFieldyard()
 {
-    return 0;
+    return false;
 }
 
 bool Card::testDefencePosition()
@@ -92,9 +92,9 @@ bool Card::testAttack()
     return false;
 }
 
-int Card::testEffectFromFieldground()
+bool Card::testEffectFromFieldground()
 {
-    return 0;
+    return false;
 }
 
 int Card::getISDN() const

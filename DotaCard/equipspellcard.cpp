@@ -32,9 +32,9 @@ bool EquipSpellCard::testEffectFromHand()
     return true;
 }
 
-int EquipSpellCard::testEffectFromFieldground()
+bool EquipSpellCard::testEffectFromFieldground()
 {
-    return 0;
+    return false;
 }
 
 void EquipSpellCard::standby()
@@ -45,10 +45,5 @@ void EquipSpellCard::standby()
 
 void EquipSpellCard::active()
 {
-    //先到场地，发光，弹出对话框，点确定，选择卡，装备卡动画
-    if(QMessageBox::information(nullptr, "title", "please select one monster to equip.", QMessageBox::Yes))
-    {
-        qDebug() << "selectOneMonsterToEquip";
-    }
-    qDota->setSearchReason(Dota::BeEquiped_Reason);
+
 }

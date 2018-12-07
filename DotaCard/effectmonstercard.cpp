@@ -9,6 +9,10 @@ EffectMonsterCard::EffectMonsterCard()
 
 bool EffectMonsterCard::testNormalSummon()
 {
+    if(qDota->testPlace(Card::Fieldyard_Area) == -1) // 整理下，以后会提示前排已满
+    {
+        return false;
+    }
     if(qDota->phase == Dota::Main1_Phase
         || qDota->phase == Dota::Main2_Phase)
     {
@@ -42,9 +46,14 @@ bool EffectMonsterCard::testAttack()
     return false;
 }
 
-int EffectMonsterCard::testEffectFromFieldyard()
+bool EffectMonsterCard::testEffectFromFieldyard()
 {
-    return 0;
+    return false;
+}
+
+void EffectMonsterCard::active()
+{
+
 }
 
 bool EffectMonsterCard::testSetCard()

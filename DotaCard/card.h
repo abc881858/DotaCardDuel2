@@ -84,19 +84,20 @@ public:
     virtual bool testSpecialSummon();
     virtual bool testNormalSummon();
     virtual bool testSetCard();
-    virtual int testEffectFromFieldyard();
+    virtual bool testEffectFromFieldyard();
 
     virtual bool testDefencePosition();
     virtual bool testAttackPosition();
     virtual bool testFlipSummon();
-    virtual int testEffectFromFieldground();
+    virtual bool testEffectFromFieldground();
     virtual bool testAttack();
+
+    virtual void active();
 
     int getISDN() const;
     KindFlag getKind() const;
 
     bool getFace() const;
-
 
     void setupCard();
     void enemySetupCard();
@@ -121,11 +122,13 @@ public:
     bool getStand() const;
     void setStand(bool value);
 
-    virtual void active();
     int getATK() const;
     void setATK(int value);
 
     bool canAttack;
+
+    QList<Card*> equipSpellCards;//装备了几张魔法卡
+    Card* equipMonsterCard;//被装备在哪张怪兽卡上
 
 protected:
     bool face; //表侧 里侧
@@ -133,7 +136,6 @@ protected:
     bool enemy; //是否在对方场上
     AreaFlag area;
     int count_turn; //在场几回合
-    Card* associatedCard; //有关联的卡,一般是装备卡
 
     int ISDN;
     KindFlag kind; //怪兽魔法陷阱

@@ -102,6 +102,8 @@ public:
     Card* attackDestinationCard; //攻击目标的卡牌
     Card* chainCard; //连锁的卡牌
     Card* hoverCard;
+    Card* equipSpellCard; //装备魔法卡牌
+    Card* equipMonsterCard; //装备怪兽卡牌
 
     enum ReasonFlag //搜寻卡牌的原因
     {
@@ -154,15 +156,13 @@ public slots:
     void response_enemyMain2Phase();
     void response_enemyEndPhase();
 
-    void response_enemyDeclared(QJsonObject json);
+    void response_enemyBeEquiped(QJsonObject json);
+    void response_enemyBeAttack(QJsonObject json);
     void response_finishChain();
 
     void response_enemyChained(QJsonObject json);
 
     void response_moveCard(QJsonObject json);
-
-    void beAttacked();
-    void chainDeclared();
 
 signals:
     void moveCardItem(CardMoveStruct);
@@ -197,7 +197,11 @@ public:
     Card *getCardFromIndex(int index);
     Card *getEnemyCardFromIndex(int index);
     void chain(int number);
+
+    void chainDeclared();
     void attack(Card *card);
+    void beAttacked();
+    void beEquiped();
 };
 
 #endif // DOTA_H

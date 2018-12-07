@@ -18,8 +18,9 @@ public:
     virtual bool testSetCard();
     virtual bool testFlipSummon();
     virtual void standby();
-    virtual int testEffectFromFieldyard();
+    virtual bool testEffectFromFieldyard();
     bool canAttack;
+    virtual void active();
 };
 
 #endif // EFFECTMONSTERCARD_H
