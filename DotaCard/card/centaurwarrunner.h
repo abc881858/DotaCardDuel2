@@ -23,10 +23,12 @@ class CentaurWarrunner : public EffectMonsterCard
     Q_OBJECT
 public:
     Q_INVOKABLE CentaurWarrunner();
-    virtual int testEffectFromFieldyard();
+    virtual bool testEffectFromFieldyard();
     virtual void standby();
-private:
-    bool oneTurnEffect2;
+    virtual void active();
+
+    bool canEffect1;
+    bool canEffect2;
 };
 
 #endif // CENTAURWARRUNNER_H

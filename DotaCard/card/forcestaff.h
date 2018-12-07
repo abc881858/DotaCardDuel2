@@ -23,6 +23,8 @@ public:
     Q_INVOKABLE ForceStaff();
     virtual void standby();
     virtual void active();
+    virtual bool testEffectFromFieldground();
+    bool canEffect;
 };
 
 #endif // FORCESTAFF_H

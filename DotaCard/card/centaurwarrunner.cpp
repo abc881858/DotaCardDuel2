@@ -1,6 +1,7 @@
 ﻿#include "centaurwarrunner.h"
 #include "dota.h"
 #include <QMessageBox>
+#include <QDebug>
 
 CentaurWarrunner::CentaurWarrunner()
 {
@@ -17,7 +18,8 @@ CentaurWarrunner::CentaurWarrunner()
     currentATK = ATK;
     currentDEF = DEF;
 
-    oneTurnEffect2 = true;
+    canEffect1 = true;
+    canEffect2 = true;
 }
 
 void CentaurWarrunner::standby()
@@ -26,21 +28,24 @@ void CentaurWarrunner::standby()
     Card::standby();
 
     //准备阶段自动做的事, 每回合一次在这初始化
-    oneTurnEffect2 = true;
+    canEffect1 = true;
+    canEffect2 = true;
 }
 
-int CentaurWarrunner::testEffectFromFieldyard()
+bool CentaurWarrunner::testEffectFromFieldyard()
 {
     if(area != Card::Fieldyard_Area)
     {
-        return 0;
+        return false;
     }
 
-    int result = 0;
     if (qDota->phase == Dota::EnemyBattle_Phase) //在对方战斗流程连锁
     {
-//        qDota->whoIsDoing 能进 test 的流程，说明一定是 我在行动
-        result += 1;
+        if(canEffect1)
+        {
+//            canEffect1 = false;
+            return true;
+        }
     }
     if (qDota->phase == Dota::Main1_Phase ||
             qDota->phase == Dota::Main2_Phase ||
@@ -48,14 +53,16 @@ int CentaurWarrunner::testEffectFromFieldyard()
             qDota->phase == Dota::EnemyBattle_Phase ||
             qDota->phase == Dota::EnemyMain2_Phase)
     {
-        if (oneTurnEffect2) //一回合一次
+        if (canEffect2) //一回合一次
         {
-            //一般是M1、M2的request可能为Positive，对方的M1、BP、M2可能为Negative
-            if (area == Card::Fieldyard_Area)
-            {
-                result += 2;
-            }
+//            canEffect2 = false;
+            return true;
         }
     }
-    return result;
+    return false;
+}
+
+void CentaurWarrunner::active()
+{
+    qDebug() << "active CentaurWarrunner";
 }
