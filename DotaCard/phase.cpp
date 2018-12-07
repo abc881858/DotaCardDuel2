@@ -38,7 +38,7 @@ void Phase::timerEvent(QTimerEvent *)
 
 void Phase::effect()
 {
-    pixmap=QPixmap(QString("phase/%1_%2.bmp").arg(name).arg(turn));
+    pixmap=QPixmap(QString("phase/%1_%2.bmp").arg(name, turn));
     id = startTimer(10);
 }
 
