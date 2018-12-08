@@ -30,6 +30,18 @@ Pixmap::Pixmap(const QString &filename, bool center_as_origin)
     animation->setDuration(300);
     animation->setEasingCurve(QEasingCurve::Linear);
     connect(animation, &QPropertyAnimation::finished, this, &Pixmap::finishedSwordAnimation);
+
+    fadeEquip = new QPropertyAnimation(this,"opacity");
+    fadeEquip->setStartValue(0);
+    fadeEquip->setKeyValueAt(0.5,0.7);
+    fadeEquip->setEndValue(0);
+    fadeEquip->setDuration(1000);
+    fadeEquip->setLoopCount(-1);
+}
+
+Pixmap::Pixmap(QPixmap q)
+{
+    this->pixmap=q;
 }
 
 QRectF Pixmap::boundingRect() const
@@ -117,4 +129,58 @@ void Pixmap::swordAnimation(QPointF p1, QPointF p2)
     animation->setStartValue(p1);
     animation->setEndValue(p2);
     animation->start();
+}
+
+void Pixmap::doEquipAnimation(QPointF positionFrom, QPointF positionTo)
+{
+    QPropertyAnimation *fade1 = new QPropertyAnimation(this,"opacity");
+    fade1->setStartValue(1);
+    fade1->setEndValue(0);
+    fade1->setDuration(1000);
+    fade1->setEasingCurve(QEasingCurve::InCirc);
+
+    QPropertyAnimation *fade2 = new QPropertyAnimation(this,"scale");
+    fade2->setStartValue(1);
+    fade2->setKeyValueAt(0.5,2);
+    fade2->setEndValue(1);
+    fade2->setDuration(1000);
+
+    QPropertyAnimation *fade3 = new QPropertyAnimation(this,"pos");
+    fade3->setStartValue(positionFrom);
+    fade3->setEndValue(positionTo);
+    fade3->setDuration(1000);
+    fade3->setEasingCurve(QEasingCurve::InBack);
+
+    QParallelAnimationGroup *group = new QParallelAnimationGroup;//并行动画
+    group->addAnimation(fade1);
+    group->addAnimation(fade2);
+    group->addAnimation(fade3);
+    group->start(QAbstractAnimation::DeleteWhenStopped);
+
+    connect(group, &QParallelAnimationGroup::finished, this, &Pixmap::finishedEquipAnimation);
+}
+
+void Pixmap::doEquipHoverAnimation()
+{
+    fadeEquip->start();
+}
+
+void Pixmap::doneEquipHoverAnimation()
+{
+    fadeEquip->stop();
+}
+
+void Pixmap::hoverEnterEvent(QGraphicsSceneHoverEvent*)
+{
+    emit hoverEnter();
+}
+
+void Pixmap::hoverLeaveEvent(QGraphicsSceneHoverEvent *)
+{
+    emit hoverLeave();
+}
+
+void Pixmap::mousePressEvent(QGraphicsSceneMouseEvent *)
+{
+    emit clicked();
 }

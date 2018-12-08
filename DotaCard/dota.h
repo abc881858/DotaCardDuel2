@@ -83,8 +83,6 @@ public:
     bool firstTurn;
     bool oneTurnOneNormalSummon;
 
-//    QList<Card*> allCards;
-//    QList<Card*> allEnemyCards;
     QList<Card*> deckCards;
     QList<Card*> handCards;
     Card* fieldyardCards[5];
@@ -180,6 +178,12 @@ signals:
     void showAttackAnimation(int, int);
     void showEnemyAttackAnimation(int, int);
     void showChainAnimation(int, int);
+    void showEquipAnimation(int, int);
+    void showEquipHoverAnimation(int, int);
+    void hideEquipAnimation(int, int);
+    void hideEquipHoverAnimation(int, int);
+
+    void showInfoDialog();
 
 public:
     void setupConnect(QList<Card *> list, bool enemy);
@@ -202,6 +206,11 @@ public:
     void attack(Card *card);
     void beAttacked();
     void beEquiped();
+    void effectEquipSpellCard();
+    void beHoverFieldyard(Card *card);
+    void beHoverFieldground(Card *card);
+    void beLeaveFieldyard(Card *card);
+    void beLeaveFieldground(Card *card);
 };
 
 #endif // DOTA_H

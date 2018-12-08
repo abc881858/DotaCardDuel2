@@ -94,6 +94,16 @@ void CardItem::hoverEnterEvent(QGraphicsSceneHoverEvent *)
         setY(-71+35);
     }
 
+    if(card->area == Card::Fieldyard_Area)
+    {
+        qDota->beHoverFieldyard(card);
+    }
+
+    if(card->area == Card::Fieldground_Area)
+    {
+        qDota->beHoverFieldground(card);
+    }
+
     if(!qDota->whoIsDoing) //对方行动
     {
         return;
@@ -182,6 +192,16 @@ void CardItem::hoverLeaveEvent(QGraphicsSceneHoverEvent *)
     else if(card->area == Card::EnemyHand_Area)
     {
         setY(-71);
+    }
+
+    if(card->area == Card::Fieldyard_Area)
+    {
+        qDota->beLeaveFieldyard(card);
+    }
+
+    if(card->area == Card::Fieldground_Area)
+    {
+        qDota->beLeaveFieldground(card);
     }
 
     clearFinger();

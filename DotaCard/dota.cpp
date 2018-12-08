@@ -320,12 +320,12 @@ void Dota::activeSpellCard(Card *card)
     if(card->getKind() == Card::EquipSpell_Kind)
     {
         //先到场地，发光，弹出对话框，点确定，选择卡，装备卡动画
-        if(QMessageBox::information(nullptr, "title", "please select one monster to equip.", QMessageBox::Yes))
-        {
-            qDebug() << "selectOneMonsterToEquip";
-        }
+        qDebug() << "selectOneMonsterToEquip";
+        whoIsDoing = false;
+
+        emit showInfoDialog();
+
         equipSpellCard = card;
-        setSearchReason(Dota::BeEquiped_Reason);
     }
 }
 
@@ -333,14 +333,67 @@ void Dota::beEquiped()
 {
     //动画
     //chain's monster == pressCard
-    //qNet equip
+
+    int from = getCardIndex(equipSpellCard);
+    int to = getCardIndex(equipMonsterCard);
+//    int area = Card::Fieldground_Area;
+
+    emit showEquipAnimation(from, to);
+
     equipSpellCard->equipMonsterCard = equipMonsterCard;
     equipMonsterCard->equipSpellCards << equipSpellCard;
 
-    qNet->sendBeEquiped(getCardIndex(equipSpellCard), getCardIndex(equipMonsterCard));
+    qNet->sendBeEquiped(from, to);
+}
 
+void Dota::effectEquipSpellCard()
+{
+    //TODO equipSpellCard 此刻也应该闪装备卡
+    equipSpellCard->activeAfterEquiped();
     equipSpellCard = nullptr;
     equipMonsterCard = nullptr;
+}
+
+void Dota::beHoverFieldyard(Card *card)
+{
+    if(card->equipSpellCards.isEmpty())
+    {
+        return;
+    }
+    for(Card* groundCard : card->equipSpellCards)
+    {
+        emit showEquipHoverAnimation(getCardIndex(groundCard), groundCard->getArea());
+    }
+}
+
+void Dota::beHoverFieldground(Card *card)
+{
+    if(card->equipMonsterCard == nullptr)
+    {
+        return;
+    }
+    emit showEquipHoverAnimation(getCardIndex(card->equipMonsterCard), card->equipMonsterCard->getArea());
+}
+
+void Dota::beLeaveFieldyard(Card *card)
+{
+    if(card->equipSpellCards.isEmpty())
+    {
+        return;
+    }
+    for(Card* groundCard : card->equipSpellCards)
+    {
+        emit hideEquipHoverAnimation(getCardIndex(groundCard), groundCard->getArea());
+    }
+}
+
+void Dota::beLeaveFieldground(Card *card)
+{
+    if(card->equipMonsterCard == nullptr)
+    {
+        return;
+    }
+    emit hideEquipHoverAnimation(getCardIndex(card->equipMonsterCard), card->equipMonsterCard->getArea());
 }
 
 void Dota::response_enemyBeEquiped(QJsonObject json)
@@ -579,7 +632,7 @@ void Dota::response_finishChain()
 
         if(attackDestinationCard->getStand())
         {
-            if(attackSourceCard->getATK() <= attackDestinationCard->getATK())
+            if(attackSourceCard->getCurrentATK() <= attackDestinationCard->getCurrentATK())
             {
                 CardMoveStruct move;
                 move.areaFrom = Card::Fieldyard_Area;
@@ -609,7 +662,7 @@ void Dota::response_finishChain()
 
         if(attackSourceCard->getStand())
         {
-            if(attackDestinationCard->getATK() <= attackSourceCard->getATK())
+            if(attackDestinationCard->getCurrentATK() <= attackSourceCard->getCurrentATK())
             {
                 CardMoveStruct move;
                 move.areaFrom = Card::EnemyFieldyard_Area;
@@ -1002,6 +1055,10 @@ void Dota::response_enemyMain1Phase()
 
 void Dota::tryGoBattlePhase()
 {
+    if(!whoIsDoing)
+    {
+        return;
+    }
     if(isSearchingTargetCard())
     {
         return;
@@ -1051,6 +1108,10 @@ void Dota::response_enemyBattlePhase()
 
 void Dota::tryGoMain2Phase()
 {
+    if(!whoIsDoing)
+    {
+        return;
+    }
     if(isSearchingTargetCard())
     {
         return;
@@ -1080,6 +1141,10 @@ void Dota::response_enemyMain2Phase()
 
 void Dota::tryGoEndPhase()
 {
+    if(!whoIsDoing)
+    {
+        return;
+    }
     if(isSearchingTargetCard())
     {
         return;

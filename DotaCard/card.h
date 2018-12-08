@@ -93,6 +93,7 @@ public:
     virtual bool testAttack();
 
     virtual void active();
+    virtual void activeAfterEquiped();
 
     int getISDN() const;
     KindFlag getKind() const;
@@ -122,8 +123,11 @@ public:
     bool getStand() const;
     void setStand(bool value);
 
-    int getATK() const;
-    void setATK(int value);
+    int getCurrentATK() const;
+    void setCurrentATK(int value);
+
+    int getCurrentDEF() const;
+    void setCurrentDEF(int value);
 
     bool canAttack;
 

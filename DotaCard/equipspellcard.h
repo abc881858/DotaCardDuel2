@@ -17,8 +17,7 @@ public:
     virtual bool testEffectFromFieldground();
     virtual void standby();
     virtual void active();
-private:
-    bool oneTurnEffect3;
+    virtual void activeAfterEquiped();
 };
 
 #endif // EQUIPSPELLCARD_H

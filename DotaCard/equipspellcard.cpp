@@ -6,8 +6,6 @@
 EquipSpellCard::EquipSpellCard()
 {
     kind = Card::EquipSpell_Kind;
-
-    oneTurnEffect3 = true;
 }
 
 bool EquipSpellCard::testEffectFromHand()
@@ -40,10 +38,14 @@ bool EquipSpellCard::testEffectFromFieldground()
 void EquipSpellCard::standby()
 {
     //准备阶段自动做的事, 每回合一次在这初始化
-    oneTurnEffect3 = true;
 }
 
 void EquipSpellCard::active()
+{
+
+}
+
+void EquipSpellCard::activeAfterEquiped()
 {
 
 }

@@ -20,6 +20,8 @@ public:
     explicit Room(QObject* parent = nullptr);
 
     Pixmap *sword[10];
+    Pixmap *equipFieldyard[10];
+    Pixmap *equipFieldground[10];
     Pixmap *item_shine;
 //    Pixmap *item_enemy_shine;
 
@@ -71,6 +73,7 @@ public:
     void hideSwords();
 
     CardItem* getCardItemFromIndex(int targetIndex, int areaIndex);
+
 protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event);
     void mousePressEvent(QGraphicsSceneMouseEvent *event);
@@ -95,6 +98,10 @@ public slots:
     void showAttackAnimation(int sourceIndex, int targetIndex);
     void showChainAnimation(int targetIndex, int areaIndex);
     void showEnemyAttackAnimation(int sourceIndex, int targetIndex);
+    void showEquipAnimation(int from, int to);
+    void showEquipHoverAnimation(int targetIndex, int areaIndex);
+    void hideEquipHoverAnimation(int targetIndex, int areaIndex);
+    void showInfoDialog();
 };
 
 #endif // ROOM_H

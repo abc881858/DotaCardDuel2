@@ -6,6 +6,7 @@
 #include <QFile>
 #include <QTextStream>
 #include <QGraphicsSceneMouseEvent>
+#include "dialog/infodialog.h"
 
 #define LeftPos QPointF(0,0)
 #define RightPos QPointF(230,0)
@@ -53,9 +54,11 @@ Room::Room(QObject* parent)
     connect(qDota, &Dota::showAttackAnimation, this, &Room::showAttackAnimation);
     connect(qDota, &Dota::showEnemyAttackAnimation, this, &Room::showEnemyAttackAnimation);
     connect(qDota, &Dota::showChainAnimation, this, &Room::showChainAnimation);
+    connect(qDota, &Dota::showEquipAnimation, this, &Room::showEquipAnimation);
+    connect(qDota, &Dota::showEquipHoverAnimation, this, &Room::showEquipHoverAnimation);
+    connect(qDota, &Dota::hideEquipHoverAnimation, this, &Room::hideEquipHoverAnimation);
 
-
-
+    connect(qDota, &Dota::showInfoDialog, this, &Room::showInfoDialog);
 
     leftarea = new Pixmap(":/backdrop/left2");
     addItem(leftarea);
@@ -188,6 +191,18 @@ Room::Room(QObject* parent)
             sword[i]->setPos(QPointF(80 * i, 0) + FieldyardPos);
             sword[i]->setRotation(0);
         });
+
+        equipFieldyard[i] = new Pixmap(":/png/zhuangbeika");
+        equipFieldyard[i]->setPos(QPointF(80 * i, 0) + FieldyardPos + QPoint(0,12));
+        equipFieldyard[i]->setZValue(4);
+        addItem(equipFieldyard[i]);
+        equipFieldyard[i]->hide();
+
+        equipFieldground[i] = new Pixmap(":/png/zhuangbeika");
+        equipFieldground[i]->setPos(QPointF(80 * i, 0) + FieldgroundPos + QPoint(0,12));
+        equipFieldground[i]->setZValue(4);
+        addItem(equipFieldground[i]);
+        equipFieldground[i]->hide();
     }
 
     for (int j = 5; j < 10; j++)
@@ -199,12 +214,23 @@ Room::Room(QObject* parent)
         addItem(sword[j]);
         sword[j]->hide();
 
-
         connect(sword[j], &Pixmap::finishedSwordAnimation, [=]() {
             sword[j]->hide();
             sword[j]->setPos(QPointF(320 - 80 * (j - 5), 0) + EnemyFieldyardPos);
             sword[j]->setRotation(180);
         });
+
+        equipFieldyard[j] = new Pixmap(":/png/zhuangbeika");
+        equipFieldyard[j]->setPos(QPointF(320 - 80 * (j - 5), 0) + EnemyFieldyardPos + QPoint(0,12));
+        equipFieldyard[j]->setZValue(4);
+        addItem(equipFieldyard[j]);
+        equipFieldyard[j]->hide();
+
+        equipFieldground[j] = new Pixmap(":/png/zhuangbeika");
+        equipFieldground[j]->setPos(QPointF(320 - 80 * (j - 5), 0) + EnemyFieldgroundPos + QPoint(0,12));
+        equipFieldground[j]->setZValue(4);
+        addItem(equipFieldground[j]);
+        equipFieldground[j]->hide();
     }
 
 //    for (int k = 0; k < 5; k++)
@@ -301,11 +327,66 @@ CardItem *Room::getCardItemFromIndex(int targetIndex, int areaIndex)
     }
 }
 
+void Room::showEquipAnimation(int from, int to)
+{
+    CardItem *itemFrom = getCardItemFromIndex(from, 4);
+    CardItem *itemTo = getCardItemFromIndex(to, 3);
+    Pixmap *pixmapItem = new Pixmap(itemFrom->pixmap());
+    QPointF positionFrom = itemFrom->pos();
+    QPointF positionTo = itemTo->pos();
+    pixmapItem->setPos(positionFrom);
+    pixmapItem->setZValue(66);
+    addItem(pixmapItem);
+    pixmapItem->doEquipAnimation(positionFrom, positionTo);
+    connect(pixmapItem, &Pixmap::finishedEquipAnimation, [=](){
+        pixmapItem->deleteLater();
+        qDota->effectEquipSpellCard();
+    });
+}
+
+void Room::showEquipHoverAnimation(int targetIndex, int areaIndex)
+{
+    if(areaIndex==3)
+    {
+        equipFieldyard[targetIndex]->show();
+        equipFieldyard[targetIndex]->doEquipHoverAnimation();
+    }
+    if(areaIndex==4)
+    {
+        equipFieldground[targetIndex]->show();
+        equipFieldground[targetIndex]->doEquipHoverAnimation();
+    }
+}
+
+void Room::hideEquipHoverAnimation(int targetIndex, int areaIndex)
+{
+    if(areaIndex==3)
+    {
+        equipFieldyard[targetIndex]->hide();
+        equipFieldyard[targetIndex]->doneEquipHoverAnimation();
+    }
+    if(areaIndex==4)
+    {
+        equipFieldground[targetIndex]->hide();
+        equipFieldground[targetIndex]->doneEquipHoverAnimation();
+    }
+}
+
 void Room::showChainAnimation(int targetIndex, int areaIndex)
 {
     CardItem *item = getCardItemFromIndex(targetIndex, areaIndex);
     item_shine->setPos(item->pos() - QPoint(12,-1));
     item_shine->doShineAnimation();
+}
+
+void Room::showInfoDialog()
+{
+    auto dialog = new InfoDialog(":/png/dialog");
+    dialog->setPos(292,-160);
+    addItem(dialog);
+    dialog->setZValue(7);
+    dialog->show();
+    dialog->showAnimation();
 }
 
 void Room::hoverEnter()
@@ -536,7 +617,7 @@ void Room::goStartGame()
     juedoukaishi->actionAnimation();
 }
 
-void Room::goDrawPhase()
+void Room::goDrawPhase() // TODO: 好像没人使用这个函数
 {
 //    if(qDota->firstTurn)
 //    {

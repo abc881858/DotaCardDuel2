@@ -185,14 +185,29 @@ void Card::active()
 
 }
 
-int Card::getATK() const
+void Card::activeAfterEquiped()
 {
-    return ATK;
+    //
 }
 
-void Card::setATK(int value)
+int Card::getCurrentATK() const
 {
-    ATK = value;
+    return currentATK;
+}
+
+void Card::setCurrentATK(int value)
+{
+    currentATK = value;
+}
+
+int Card::getCurrentDEF() const
+{
+    return currentDEF;
+}
+
+void Card::setCurrentDEF(int value)
+{
+    currentDEF = value;
 }
 
 void Card::enemyActiveCard()
