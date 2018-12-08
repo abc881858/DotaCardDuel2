@@ -14,12 +14,7 @@ HelmOfTheDominator::HelmOfTheDominator()
 void HelmOfTheDominator::standby()
 {
     EquipSpellCard::standby();
-}
-
-void HelmOfTheDominator::active()
-{
-    qDebug() << "active HelmOfTheDominator";
-    canEffect = false;
+    canEffect = true;
 }
 
 bool HelmOfTheDominator::testEffectFromFieldground()
@@ -40,4 +35,15 @@ bool HelmOfTheDominator::testEffectFromFieldground()
         }
     }
     return false;
+}
+
+void HelmOfTheDominator::active()
+{
+    qDebug() << "active HelmOfTheDominator";
+    canEffect = false;
+}
+
+void HelmOfTheDominator::activeAfterEquiped()
+{
+    equipMonsterCard->setCurrentDEF(equipMonsterCard->getCurrentDEF()+300);
 }
