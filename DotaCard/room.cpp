@@ -6,7 +6,6 @@
 #include <QFile>
 #include <QTextStream>
 #include <QGraphicsSceneMouseEvent>
-#include "dialog/infodialog.h"
 
 #define LeftPos QPointF(0,0)
 #define RightPos QPointF(230,0)
@@ -21,19 +20,6 @@
 #define EnemyFieldyardPos QPointF(91+256, 213)
 #define EnemyFieldgroundPos QPointF(91+256, 105)
 #define EnemyGraveyardPos QPointF(15+256, 200)
-
-//#define NoZValue 0
-//#define DeckZValue 1
-#define HandZValue 1
-//#define FieldyardZValue 3
-//#define SwordZValue 3.1
-//#define FieldgroundZValue 4
-//#define GraveyardZValue 5
-//#define EnemyDeckZValue 6
-#define EnemyHandZValue 1
-//#define EnemyFieldyardZValue 8
-//#define EnemyFieldgroundZValue 9
-//#define EnemyGraveyardZValue 10
 
 Room::Room(QObject* parent)
     : QGraphicsScene(parent)
@@ -269,6 +255,11 @@ Room::Room(QObject* parent)
         item_shine->setScale(0);
         item_shine->setOpacity(0);
     });
+
+    dialog = new InfoDialog(":/png/dialog");
+    addItem(dialog);
+    dialog->setZValue(7);
+    dialog->hide();
 }
 
 void Room::showAttackAnimation(int sourceIndex, int targetIndex)
@@ -377,14 +368,13 @@ void Room::showChainAnimation(int targetIndex, int areaIndex)
     CardItem *item = getCardItemFromIndex(targetIndex, areaIndex);
     item_shine->setPos(item->pos() - QPoint(12,-1));
     item_shine->doShineAnimation();
+    connect(item_shine, &Pixmap::finishedDoShineAnimation, [=](){
+        qDota->afterActiveSpellCard(targetIndex, areaIndex);
+    });
 }
 
 void Room::showInfoDialog()
 {
-    auto dialog = new InfoDialog(":/png/dialog");
-    dialog->setPos(292,-160);
-    addItem(dialog);
-    dialog->setZValue(7);
     dialog->show();
     dialog->showAnimation();
 }
@@ -546,7 +536,7 @@ void Room::adjustHandItems()
     int card_skip = (n > 5) ? (412 / (n - 1)) : 102;
     for (int i = 0; i < n; i++)
     {
-        handItems[i]->setZValue(HandZValue + 0.1 * i);
+        handItems[i]->setZValue(1 + 0.1 * i);
         handItems[i]->setPos(HandPos + QPointF(card_skip * i, 0));
     }
 }
@@ -559,7 +549,7 @@ void Room::adjustEnemyHandItems()
     int card_skip = (n > 5) ? (412 / (n - 1)) : 102;
     for (int i = 0; i < n; i++)
     {
-        enemyHandItems[i]->setZValue(EnemyHandZValue + 0.1 * i);
+        enemyHandItems[i]->setZValue(1 + 0.1 * i);
         enemyHandItems[i]->setPos(EnemyHandPos + QPointF(408 - card_skip * i, 0));
     }
 }

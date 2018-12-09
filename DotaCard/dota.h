@@ -211,6 +211,7 @@ public:
     void beHoverFieldground(Card *card);
     void beLeaveFieldyard(Card *card);
     void beLeaveFieldground(Card *card);
+    void afterActiveSpellCard(int targetIndex, int areaIndex);
 };
 
 #endif // DOTA_H

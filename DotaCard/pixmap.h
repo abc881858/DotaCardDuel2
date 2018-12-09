@@ -21,9 +21,6 @@ protected:
     virtual QRectF boundingRect() const;
     void timerEvent(QTimerEvent*);
 
-    void hoverEnterEvent(QGraphicsSceneHoverEvent *);
-    void hoverLeaveEvent(QGraphicsSceneHoverEvent *);
-    void mousePressEvent(QGraphicsSceneMouseEvent *);
 public:
     void setPixmap(QString filename);
     void doShineAnimation();
@@ -49,10 +46,6 @@ signals:
     void finishedActionAnimation();
     void finishedSwordAnimation();
     void finishedEquipAnimation();
-
-    void hoverEnter();
-    void hoverLeave();
-    void clicked();
 };
 
 #endif // PIXMAP_H

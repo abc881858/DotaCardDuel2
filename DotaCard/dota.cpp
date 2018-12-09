@@ -314,18 +314,26 @@ void Dota::activeSpellCard(Card *card)
     move.reason = CardMoveStruct::REASON_activeSpellCard;
     moveCard(move);
 
+    whoIsDoing = false;
+
     emit showChainAnimation(move.indexTo, Card::Fieldground_Area);
 //    qNet->sendChained(move.indexTo, Card::Fieldground_Area); // 考虑下提前发送Net连锁动画
+}
 
-    if(card->getKind() == Card::EquipSpell_Kind)
+void Dota::afterActiveSpellCard(int targetIndex, int areaIndex)
+{
+    if(areaIndex == 4)
     {
-        //先到场地，发光，弹出对话框，点确定，选择卡，装备卡动画
-        qDebug() << "selectOneMonsterToEquip";
-        whoIsDoing = false;
+        Card* card = fieldgroundCards[targetIndex];
+        if(card->getKind() == Card::EquipSpell_Kind)
+        {
+            //先到场地，发光，弹出对话框，点确定，选择卡，装备卡动画
+            qDebug() << "selectOneMonsterToEquip";
 
-        emit showInfoDialog();
+            emit showInfoDialog();
 
-        equipSpellCard = card;
+            equipSpellCard = card;
+        }
     }
 }
 
@@ -614,6 +622,8 @@ void Dota::response_moveCard(QJsonObject json)
 //不连锁之后，发动卡牌效果一方执行连锁。
 void Dota::response_finishChain()
 {
+    whoIsDoing = true;
+
     if(chainStack.isEmpty())
     {
         return;
@@ -693,7 +703,6 @@ void Dota::response_finishChain()
 
         attackSourceCard = nullptr;
         attackDestinationCard = nullptr;
-        whoIsDoing = true;
     }
 
     qNet->sendFinishChain(); //考虑下 最后一下可以不发

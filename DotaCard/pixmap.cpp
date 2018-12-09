@@ -169,18 +169,3 @@ void Pixmap::doneEquipHoverAnimation()
 {
     fadeEquip->stop();
 }
-
-void Pixmap::hoverEnterEvent(QGraphicsSceneHoverEvent*)
-{
-    emit hoverEnter();
-}
-
-void Pixmap::hoverLeaveEvent(QGraphicsSceneHoverEvent *)
-{
-    emit hoverLeave();
-}
-
-void Pixmap::mousePressEvent(QGraphicsSceneMouseEvent *)
-{
-    emit clicked();
-}

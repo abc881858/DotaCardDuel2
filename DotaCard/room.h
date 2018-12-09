@@ -12,6 +12,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include "structs.h"
+#include "dialog/infodialog.h"
 
 class Room : public QGraphicsScene
 {
@@ -24,6 +25,7 @@ public:
     Pixmap *equipFieldground[10];
     Pixmap *item_shine;
 //    Pixmap *item_enemy_shine;
+    InfoDialog *dialog;
 
 //    QGraphicsTextItem word[10];
 //    GraphicsPixmapObject* duifangxingdong;
