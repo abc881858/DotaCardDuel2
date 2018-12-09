@@ -15,6 +15,7 @@ void HelmOfTheDominator::standby()
 {
     EquipSpellCard::standby();
     canEffect = true;
+    didEffect = false;
 }
 
 bool HelmOfTheDominator::testEffectFromFieldground()
@@ -41,6 +42,15 @@ void HelmOfTheDominator::active()
 {
     qDebug() << "active HelmOfTheDominator";
     canEffect = false;
+    if(didEffect)
+    {
+        //召唤怪兽破坏
+    }
+    else
+    {
+        //
+        didEffect = true;
+    }
 }
 
 void HelmOfTheDominator::activeAfterEquiped()

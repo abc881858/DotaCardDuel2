@@ -28,6 +28,7 @@ public:
     virtual void active();
     virtual bool testEffectFromFieldground();
     bool canEffect;
+    bool didEffect;
     virtual void activeAfterEquiped();
 };
 
