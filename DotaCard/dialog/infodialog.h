@@ -5,6 +5,7 @@
 #include <QPixmap>
 #include <QPainter>
 #include "pixmap.h"
+#include "dialog/button.h"
 
 class InfoDialog : public QGraphicsObject
 {
@@ -12,7 +13,7 @@ class InfoDialog : public QGraphicsObject
 public:
     InfoDialog(const QString &filename);
     QPixmap pixmap;
-    Pixmap *button;
+    Button *button;
     void showAnimation();
 protected:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *);

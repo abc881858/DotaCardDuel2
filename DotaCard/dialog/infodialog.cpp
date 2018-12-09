@@ -8,23 +8,23 @@ InfoDialog::InfoDialog(const QString &filename)
     setAcceptHoverEvents(true);
     setFlag(QGraphicsItem::ItemIsMovable);
 
-    button = new Pixmap(":/png/disable");
+    button = new Button(":/png/disable");
     button->setAcceptHoverEvents(true);
     button->setPos(151,75);
     button->setParentItem(this);
     button->setZValue(8);
     button->show();
 
-    connect(button,&Pixmap::hoverEnter, [=](){
+    connect(button,&Button::hoverEnter, [=](){
         button->setPixmap(":/png/enable");
         button->update();
     });
-    connect(button,&Pixmap::hoverLeave, [=](){
+    connect(button,&Button::hoverLeave, [=](){
         button->setPixmap(":/png/disable");
         button->update();
     });
 
-    connect(button,&Pixmap::clicked,[=](){
+    connect(button,&Button::clicked,[=](){
         QPropertyAnimation *action2 = new QPropertyAnimation(this,"pos");
         action2->setStartValue(QPointF(292,226));
         action2->setEndValue(QPointF(292,-160));
@@ -33,7 +33,6 @@ InfoDialog::InfoDialog(const QString &filename)
         action2->start(QAbstractAnimation::DeleteWhenStopped);
         connect(action2,&QPropertyAnimation::finished, [=](){
             this->hide();
-            this->deleteLater();
             qDota->whoIsDoing = true;
             qDota->setSearchReason(Dota::BeEquiped_Reason);
         });
@@ -54,8 +53,9 @@ void InfoDialog::showAnimation()
 {
     qDebug() << "showAnimation";
     QPropertyAnimation *action = new QPropertyAnimation(this,"pos");
+    action->setStartValue(QPointF(292,-160));
     action->setEndValue(QPointF(292,226));
     action->setDuration(600);
-    action->setEasingCurve(QEasingCurve::InQuad);
+    action->setEasingCurve(QEasingCurve::OutSine);
     action->start(QAbstractAnimation::DeleteWhenStopped);
 }
