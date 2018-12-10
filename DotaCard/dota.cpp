@@ -1,4 +1,4 @@
-﻿#include "dota.h"
+#include "dota.h"
 #include "engine.h"
 #include "net.h"
 #include <QMessageBox>
@@ -667,12 +667,41 @@ void Dota::response_finishChain()
                         }
                     }
                 }
+                //animation shake fieldyard card
+                emit addLP(attackSourceCard->getCurrentATK() - attackDestinationCard->getCurrentATK());
+            }
+            if(attackSourceCard->getCurrentATK() >= attackDestinationCard->getCurrentATK())
+            {
+                CardMoveStruct move;
+                move.areaFrom = Card::EnemyFieldyard_Area;
+                move.areaTo = Card::EnemyGraveyard_Area;
+                move.indexFrom = getCardIndex(attackDestinationCard);
+                move.indexTo = -1;
+                move.reason = CardMoveStruct::REASON_destroyEnemyCard;
+                moveCard(move);
+                if(attackDestinationCard->getKind()==Card::EffectMonster_Kind && !attackDestinationCard->equipSpellCards.isEmpty())
+                {
+                    for(Card* spell : attackDestinationCard->equipSpellCards)
+                    {
+                        if(spell->getArea() == Card::EnemyFieldground_Area)
+                        {
+                            CardMoveStruct move;
+                            move.areaFrom = Card::EnemyFieldground_Area;
+                            move.areaTo = Card::EnemyGraveyard_Area;
+                            move.indexFrom = getCardIndex(spell);
+                            move.indexTo = -1;
+                            move.reason = CardMoveStruct::REASON_destroyEnemyCard;
+                            moveCard(move);
+                        }
+                    }
+                }
+                //animation shake enemy fieldyard card
+                emit addEnemyLP(attackDestinationCard->getCurrentATK() - attackSourceCard->getCurrentATK());
             }
         }
-
-        if(attackSourceCard->getStand())
+        else
         {
-            if(attackDestinationCard->getCurrentATK() <= attackSourceCard->getCurrentATK())
+            if(attackSourceCard->getCurrentATK() > attackDestinationCard->getCurrentDEF())
             {
                 CardMoveStruct move;
                 move.areaFrom = Card::EnemyFieldyard_Area;
@@ -698,7 +727,11 @@ void Dota::response_finishChain()
                     }
                 }
             }
-
+            else
+            {
+                //animation shake fieldyard card
+                emit addLP(attackSourceCard->getCurrentATK() - attackDestinationCard->getCurrentDEF());
+            }
         }
 
         attackSourceCard = nullptr;
