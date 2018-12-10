@@ -1,4 +1,4 @@
-﻿#ifndef DOTA_H
+#ifndef DOTA_H
 #define DOTA_H
 
 //给单例 Dota 设置一个宏，方便使用
@@ -153,13 +153,10 @@ public slots:
     void response_enemyBattlePhase();
     void response_enemyMain2Phase();
     void response_enemyEndPhase();
-
     void response_enemyBeEquiped(QJsonObject json);
     void response_enemyBeAttack(QJsonObject json);
     void response_finishChain();
-
     void response_enemyChained(QJsonObject json);
-
     void response_moveCard(QJsonObject json);
 
 signals:
@@ -171,10 +168,8 @@ signals:
     void goStartGame();
     void goStandbyPhase();
     void goMain1Phase();
-
     void createCardItem(int);
     void createEnemyCardItem(int);
-
     void showAttackAnimation(int, int);
     void showEnemyAttackAnimation(int, int);
     void showChainAnimation(int, int);
@@ -182,8 +177,9 @@ signals:
     void showEquipHoverAnimation(int, int);
     void hideEquipAnimation(int, int);
     void hideEquipHoverAnimation(int, int);
-
     void showInfoDialog();
+    void addLP(int);
+    void addEnemyLP(int);
 
 public:
     void setupConnect(QList<Card *> list, bool enemy);
