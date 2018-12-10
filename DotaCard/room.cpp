@@ -45,6 +45,7 @@ Room::Room(QObject* parent)
     connect(qDota, &Dota::hideEquipHoverAnimation, this, &Room::hideEquipHoverAnimation);
 
     connect(qDota, &Dota::showInfoDialog, this, &Room::showInfoDialog);
+    connect(qDota, &Dota::showWarningDialog, this, &Room::showWarningDialog);
 
     leftarea = new Pixmap(":/backdrop/left2");
     addItem(leftarea);
@@ -260,6 +261,26 @@ Room::Room(QObject* parent)
     addItem(dialog);
     dialog->setZValue(7);
     dialog->hide();
+    connect(dialog, &InfoDialog::clicked_ok, [=](){
+        dialog->hide();
+        qDota->setSearchReason(Dota::BeEquiped_Reason);
+    });
+
+    dialog2 = new WarningDialog(":/png/teshuzhaohuan");
+    addItem(dialog2);
+    dialog2->setZValue(7);
+    dialog2->hide();
+    connect(dialog2, &WarningDialog::clicked_yes, [=](){
+        dialog2->hide();
+        qDota->whoIsDoing = true;
+        qDota->currentActiveCard->doActive();
+        //show scroll area
+    });
+    connect(dialog2, &WarningDialog::clicked_no, [=](){
+        dialog2->hide();
+        qDota->whoIsDoing = true;
+        qDota->currentActiveCard->unActive();
+    });
 }
 
 void Room::showAttackAnimation(int sourceIndex, int targetIndex)
@@ -377,6 +398,12 @@ void Room::showInfoDialog()
 {
     dialog->show();
     dialog->showAnimation();
+}
+
+void Room::showWarningDialog()
+{
+    dialog2->show();
+    dialog2->showAnimation();
 }
 
 void Room::hoverEnter()

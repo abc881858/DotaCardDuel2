@@ -16,8 +16,10 @@ public:
     virtual bool testEffectFromHand();
     virtual bool testEffectFromFieldground();
     virtual void standby();
-    virtual void active();
-    virtual void activeAfterEquiped();
+    virtual void active(){}
+    virtual void activeAfterEquiped(){}
+    virtual void unActive(){}
+    virtual void doActive(){}
 };
 
 #endif // EQUIPSPELLCARD_H

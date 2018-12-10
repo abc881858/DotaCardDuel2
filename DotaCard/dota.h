@@ -1,4 +1,4 @@
-#ifndef DOTA_H
+﻿#ifndef DOTA_H
 #define DOTA_H
 
 //给单例 Dota 设置一个宏，方便使用
@@ -102,6 +102,7 @@ public:
     Card* hoverCard;
     Card* equipSpellCard; //装备魔法卡牌
     Card* equipMonsterCard; //装备怪兽卡牌
+    Card* currentActiveCard; //当前处理的魔法卡
 
     enum ReasonFlag //搜寻卡牌的原因
     {
@@ -180,6 +181,7 @@ signals:
     void showInfoDialog();
     void addLP(int);
     void addEnemyLP(int);
+    void showWarningDialog();
 
 public:
     void setupConnect(QList<Card *> list, bool enemy);
@@ -208,6 +210,8 @@ public:
     void beLeaveFieldyard(Card *card);
     void beLeaveFieldground(Card *card);
     void afterActiveSpellCard(int targetIndex, int areaIndex);
+
+    void tryActive();
 };
 
 #endif // DOTA_H

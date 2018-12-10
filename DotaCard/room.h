@@ -13,6 +13,7 @@
 #include <QJsonObject>
 #include "structs.h"
 #include "dialog/infodialog.h"
+#include "dialog/warningdialog.h"
 
 class Room : public QGraphicsScene
 {
@@ -26,6 +27,7 @@ public:
     Pixmap *item_shine;
 //    Pixmap *item_enemy_shine;
     InfoDialog *dialog;
+    WarningDialog *dialog2;
 
 //    QGraphicsTextItem word[10];
 //    GraphicsPixmapObject* duifangxingdong;
@@ -104,6 +106,7 @@ public slots:
     void showEquipHoverAnimation(int targetIndex, int areaIndex);
     void hideEquipHoverAnimation(int targetIndex, int areaIndex);
     void showInfoDialog();
+    void showWarningDialog();
 };
 
 #endif // ROOM_H

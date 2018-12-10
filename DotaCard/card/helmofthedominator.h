@@ -30,6 +30,8 @@ public:
     bool canEffect;
     bool didEffect;
     virtual void activeAfterEquiped();
+    virtual void unActive();
+    virtual void doActive();
 };
 
 #endif // HELMOFTHEDOMINATOR_H

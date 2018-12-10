@@ -67,9 +67,9 @@
         <file alias="chooseRed">image/png/chooseRed.png</file>
         <file>image/png/deck.png</file>
         <file alias="dfxd">image/png/dfxd.png</file>
-        <file>image/png/dialog.png</file>
+        <file alias="dialog">image/png/dialog.png</file>
         <file alias="duel_start">image/png/duel_start.png</file>
-        <file>image/png/enable.png</file>
+        <file alias="enable">image/png/enable.png</file>
         <file>image/png/enemydeck.png</file>
         <file>image/png/enemyfieldground.png</file>
         <file>image/png/enemyfieldyard.png</file>
@@ -86,9 +86,13 @@
         <file alias="shine">image/png/shine.png</file>
         <file alias="sword">image/png/sword.png</file>
         <file>image/png/temp.png</file>
-        <file>image/png/zhuangbeika.png</file>
+        <file alias="zhuangbeika">image/png/zhuangbeika.png</file>
         <file>image/png/zujiankazu.png</file>
         <file alias="zujiankazu2">image/png/zujiankazu2.png</file>
+        <file alias="teshuzhaohuan">image/png/tezh.png</file>
+        <file alias="disable">image/png/disable.png</file>
+        <file alias="enable_no">image/png/enable_no.png</file>
+        <file alias="enable_yes">image/png/enable_yes.png</file>
     </qresource>
     <qresource prefix="/backdrop">
         <file>image/backdrop/beijing.jpg</file>

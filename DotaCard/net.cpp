@@ -15,7 +15,8 @@ Net* Net::instance()
 void Net::initialize()
 {
     client = new QWebSocket;
-    client->open(QUrl("ws://localhost:7720")); //QUrl("ws://139.196.72.104:7720")
+    client->open(QUrl("ws://localhost:7720"));
+//    client->open(QUrl("ws://47.101.204.243:7720"));
     connect(client, SIGNAL(connected()), this, SLOT(connected()));
     connect(client, SIGNAL(binaryMessageReceived(QByteArray)), this, SLOT(readFromServer(QByteArray)));
 }
@@ -29,6 +30,7 @@ void Net::write(QJsonObject jsonObject)
 
 void Net::connected()
 {
+    qDebug() << "connected";
     QJsonObject jsonObject;
     jsonObject.insert("command", 1000);
     write(jsonObject);

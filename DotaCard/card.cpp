@@ -180,16 +180,6 @@ void Card::activeCard()
     enemy = false;
 }
 
-void Card::active()
-{
-
-}
-
-void Card::activeAfterEquiped()
-{
-    //
-}
-
 int Card::getCurrentATK() const
 {
     return currentATK;

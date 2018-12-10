@@ -32,9 +32,9 @@ InfoDialog::InfoDialog(const QString &filename)
         action2->setEasingCurve(QEasingCurve::InQuad);
         action2->start(QAbstractAnimation::DeleteWhenStopped);
         connect(action2,&QPropertyAnimation::finished, [=](){
-            this->hide();
-            qDota->whoIsDoing = true;
-            qDota->setSearchReason(Dota::BeEquiped_Reason);
+            button->setPixmap(":/png/disable");
+            button->update();
+            emit clicked_ok();
         });
     });
 }

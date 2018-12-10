@@ -9,13 +9,13 @@ HelmOfTheDominator::HelmOfTheDominator()
     name = "HelmOfTheDominator";
     description = tr("HelmOfTheDominator");
     canEffect = true;
+    didEffect = false;
 }
 
 void HelmOfTheDominator::standby()
 {
     EquipSpellCard::standby();
     canEffect = true;
-    didEffect = false;
 }
 
 bool HelmOfTheDominator::testEffectFromFieldground()
@@ -40,20 +40,34 @@ bool HelmOfTheDominator::testEffectFromFieldground()
 
 void HelmOfTheDominator::active()
 {
-    qDebug() << "active HelmOfTheDominator";
+    qDebug() << "try active HelmOfTheDominator";
+
     canEffect = false;
+    qDota->currentActiveCard = this;
+    qDota->tryActive();
+}
+
+void HelmOfTheDominator::doActive()
+{
     if(didEffect)
     {
         //召唤怪兽破坏
     }
     else
     {
-        //
         didEffect = true;
     }
+//    qDota->doActive(); //显示 dialog3 特招对话框
+}
+
+void HelmOfTheDominator::unActive()
+{
+    canEffect = true;
+    qDota->currentActiveCard = nullptr;
 }
 
 void HelmOfTheDominator::activeAfterEquiped()
 {
     equipMonsterCard->setCurrentDEF(equipMonsterCard->getCurrentDEF()+300);
+    active();
 }

@@ -92,8 +92,11 @@ public:
     virtual bool testEffectFromFieldground();
     virtual bool testAttack();
 
-    virtual void active();
-    virtual void activeAfterEquiped();
+    virtual void active(){}
+    virtual void activeAfterEquiped(){}
+
+    virtual void unActive(){}
+    virtual void doActive(){}
 
     int getISDN() const;
     KindFlag getKind() const;

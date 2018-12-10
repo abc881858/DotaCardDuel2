@@ -4,7 +4,6 @@
 #include <QGraphicsObject>
 #include <QPixmap>
 #include <QPainter>
-#include "pixmap.h"
 #include "dialog/button.h"
 
 class InfoDialog : public QGraphicsObject
@@ -20,7 +19,7 @@ protected:
     virtual QRectF boundingRect() const;
 
 signals:
-    void clicked();
+    void clicked_ok();
 };
 
 #endif // INFODIALOG_H

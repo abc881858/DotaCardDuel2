@@ -1,4 +1,4 @@
-#include "dota.h"
+﻿#include "dota.h"
 #include "engine.h"
 #include "net.h"
 #include <QMessageBox>
@@ -56,6 +56,8 @@ void Dota::initialize()
         enemyFieldyardCards[i] = nullptr;
         enemyFieldgroundCards[i] = nullptr;
     }
+
+    currentActiveCard = nullptr;
 }
 
 void Dota::setSearchReason(Dota::ReasonFlag flag)
@@ -330,11 +332,18 @@ void Dota::afterActiveSpellCard(int targetIndex, int areaIndex)
             //先到场地，发光，弹出对话框，点确定，选择卡，装备卡动画
             qDebug() << "selectOneMonsterToEquip";
 
-            emit showInfoDialog();
-
             equipSpellCard = card;
+
+            whoIsDoing = true;
+            emit showInfoDialog();
         }
     }
+}
+
+void Dota::tryActive()
+{
+    whoIsDoing = false;
+    emit showWarningDialog();
 }
 
 void Dota::beEquiped()

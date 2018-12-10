@@ -36,3 +36,9 @@ DotaCard/Makefile
 *.Debug
 
 *.Release
+
+build/
+
+DotaCard/debug2/
+
+*.autosave

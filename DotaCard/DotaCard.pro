@@ -55,7 +55,11 @@ SOURCES += \
     card/urnofshadows.cpp \
     equipspellcard.cpp \
     effectmonstercard.cpp \
-    structs.cpp
+    structs.cpp \
+    dialog/button.cpp \
+    dialog/infodialog.cpp \
+    card/satanic.cpp \
+    dialog/warningdialog.cpp
 
 HEADERS += \
     card.h \
@@ -86,7 +90,11 @@ HEADERS += \
     card/urnofshadows.h \
     equipspellcard.h \
     effectmonstercard.h \
-    structs.h
+    structs.h \
+    dialog/button.h \
+    dialog/infodialog.h \
+    card/satanic.h \
+    dialog/warningdialog.h
 
 RESOURCES += \
     dotacard.qrc
