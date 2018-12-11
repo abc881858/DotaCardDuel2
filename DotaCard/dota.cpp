@@ -1,4 +1,4 @@
-﻿#include "dota.h"
+#include "dota.h"
 #include "engine.h"
 #include "net.h"
 #include <QMessageBox>
@@ -306,44 +306,22 @@ int Dota::testPlace(Card::AreaFlag flag)
     return -1;
 }
 
-void Dota::activeSpellCard(Card *card)
+void Dota::afterActiveSpellCard()
 {
-    CardMoveStruct move;
-    move.areaFrom = Card::Hand_Area;
-    move.areaTo = Card::Fieldground_Area;
-    move.indexFrom = getCardIndex(card);
-    move.indexTo = testPlace(Card::Fieldground_Area);
-    move.reason = CardMoveStruct::REASON_activeSpellCard;
-    moveCard(move);
-
-    whoIsDoing = false;
-
-    emit showChainAnimation(move.indexTo, Card::Fieldground_Area);
-//    qNet->sendChained(move.indexTo, Card::Fieldground_Area); // 考虑下提前发送Net连锁动画
-}
-
-void Dota::afterActiveSpellCard(int targetIndex, int areaIndex)
-{
-    if(areaIndex == 4)
+    if(currentActiveCard->getArea() == 4)
     {
-        Card* card = fieldgroundCards[targetIndex];
-        if(card->getKind() == Card::EquipSpell_Kind)
+        if(currentActiveCard->getKind() == Card::EquipSpell_Kind)
         {
             //先到场地，发光，弹出对话框，点确定，选择卡，装备卡动画
             qDebug() << "selectOneMonsterToEquip";
 
-            equipSpellCard = card;
+            equipSpellCard = currentActiveCard;
+            currentActiveCard = nullptr;
 
             whoIsDoing = true;
             emit showInfoDialog();
         }
     }
-}
-
-void Dota::tryActive()
-{
-    whoIsDoing = false;
-    emit showWarningDialog();
 }
 
 void Dota::doActive()
@@ -373,6 +351,7 @@ void Dota::effectEquipSpellCard()
 {
     //TODO equipSpellCard 此刻也应该闪装备卡
     equipSpellCard->activeAfterEquiped();
+    equipSpellCard->beforeActive();
     equipSpellCard = nullptr;
     equipMonsterCard = nullptr;
 }
@@ -432,36 +411,6 @@ void Dota::response_enemyBeEquiped(QJsonObject json)
     equipMonsterCard = nullptr;
 }
 
-void Dota::specialSummonCard(Card *card)
-{
-    CardMoveStruct move;
-    move.areaFrom = Card::Hand_Area;
-    move.areaTo = Card::Fieldyard_Area;
-    move.indexFrom = getCardIndex(card);
-    move.indexTo = testPlace(Card::Fieldyard_Area);
-    move.reason = CardMoveStruct::REASON_specialSummonCard;
-    moveCard(move);
-}
-void Dota::summonCard(Card *card)
-{
-    CardMoveStruct move;
-    move.areaFrom = Card::Hand_Area;
-    move.areaTo = Card::Fieldyard_Area;
-    move.indexFrom = getCardIndex(card);
-    move.indexTo = testPlace(Card::Fieldyard_Area);
-    move.reason = CardMoveStruct::REASON_summonCard;
-    moveCard(move);
-}
-void Dota::setCard(Card *card)
-{
-    CardMoveStruct move;
-    move.areaFrom = Card::Hand_Area;
-    move.areaTo = Card::Fieldyard_Area;
-    move.indexFrom = getCardIndex(card);
-    move.indexTo = testPlace(Card::Fieldyard_Area);
-    move.reason = CardMoveStruct::REASON_setCard;
-    moveCard(move);
-}
 void Dota::moveCard(CardMoveStruct move)
 {
     Card *card = nullptr;
@@ -548,73 +497,33 @@ void Dota::moveCard(CardMoveStruct move)
         break;
     }
 
-    if(move.reason == CardMoveStruct::REASON_setupCard)
+    if(move.reason > 0)
     {
-        card->setupCard();
-        qNet->moveCard(move.toJson());
-    }
-    else if(move.reason == CardMoveStruct::REASON_enemySetupCard)
-    {
-        card->enemySetupCard();
-    }
-    else if(move.reason == CardMoveStruct::REASON_drawCard)
-    {
-        card->drawCard();
         qNet->moveCard(move.toJson()); // ToDo: 改为 emit 到 qNet
     }
     else if(move.reason == CardMoveStruct::REASON_enemyDrawCard)
     {
         card->enemyDrawCard();
     }
-    else if(move.reason == CardMoveStruct::REASON_specialSummonCard)
-    {
-        card->specialSummonCard();
-        qNet->moveCard(move.toJson());
-    }
     else if(move.reason == CardMoveStruct::REASON_enemySpecialSummonCard)
     {
         card->enemySpecialSummonCard();
-    }
-    else if(move.reason == CardMoveStruct::REASON_summonCard)
-    {
-        card->summonCard();
-        qNet->moveCard(move.toJson());
     }
     else if(move.reason == CardMoveStruct::REASON_enemySummonCard)
     {
         card->enemySummonCard();
     }
-    else if(move.reason == CardMoveStruct::REASON_activeSpellCard)
+    else if(move.reason == CardMoveStruct::REASON_enemyActiveSpellCard)
     {
-        card->activeCard();
-        qNet->moveCard(move.toJson());
-    }
-    else if(move.reason == CardMoveStruct::REASON_enemyActiveCard)
-    {
-        card->enemyActiveCard();
-    }
-    else if(move.reason == CardMoveStruct::REASON_setCard)
-    {
-        card->setCard();
-        qNet->moveCard(move.toJson());
+        card->enemyActiveSpellCard();
     }
     else if(move.reason == CardMoveStruct::REASON_enemySetCard)
     {
         card->enemySetCard();
     }
-    else if(move.reason == CardMoveStruct::REASON_destroyCard)
-    {
-        card->destroyCard();
-        qNet->moveCard(move.toJson());
-    }
     else if(move.reason == CardMoveStruct::REASON_enemyDestroyCard)
     {
         card->enemyDestroyCard();
-    }
-    else if(move.reason == CardMoveStruct::REASON_destroyEnemyCard)
-    {
-        card->enemyDestroyCard();
-        qNet->moveCard(move.toJson());
     }
     else if(move.reason == CardMoveStruct::REASON_enemyDestroyEnemyCard)
     {
@@ -633,7 +542,6 @@ void Dota::response_moveCard(QJsonObject json)
     moveCard(move);
 }
 
-
 //不连锁之后，发动卡牌效果一方执行连锁。
 void Dota::response_finishChain()
 {
@@ -647,7 +555,7 @@ void Dota::response_finishChain()
 
     if(flag == Dota::ChainDeclared_Reason) // 这里应该有个while循环，response_finishChain();
     {
-        chainCard->tryActive();
+        chainCard->beforeActive();
         chainCard = nullptr;
     }
     else if(flag == Dota::BeAttacked_Reason)
@@ -659,6 +567,7 @@ void Dota::response_finishChain()
         {
             if(attackSourceCard->getCurrentATK() <= attackDestinationCard->getCurrentATK())
             {
+                attackSourceCard->destroyCard();
                 CardMoveStruct move;
                 move.areaFrom = Card::Fieldyard_Area;
                 move.areaTo = Card::Graveyard_Area;
@@ -672,6 +581,7 @@ void Dota::response_finishChain()
                     {
                         if(spell->getArea() == Card::Fieldground_Area)
                         {
+                            spell->destroyCard();
                             CardMoveStruct move;
                             move.areaFrom = Card::Fieldground_Area;
                             move.areaTo = Card::Graveyard_Area;
@@ -687,6 +597,7 @@ void Dota::response_finishChain()
             }
             if(attackSourceCard->getCurrentATK() >= attackDestinationCard->getCurrentATK())
             {
+                attackDestinationCard->enemyDestroyCard();
                 CardMoveStruct move;
                 move.areaFrom = Card::EnemyFieldyard_Area;
                 move.areaTo = Card::EnemyGraveyard_Area;
@@ -700,6 +611,7 @@ void Dota::response_finishChain()
                     {
                         if(spell->getArea() == Card::EnemyFieldground_Area)
                         {
+                            spell->enemyDestroyCard();
                             CardMoveStruct move;
                             move.areaFrom = Card::EnemyFieldground_Area;
                             move.areaTo = Card::EnemyGraveyard_Area;
@@ -945,6 +857,7 @@ void Dota::response_setupDeck()
         int ISDN = text_stream.readLine().toInt();
         allISDN << QVariant(ISDN);
         Card* card = Engine::instance()->cloneCard(ISDN);
+        card->setupCard();
         deckCards << card;
         emit createCardItem(deckCards.size()-1);
     }
@@ -962,6 +875,7 @@ void Dota::response_enemySetupDeck(QJsonObject json)
     {
         int ISDN = value.toInt();
         Card* card = Engine::instance()->cloneCard(ISDN);
+        card->enemySetupCard();
         enemyDeckCards << card;
         emit createEnemyCardItem(enemyDeckCards.size()-1);
     }
@@ -976,6 +890,7 @@ void Dota::response_enemySetupDeck(QJsonObject json)
         int ISDN = text_stream.readLine().toInt();
         allISDN << QVariant(ISDN);
         Card* card = Engine::instance()->cloneCard(ISDN);
+        card->setupCard();
         deckCards << card;
         emit createCardItem(deckCards.size()-1);
     }
@@ -993,6 +908,7 @@ void Dota::response_startGame(QJsonObject json)
     {
         int ISDN = value.toInt();
         Card* card = Engine::instance()->cloneCard(ISDN);
+        card->enemySetupCard();
         enemyDeckCards << card;
         emit createEnemyCardItem(enemyDeckCards.size()-1);
     }
@@ -1011,6 +927,9 @@ void Dota::goStartPhase()
     {
         qDebug() << "draw a card";
 
+        Card* card = deckCards[0];
+        card->drawCard();
+
         CardMoveStruct move;
         move.areaFrom = Card::Deck_Area;
         move.areaTo = Card::Hand_Area;
@@ -1025,6 +944,9 @@ void Dota::goStartPhase()
 
 void Dota::response_drawPhase()
 {
+    Card* card = deckCards[0];
+    card->drawCard();
+
     CardMoveStruct move;
     move.areaFrom = Card::Deck_Area;
     move.areaTo = Card::Hand_Area;
