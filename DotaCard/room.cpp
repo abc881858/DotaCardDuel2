@@ -1,4 +1,4 @@
-﻿#include "room.h"
+#include "room.h"
 #include "dota.h"
 #include <QDebug>
 
@@ -400,7 +400,7 @@ void Room::showChainAnimation(int targetIndex, int areaIndex)
     item_shine->setPos(item->pos() - QPoint(12,-1));
     item_shine->doShineAnimation();
     connect(item_shine, &Pixmap::finishedDoShineAnimation, [=](){
-        qDota->afterActiveSpellCard(targetIndex, areaIndex);
+        qDota->afterActiveSpellCard();
     });
 }
 
