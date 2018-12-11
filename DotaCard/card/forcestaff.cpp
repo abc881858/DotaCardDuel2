@@ -35,7 +35,7 @@ bool ForceStaff::testEffectFromFieldground()
     return false;
 }
 
-void ForceStaff::tryActive()
+void ForceStaff::beforeActive()
 {
     int effectNum = QMessageBox::question(nullptr, QString(tr("selecting")), QString(tr("Active Which Effect")), "ForceStaff_1", "ForceStaff_2", "ForceStaff_3");
     switch(effectNum)

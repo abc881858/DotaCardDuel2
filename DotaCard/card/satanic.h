@@ -22,7 +22,7 @@ class Satanic : public EquipSpellCard
 public:
     Q_INVOKABLE Satanic();
     virtual void standby();
-    virtual void tryActive();
+    virtual void beforeActive();
     virtual bool testEffectFromFieldground();
     bool canEffect;
 };
