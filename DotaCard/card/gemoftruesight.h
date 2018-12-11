@@ -18,7 +18,7 @@ class GemOfTrueSight : public EquipSpellCard
 public:
     Q_INVOKABLE GemOfTrueSight();
     virtual void standby();
-    virtual void active();
+    virtual void tryActive();
 };
 
 #endif // GEMOFTRUESIGHT_H

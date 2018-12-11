@@ -92,7 +92,7 @@ public:
     virtual bool testEffectFromFieldground();
     virtual bool testAttack();
 
-    virtual void active(){}
+    virtual void tryActive(){}
     virtual void activeAfterEquiped(){}
 
     virtual void unActive(){}
@@ -117,6 +117,9 @@ public:
     void enemySetCard();
 
     AreaFlag getArea() const;
+    int getLevel() const;
+
+    QString getFieldPath();
 
     void destroyCard();
     void enemyDestroyCard();

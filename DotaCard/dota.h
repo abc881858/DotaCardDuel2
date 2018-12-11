@@ -182,6 +182,7 @@ signals:
     void addLP(int);
     void addEnemyLP(int);
     void showWarningDialog();
+    void showSelectDialog();
 
 public:
     void setupConnect(QList<Card *> list, bool enemy);
@@ -212,6 +213,7 @@ public:
     void afterActiveSpellCard(int targetIndex, int areaIndex);
 
     void tryActive();
+    void doActive();
 };
 
 #endif // DOTA_H

@@ -20,7 +20,7 @@ public:
     virtual void standby();
     virtual bool testEffectFromFieldyard();
     bool canAttack;
-    virtual void active();
+    virtual void tryActive();
 };
 
 #endif // EFFECTMONSTERCARD_H

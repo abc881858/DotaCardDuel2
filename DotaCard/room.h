@@ -14,6 +14,7 @@
 #include "structs.h"
 #include "dialog/infodialog.h"
 #include "dialog/warningdialog.h"
+#include "dialog/selectdialog.h"
 
 class Room : public QGraphicsScene
 {
@@ -28,6 +29,7 @@ public:
 //    Pixmap *item_enemy_shine;
     InfoDialog *dialog;
     WarningDialog *dialog2;
+    SelectDialog *dialog3;
 
 //    QGraphicsTextItem word[10];
 //    GraphicsPixmapObject* duifangxingdong;
@@ -107,6 +109,7 @@ public slots:
     void hideEquipHoverAnimation(int targetIndex, int areaIndex);
     void showInfoDialog();
     void showWarningDialog();
+    void showSelectDialog();
 };
 
 #endif // ROOM_H

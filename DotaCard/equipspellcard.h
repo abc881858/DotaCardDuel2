@@ -16,7 +16,7 @@ public:
     virtual bool testEffectFromHand();
     virtual bool testEffectFromFieldground();
     virtual void standby();
-    virtual void active(){}
+    virtual void tryActive(){}
     virtual void activeAfterEquiped(){}
     virtual void unActive(){}
     virtual void doActive(){}

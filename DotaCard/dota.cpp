@@ -346,6 +346,12 @@ void Dota::tryActive()
     emit showWarningDialog();
 }
 
+void Dota::doActive()
+{
+    whoIsDoing = false;
+    emit showSelectDialog();
+}
+
 void Dota::beEquiped()
 {
     //动画
@@ -641,7 +647,7 @@ void Dota::response_finishChain()
 
     if(flag == Dota::ChainDeclared_Reason) // 这里应该有个while循环，response_finishChain();
     {
-        chainCard->active();
+        chainCard->tryActive();
         chainCard = nullptr;
     }
     else if(flag == Dota::BeAttacked_Reason)

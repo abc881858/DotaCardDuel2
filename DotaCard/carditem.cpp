@@ -274,10 +274,10 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
             qDota->activeSpellCard(card);//active();
             break;
         case CardItem::EffectFromFieldyard_Finger:
-            card->active();
+            card->tryActive();
             break;
         case CardItem::EffectFromFieldground_Finger:
-            card->active();
+            card->tryActive();
             break;
         case CardItem::SpecialSummon_Finger:
             qDota->specialSummonCard(card);

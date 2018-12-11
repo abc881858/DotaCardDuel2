@@ -46,6 +46,7 @@ Room::Room(QObject* parent)
 
     connect(qDota, &Dota::showInfoDialog, this, &Room::showInfoDialog);
     connect(qDota, &Dota::showWarningDialog, this, &Room::showWarningDialog);
+    connect(qDota, &Dota::showSelectDialog, this, &Room::showSelectDialog);
 
     leftarea = new Pixmap(":/backdrop/left2");
     addItem(leftarea);
@@ -281,6 +282,15 @@ Room::Room(QObject* parent)
         qDota->whoIsDoing = true;
         qDota->currentActiveCard->unActive();
     });
+
+    dialog3 = new SelectDialog(":/png/dialog");
+    addItem(dialog3);
+    dialog3->setZValue(7);
+    dialog3->hide();
+//    connect(dialog3, &InfoDialog::clicked_ok, [=](){
+//        dialog3->hide();
+//        qDota->setSearchReason(Dota::BeEquiped_Reason);
+//    });
 }
 
 void Room::showAttackAnimation(int sourceIndex, int targetIndex)
@@ -404,6 +414,12 @@ void Room::showWarningDialog()
 {
     dialog2->show();
     dialog2->showAnimation();
+}
+
+void Room::showSelectDialog()
+{
+    dialog3->show();
+    dialog3->showAnimation();
 }
 
 void Room::hoverEnter()

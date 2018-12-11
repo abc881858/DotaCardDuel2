@@ -51,7 +51,7 @@ bool EffectMonsterCard::testEffectFromFieldyard()
     return false;
 }
 
-void EffectMonsterCard::active()
+void EffectMonsterCard::tryActive()
 {
 
 }

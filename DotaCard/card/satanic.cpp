@@ -17,7 +17,7 @@ void Satanic::standby()
     canEffect = true;
 }
 
-void Satanic::active()
+void Satanic::tryActive()
 {
 
 }

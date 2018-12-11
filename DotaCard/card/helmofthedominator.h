@@ -25,7 +25,7 @@ class HelmOfTheDominator : public EquipSpellCard
 public:
     Q_INVOKABLE HelmOfTheDominator();
     virtual void standby();
-    virtual void active();
+    virtual void tryActive();
     virtual bool testEffectFromFieldground();
     bool canEffect;
     bool didEffect;

@@ -24,7 +24,11 @@ Card::Card()
     count_turn = 0;
 
     canAttack = false;
+}
 
+QString Card::getFieldPath()
+{
+    return QString(":/field/%1").arg(name);
 }
 
 void Card::standby()
@@ -198,6 +202,11 @@ int Card::getCurrentDEF() const
 void Card::setCurrentDEF(int value)
 {
     currentDEF = value;
+}
+
+int Card::getLevel() const
+{
+    return level;
 }
 
 void Card::enemyActiveCard()

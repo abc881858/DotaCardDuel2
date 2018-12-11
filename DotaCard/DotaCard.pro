@@ -59,7 +59,8 @@ SOURCES += \
     dialog/button.cpp \
     dialog/infodialog.cpp \
     card/satanic.cpp \
-    dialog/warningdialog.cpp
+    dialog/warningdialog.cpp \
+    dialog/selectdialog.cpp
 
 HEADERS += \
     card.h \
@@ -94,7 +95,8 @@ HEADERS += \
     dialog/button.h \
     dialog/infodialog.h \
     card/satanic.h \
-    dialog/warningdialog.h
+    dialog/warningdialog.h \
+    dialog/selectdialog.h
 
 RESOURCES += \
     dotacard.qrc
