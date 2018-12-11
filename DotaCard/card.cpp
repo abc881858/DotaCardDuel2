@@ -1,4 +1,4 @@
-﻿#include "card.h"
+#include "card.h"
 #include "dota.h"
 
 Card::Card()
@@ -143,29 +143,12 @@ void Card::enemyDrawCard()
     enemy = true;
 }
 
-void Card::specialSummonCard()
-{
-    area = Card::Fieldyard_Area;
-    stand = true;
-    face = true;
-    enemy = false;
-}
-
 void Card::enemySpecialSummonCard()
 {
     area = Card::EnemyFieldyard_Area;
     stand = true;
     face = true;
     enemy = true;
-}
-
-void Card::summonCard()
-{
-    qDota->oneTurnOneNormalSummon = false;
-    area = Card::Fieldyard_Area;
-    stand = true;
-    face = true;
-    enemy = false;
 }
 
 void Card::enemySummonCard()
@@ -176,7 +159,7 @@ void Card::enemySummonCard()
     enemy = true;
 }
 
-void Card::activeCard()
+void Card::activeSpellCard()
 {
     area = Card::Fieldground_Area;
     stand = true;
@@ -209,21 +192,12 @@ int Card::getLevel() const
     return level;
 }
 
-void Card::enemyActiveCard()
+void Card::enemyActiveSpellCard()
 {
     area = Card::EnemyFieldground_Area;
     stand = true;
     face = true;
     enemy = true;
-}
-
-void Card::setCard()
-{
-    qDota->oneTurnOneNormalSummon = false;
-    area = Card::Fieldyard_Area;
-    stand = false;
-    face = false;
-    enemy = false;
 }
 
 void Card::enemySetCard()
