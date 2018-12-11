@@ -1,4 +1,4 @@
-﻿#include "carditem.h"
+#include "carditem.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QStyleOptionGraphicsItem>
 #include <QImage>
@@ -271,22 +271,25 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
         case CardItem::No_Finger:
             return;
         case CardItem::EffectFromHand_Finger://暂时没过滤怪兽卡,发动魔法卡
-            qDota->activeSpellCard(card);//active();
+            if(card->getKind() == Card::EquipSpell_Kind)
+            {
+                card->beforeEquip();
+            }
             break;
         case CardItem::EffectFromFieldyard_Finger:
-            card->tryActive();
+            card->beforeActive();
             break;
         case CardItem::EffectFromFieldground_Finger:
-            card->tryActive();
+            card->beforeActive();
             break;
         case CardItem::SpecialSummon_Finger:
-            qDota->specialSummonCard(card);
+            card->specialSummonCard();
             break;
         case CardItem::NormalSummon_Finger:
-            qDota->summonCard(card);
+            card->summonCard();
             break;
         case CardItem::SetCard_Finger:
-            qDota->setCard(card);
+            card->setCard();
             break;
         case CardItem::FlipSummon_Finger:
 //            card->flipSummon();
