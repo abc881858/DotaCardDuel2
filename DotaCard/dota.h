@@ -1,4 +1,4 @@
-﻿#ifndef DOTA_H
+#ifndef DOTA_H
 #define DOTA_H
 
 //给单例 Dota 设置一个宏，方便使用
@@ -189,10 +189,6 @@ public:
     int testPlace(Card::AreaFlag flag);
     void moveCard(CardMoveStruct move);
     void goStartPhase();
-    void activeSpellCard(Card *card);
-    void specialSummonCard(Card *card);
-    void summonCard(Card *card);
-    void setCard(Card *card);
 
     void tryGoBattlePhase();
     void tryGoMain2Phase();
@@ -210,9 +206,8 @@ public:
     void beHoverFieldground(Card *card);
     void beLeaveFieldyard(Card *card);
     void beLeaveFieldground(Card *card);
-    void afterActiveSpellCard(int targetIndex, int areaIndex);
+    void afterActiveSpellCard();
 
-    void tryActive();
     void doActive();
 };
 
