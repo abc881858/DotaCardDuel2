@@ -1,4 +1,4 @@
-﻿#include "effectmonstercard.h"
+#include "effectmonstercard.h"
 #include "dota.h"
 #include <QDebug>
 
@@ -51,9 +51,53 @@ bool EffectMonsterCard::testEffectFromFieldyard()
     return false;
 }
 
-void EffectMonsterCard::tryActive()
+void EffectMonsterCard::beforeActive()
 {
 
+}
+
+void EffectMonsterCard::specialSummonCard()
+{
+    area = Card::Fieldyard_Area;
+    stand = true;
+    face = true;
+    enemy = false;
+
+    CardMoveStruct move;
+    move.areaFrom = Card::Hand_Area;
+    move.areaTo = Card::Fieldyard_Area;
+    move.indexFrom = qDota->getCardIndex(this);
+    move.indexTo = qDota->testPlace(Card::Fieldyard_Area);
+    move.reason = CardMoveStruct::REASON_specialSummonCard;
+    qDota->moveCard(move);
+}
+
+void EffectMonsterCard::summonCard()
+{
+    CardMoveStruct move;
+    move.areaFrom = Card::Hand_Area;
+    move.areaTo = Card::Fieldyard_Area;
+    move.indexFrom = qDota->getCardIndex(this);
+    move.indexTo = qDota->testPlace(Card::Fieldyard_Area);
+    move.reason = CardMoveStruct::REASON_summonCard;
+    qDota->moveCard(move);
+}
+
+void EffectMonsterCard::setCard()
+{
+    qDota->oneTurnOneNormalSummon = false;
+    area = Card::Fieldyard_Area;
+    stand = false;
+    face = false;
+    enemy = false;
+
+    CardMoveStruct move;
+    move.areaFrom = Card::Hand_Area;
+    move.areaTo = Card::Fieldyard_Area;
+    move.indexFrom = qDota->getCardIndex(this);
+    move.indexTo = qDota->testPlace(Card::Fieldyard_Area);
+    move.reason = CardMoveStruct::REASON_setCard;
+    qDota->moveCard(move);
 }
 
 bool EffectMonsterCard::testSetCard()
