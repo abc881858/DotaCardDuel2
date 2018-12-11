@@ -62,7 +62,7 @@ bool CentaurWarrunner::testEffectFromFieldyard()
     return false;
 }
 
-void CentaurWarrunner::tryActive()
+void CentaurWarrunner::beforeActive()
 {
     qDebug() << "active CentaurWarrunner";
 }
