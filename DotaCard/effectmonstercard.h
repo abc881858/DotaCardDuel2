@@ -1,4 +1,4 @@
-﻿#ifndef EFFECTMONSTERCARD_H
+#ifndef EFFECTMONSTERCARD_H
 #define EFFECTMONSTERCARD_H
 
 #include "card.h"
@@ -20,7 +20,10 @@ public:
     virtual void standby();
     virtual bool testEffectFromFieldyard();
     bool canAttack;
-    virtual void tryActive();
+    virtual void beforeActive();
+    virtual void specialSummonCard();
+    virtual void summonCard();
+    virtual void setCard();
 };
 
 #endif // EFFECTMONSTERCARD_H
