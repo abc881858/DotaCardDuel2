@@ -1,4 +1,4 @@
-#include "room.h"
+﻿#include "room.h"
 #include "dota.h"
 #include <QDebug>
 
@@ -283,14 +283,15 @@ Room::Room(QObject* parent)
         qDota->currentActiveCard->unActive();
     });
 
-    dialog3 = new SelectDialog(":/png/dialog");
+    dialog3 = new SelectDialog(":/png/jiansuo");
     addItem(dialog3);
     dialog3->setZValue(7);
     dialog3->hide();
-//    connect(dialog3, &InfoDialog::clicked_ok, [=](){
-//        dialog3->hide();
-//        qDota->setSearchReason(Dota::BeEquiped_Reason);
-//    });
+    connect(dialog3, &SelectDialog::selected, [=](int i){
+        dialog3->hide();
+        qDota->whoIsDoing = true;
+        qDebug() << "selected" << i;
+    });
 }
 
 void Room::showAttackAnimation(int sourceIndex, int targetIndex)
@@ -396,16 +397,18 @@ void Room::hideEquipHoverAnimation(int targetIndex, int areaIndex)
 
 void Room::showChainAnimation(int targetIndex, int areaIndex)
 {
+    qDebug() << "showChainAnimation";
     CardItem *item = getCardItemFromIndex(targetIndex, areaIndex);
     item_shine->setPos(item->pos() - QPoint(12,-1));
     item_shine->doShineAnimation();
     connect(item_shine, &Pixmap::finishedDoShineAnimation, [=](){
-        qDota->afterActiveSpellCard();
+        qDota->searchEquip(targetIndex);
     });
 }
 
 void Room::showInfoDialog()
 {
+    qDebug() << "showInfoDialog";
     dialog->show();
     dialog->showAnimation();
 }
@@ -418,6 +421,9 @@ void Room::showWarningDialog()
 
 void Room::showSelectDialog()
 {
+    dialog3->area = 1;
+    dialog3->level = 3;
+    dialog3->buildDialog();
     dialog3->show();
     dialog3->showAnimation();
 }
@@ -504,9 +510,6 @@ void Room::moveCardItem(CardMoveStruct move)
         break;
     }
 
-    item->changeImage(); // Todo: 改到card里
-    item->clearFinger(); // Todo: 改到card里
-
     switch (move.areaTo)
     {
     case Card::Deck_Area:
@@ -569,6 +572,9 @@ void Room::moveCardItem(CardMoveStruct move)
         // for No_Area
         break;
     }
+
+    item->changeImage(); // Todo: 改到card里
+    item->clearFinger(); // Todo: 改到card里
 }
 
 void Room::adjustHandItems()

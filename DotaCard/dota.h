@@ -1,4 +1,4 @@
-#ifndef DOTA_H
+﻿#ifndef DOTA_H
 #define DOTA_H
 
 //给单例 Dota 设置一个宏，方便使用
@@ -206,7 +206,7 @@ public:
     void beHoverFieldground(Card *card);
     void beLeaveFieldyard(Card *card);
     void beLeaveFieldground(Card *card);
-    void afterActiveSpellCard();
+    void searchEquip(int targetIndex);
 
     void doActive();
 };

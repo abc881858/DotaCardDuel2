@@ -1,4 +1,4 @@
-#ifndef EQUIPSPELLCARD_H
+﻿#ifndef EQUIPSPELLCARD_H
 #define EQUIPSPELLCARD_H
 
 #include "card.h"
@@ -16,11 +16,11 @@ public:
     virtual bool testEffectFromHand();
     virtual bool testEffectFromFieldground();
     virtual void standby();
-    virtual void beforeActive(){}
-    virtual void activeAfterEquiped(){}
+    virtual void afterEquip(){}
+    virtual void active(){}
     virtual void unActive(){}
     virtual void doActive(){}
-    virtual void beforeEquip();
+    virtual void beforeActive();
 };
 
 #endif // EQUIPSPELLCARD_H

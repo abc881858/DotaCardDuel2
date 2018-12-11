@@ -15,7 +15,7 @@ void GemOfTrueSight::standby()
     EquipSpellCard::standby();
 }
 
-void GemOfTrueSight::beforeActive()
+void GemOfTrueSight::active()
 {
     qDebug() << "active GemOfTrueSight";
 }

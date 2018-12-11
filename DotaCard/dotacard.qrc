@@ -93,6 +93,7 @@
         <file alias="disable">image/png/disable.png</file>
         <file alias="enable_no">image/png/enable_no.png</file>
         <file alias="enable_yes">image/png/enable_yes.png</file>
+        <file alias="jiansuo">image/png/jiansuo.png</file>
     </qresource>
     <qresource prefix="/backdrop">
         <file>image/backdrop/beijing.jpg</file>

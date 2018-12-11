@@ -66,11 +66,11 @@ void Pixmap::doShineAnimation()
     QPropertyAnimation *fade1 = new QPropertyAnimation(this,"opacity");
     fade1->setStartValue(0);
     fade1->setEndValue(1);
-    fade1->setDuration(1000);
+    fade1->setDuration(500);
     QPropertyAnimation *fade2 = new QPropertyAnimation(this,"scale");
     fade2->setStartValue(0);
     fade2->setEndValue(1.2);
-    fade2->setDuration(1000);
+    fade2->setDuration(500);
     QParallelAnimationGroup *group1 = new QParallelAnimationGroup;
     group1->addAnimation(fade1);
     group1->addAnimation(fade2);

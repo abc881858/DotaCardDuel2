@@ -1,4 +1,4 @@
-#include "card.h"
+﻿#include "card.h"
 #include "dota.h"
 
 Card::Card()
@@ -96,6 +96,14 @@ bool Card::testAttack()
     return false;
 }
 
+void Card::beforeActive()
+{
+    area = Card::Fieldground_Area;
+    stand = true;
+    face = true;
+    enemy = false;
+}
+
 bool Card::testEffectFromFieldground()
 {
     return false;
@@ -157,14 +165,6 @@ void Card::enemySummonCard()
     stand = true;
     face = true;
     enemy = true;
-}
-
-void Card::activeSpellCard()
-{
-    area = Card::Fieldground_Area;
-    stand = true;
-    face = true;
-    enemy = false;
 }
 
 int Card::getCurrentATK() const

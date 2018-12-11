@@ -7,6 +7,10 @@
 #include "dialog/button.h"
 #include <QScrollArea>
 #include <QGraphicsProxyWidget>
+#include <QHBoxLayout>
+#include <QGraphicsView>
+#include <QGraphicsScene>
+#include <QPushButton>
 
 class SelectDialog : public QGraphicsObject
 {
@@ -20,13 +24,19 @@ public:
     int area{0};
     int level{0};
     QScrollArea *scrollArea;
+    QHBoxLayout *layout;
     QGraphicsProxyWidget *proxy;
+    QWidget *widget;
+    int i{-1};
+    int j{-1};
+public slots:
+    void hideAnimation();
 protected:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *);
     virtual QRectF boundingRect() const;
 
 signals:
-    void clicked_pixmap(int areaIndex, int cardIndex);
+    void selected(int cardIndex);
 };
 
 #endif // SELECTDIALOG_H

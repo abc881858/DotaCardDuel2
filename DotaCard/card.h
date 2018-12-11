@@ -1,4 +1,4 @@
-#ifndef CARD_H
+﻿#ifndef CARD_H
 #define CARD_H
 
 #include <QObject>
@@ -92,12 +92,12 @@ public:
     virtual bool testEffectFromFieldground();
     virtual bool testAttack();
 
-    virtual void beforeActive(){}
-    virtual void activeAfterEquiped(){}
+    virtual void beforeActive();
+    virtual void afterEquip(){}
 
     virtual void unActive(){}
     virtual void doActive(){}
-    virtual void beforeEquip(){}
+    virtual void active(){}
 
     virtual void specialSummonCard(){}
     virtual void summonCard(){}
@@ -114,7 +114,6 @@ public:
     void enemyDrawCard();
     void enemySpecialSummonCard();
     void enemySummonCard();
-    void activeSpellCard();
     void enemyActiveSpellCard();
 
     void enemySetCard();

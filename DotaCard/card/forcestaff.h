@@ -23,7 +23,7 @@ class ForceStaff : public EquipSpellCard
 public:
     Q_INVOKABLE ForceStaff();
     virtual void standby();
-    virtual void beforeActive();
+    virtual void active();
     virtual bool testEffectFromFieldground();
     bool canEffect;
 };

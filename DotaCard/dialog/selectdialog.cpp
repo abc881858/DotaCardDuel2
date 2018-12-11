@@ -1,6 +1,7 @@
 ﻿#include "selectdialog.h"
 #include <QDebug>
 #include "dota.h"
+#include "button.h"
 
 SelectDialog::SelectDialog(const QString &filename)
     : pixmap(filename)
@@ -8,24 +9,25 @@ SelectDialog::SelectDialog(const QString &filename)
     setAcceptHoverEvents(true);
     setFlag(QGraphicsItem::ItemIsMovable);
 
-//    connect(button,&Button::clicked,[=](){
-//        QPropertyAnimation *action2 = new QPropertyAnimation(this,"pos");
-//        action2->setStartValue(QPointF(292,226));
-//        action2->setEndValue(QPointF(292,-160));
-//        action2->setDuration(600);
-//        action2->setEasingCurve(QEasingCurve::InQuad);
-//        action2->start(QAbstractAnimation::DeleteWhenStopped);
-//        connect(action2,&QPropertyAnimation::finished, [=](){
-//            button->setPixmap(":/png/disable");
-//            button->update();
-//            emit clicked_pixmap(0,0);
-//        });
-//    });
     scrollArea = new QScrollArea;
-    scrollArea->setFixedSize(370, 80);
+    widget = new QWidget;
+    layout = new QHBoxLayout;
+    layout->setContentsMargins(15,0,15,0);
+    layout->setSpacing(22);
+    widget->setLayout(layout);
+
+    scrollArea->setWidget(widget);
+    scrollArea->setStyleSheet("QScrollArea {background-color:transparent;}");
+    scrollArea->viewport()->setStyleSheet("background-color:transparent;");
+    widget->setStyleSheet("background-color:transparent;");
+    scrollArea->setFixedSize(370, 100);
+    scrollArea->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
     proxy = new QGraphicsProxyWidget;
     proxy->setWidget(scrollArea);
     proxy->setParentItem(this);
+    proxy->setPos(40,49);
+    proxy->setZValue(10);
 }
 
 QRectF SelectDialog::boundingRect() const
@@ -51,21 +53,38 @@ void SelectDialog::showAnimation()
 
 void SelectDialog::buildDialog()
 {
-//    if(area==1) //从卡组
-//    {
-//        int i = 0;
-//        for(Card* card : qDota->deckCards)
-//        {
-//            if(card->getLevel()<=3)
-//            {
-//                Button *button = new Button(card->getFieldPath());
-//                button->setAcceptHoverEvents(true);
-//                button->setPos(51+80*i,55);
-//                button->setParentItem(this);
-//                button->setZValue(8);
-//                button->show();
-//                i++;
-//            }
-//        }
-//    }
+    if(area == 1) //从卡组
+    {
+        for(Card* card : qDota->deckCards)
+        {
+            j++;
+            if(card->getLevel() <= level)
+            {
+                i++;
+                QPushButton *button = new QPushButton;
+                button->setFixedSize(50,72);
+                button->setStyleSheet(QString("border-image: url(%1);").arg(card->getFieldPath()));
+                layout->addWidget(button);
+
+                connect(button, &QPushButton::clicked, this, &SelectDialog::hideAnimation);
+            }
+        }
+        widget->setFixedSize(72*i+30, 80);
+        update();
+    }
+}
+
+void SelectDialog::hideAnimation()
+{
+    QPropertyAnimation *action = new QPropertyAnimation(this,"pos");
+    action->setStartValue(QPointF(292,226));
+    action->setEndValue(QPointF(292,-160));
+    action->setDuration(600);
+    action->setEasingCurve(QEasingCurve::InQuad);
+    action->start(QAbstractAnimation::DeleteWhenStopped);
+    connect(action,&QPropertyAnimation::finished, [=](){
+        emit selected(i);
+        i = -1;
+        j = -1;
+    });
 }

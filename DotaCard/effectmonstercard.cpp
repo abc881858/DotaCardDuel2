@@ -1,4 +1,4 @@
-#include "effectmonstercard.h"
+﻿#include "effectmonstercard.h"
 #include "dota.h"
 #include <QDebug>
 
@@ -58,38 +58,43 @@ void EffectMonsterCard::beforeActive()
 
 void EffectMonsterCard::specialSummonCard()
 {
-    area = Card::Fieldyard_Area;
-    stand = true;
-    face = true;
-    enemy = false;
-
     CardMoveStruct move;
     move.areaFrom = Card::Hand_Area;
     move.areaTo = Card::Fieldyard_Area;
     move.indexFrom = qDota->getCardIndex(this);
     move.indexTo = qDota->testPlace(Card::Fieldyard_Area);
     move.reason = CardMoveStruct::REASON_specialSummonCard;
+
+    area = Card::Fieldyard_Area;
+    stand = true;
+    face = true;
+    enemy = false;
+
     qDota->moveCard(move);
 }
 
 void EffectMonsterCard::summonCard()
 {
+    qDota->oneTurnOneNormalSummon = false;
+
     CardMoveStruct move;
     move.areaFrom = Card::Hand_Area;
     move.areaTo = Card::Fieldyard_Area;
     move.indexFrom = qDota->getCardIndex(this);
     move.indexTo = qDota->testPlace(Card::Fieldyard_Area);
     move.reason = CardMoveStruct::REASON_summonCard;
+
+    area = Card::Fieldyard_Area;
+    stand = true;
+    face = true;
+    enemy = false;
+
     qDota->moveCard(move);
 }
 
 void EffectMonsterCard::setCard()
 {
     qDota->oneTurnOneNormalSummon = false;
-    area = Card::Fieldyard_Area;
-    stand = false;
-    face = false;
-    enemy = false;
 
     CardMoveStruct move;
     move.areaFrom = Card::Hand_Area;
@@ -97,6 +102,12 @@ void EffectMonsterCard::setCard()
     move.indexFrom = qDota->getCardIndex(this);
     move.indexTo = qDota->testPlace(Card::Fieldyard_Area);
     move.reason = CardMoveStruct::REASON_setCard;
+
+    area = Card::Fieldyard_Area;
+    stand = false;
+    face = false;
+    enemy = false;
+
     qDota->moveCard(move);
 }
 

@@ -1,4 +1,4 @@
-#include "dota.h"
+﻿#include "dota.h"
 #include "engine.h"
 #include "net.h"
 #include <QMessageBox>
@@ -73,12 +73,12 @@ void Dota::setSearchReason(Dota::ReasonFlag flag)
     {
         addAuthenticateCardArea(Card::EnemyFieldyard_Area);
     }
-    else if(flag==Dota::ChainDeclared_Reason)
-    {
-        addAuthenticateCardArea(Card::Fieldyard_Area);
-        addAuthenticateCardArea(Card::Fieldground_Area);
-        needAuthenticateCardActive();
-    }
+//    else if(flag==Dota::ChainDeclared_Reason)
+//    {
+//        addAuthenticateCardArea(Card::Fieldyard_Area);
+//        addAuthenticateCardArea(Card::Fieldground_Area);
+//        needAuthenticateCardActive();
+//    }
     else if(flag==Dota::BeEquiped_Reason)
     {
         addAuthenticateCardArea(Card::Fieldyard_Area);
@@ -306,22 +306,15 @@ int Dota::testPlace(Card::AreaFlag flag)
     return -1;
 }
 
-void Dota::afterActiveSpellCard()
+void Dota::searchEquip(int targetIndex)
 {
-    if(currentActiveCard->getArea() == 4)
-    {
-        if(currentActiveCard->getKind() == Card::EquipSpell_Kind)
-        {
-            //先到场地，发光，弹出对话框，点确定，选择卡，装备卡动画
-            qDebug() << "selectOneMonsterToEquip";
+    //先到场地，发光，弹出对话框，点确定，选择卡，装备卡动画
+    qDebug() << "selectOneMonsterToEquip";
 
-            equipSpellCard = currentActiveCard;
-            currentActiveCard = nullptr;
+    equipSpellCard = fieldgroundCards[targetIndex];
 
-            whoIsDoing = true;
-            emit showInfoDialog();
-        }
-    }
+    whoIsDoing = true;
+    emit showInfoDialog();
 }
 
 void Dota::doActive()
@@ -350,8 +343,8 @@ void Dota::beEquiped()
 void Dota::effectEquipSpellCard()
 {
     //TODO equipSpellCard 此刻也应该闪装备卡
-    equipSpellCard->activeAfterEquiped();
-    equipSpellCard->beforeActive();
+    equipSpellCard->afterEquip();
+    equipSpellCard->active();
     equipSpellCard = nullptr;
     equipMonsterCard = nullptr;
 }
@@ -553,12 +546,13 @@ void Dota::response_finishChain()
     }
     Dota::ReasonFlag flag = chainStack.pop();
 
-    if(flag == Dota::ChainDeclared_Reason) // 这里应该有个while循环，response_finishChain();
-    {
-        chainCard->beforeActive();
-        chainCard = nullptr;
-    }
-    else if(flag == Dota::BeAttacked_Reason)
+//    if(flag == Dota::ChainDeclared_Reason) // 这里应该有个while循环，response_finishChain();
+//    {
+//        chainCard->beforeActive();
+//        chainCard = nullptr;
+//    }
+
+    if(flag == Dota::BeAttacked_Reason)
     {
         //解锁中，不响应
         //先问自己是否连锁，再问对方是否连锁 /*简单处理下攻击后的伤亡情况*/
@@ -567,27 +561,32 @@ void Dota::response_finishChain()
         {
             if(attackSourceCard->getCurrentATK() <= attackDestinationCard->getCurrentATK())
             {
-                attackSourceCard->destroyCard();
                 CardMoveStruct move;
                 move.areaFrom = Card::Fieldyard_Area;
                 move.areaTo = Card::Graveyard_Area;
                 move.indexFrom = getCardIndex(attackSourceCard);
                 move.indexTo = -1;
                 move.reason = CardMoveStruct::REASON_destroyCard;
+
+                attackSourceCard->destroyCard();
+
                 moveCard(move);
+
                 if(attackSourceCard->getKind()==Card::EffectMonster_Kind && !attackSourceCard->equipSpellCards.isEmpty())
                 {
                     for(Card* spell : attackSourceCard->equipSpellCards)
                     {
                         if(spell->getArea() == Card::Fieldground_Area)
                         {
-                            spell->destroyCard();
                             CardMoveStruct move;
                             move.areaFrom = Card::Fieldground_Area;
                             move.areaTo = Card::Graveyard_Area;
                             move.indexFrom = getCardIndex(spell);
                             move.indexTo = -1;
                             move.reason = CardMoveStruct::REASON_destroyCard;
+
+                            spell->destroyCard();
+
                             moveCard(move);
                         }
                     }
@@ -597,27 +596,32 @@ void Dota::response_finishChain()
             }
             if(attackSourceCard->getCurrentATK() >= attackDestinationCard->getCurrentATK())
             {
-                attackDestinationCard->enemyDestroyCard();
                 CardMoveStruct move;
                 move.areaFrom = Card::EnemyFieldyard_Area;
                 move.areaTo = Card::EnemyGraveyard_Area;
                 move.indexFrom = getCardIndex(attackDestinationCard);
                 move.indexTo = -1;
                 move.reason = CardMoveStruct::REASON_destroyEnemyCard;
+
+                attackDestinationCard->enemyDestroyCard();
+
                 moveCard(move);
+
                 if(attackDestinationCard->getKind()==Card::EffectMonster_Kind && !attackDestinationCard->equipSpellCards.isEmpty())
                 {
                     for(Card* spell : attackDestinationCard->equipSpellCards)
                     {
                         if(spell->getArea() == Card::EnemyFieldground_Area)
                         {
-                            spell->enemyDestroyCard();
                             CardMoveStruct move;
                             move.areaFrom = Card::EnemyFieldground_Area;
                             move.areaTo = Card::EnemyGraveyard_Area;
                             move.indexFrom = getCardIndex(spell);
                             move.indexTo = -1;
                             move.reason = CardMoveStruct::REASON_destroyEnemyCard;
+
+                            spell->enemyDestroyCard();
+
                             moveCard(move);
                         }
                     }
@@ -636,6 +640,9 @@ void Dota::response_finishChain()
                 move.indexFrom = getCardIndex(attackDestinationCard);
                 move.indexTo = -1;
                 move.reason = CardMoveStruct::REASON_destroyEnemyCard;
+
+                attackDestinationCard->enemyDestroyCard();
+
                 moveCard(move);
                 if(attackDestinationCard->getKind()==Card::EffectMonster_Kind && !attackDestinationCard->equipSpellCards.isEmpty())
                 {

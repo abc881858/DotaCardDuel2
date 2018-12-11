@@ -38,7 +38,7 @@ bool HelmOfTheDominator::testEffectFromFieldground()
     return false;
 }
 
-void HelmOfTheDominator::beforeActive()
+void HelmOfTheDominator::active()
 {
     qDebug() << "try active HelmOfTheDominator";
 
@@ -68,7 +68,7 @@ void HelmOfTheDominator::unActive()
     qDota->currentActiveCard = nullptr;
 }
 
-void HelmOfTheDominator::activeAfterEquiped()
+void HelmOfTheDominator::afterEquip()
 {
     equipMonsterCard->setCurrentDEF(equipMonsterCard->getCurrentDEF()+300);
 }

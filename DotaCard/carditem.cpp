@@ -1,4 +1,4 @@
-#include "carditem.h"
+﻿#include "carditem.h"
 #include <QGraphicsSceneMouseEvent>
 #include <QStyleOptionGraphicsItem>
 #include <QImage>
@@ -116,11 +116,11 @@ void CardItem::hoverEnterEvent(QGraphicsSceneHoverEvent *)
         {
             qDebug() << "authenticateCard";
 //          高亮hover的卡牌
-            if(qDota->getSearchReason()==Dota::ChainDeclared_Reason)
-            {
-                qDebug() << "currentTargetReason ChainDeclared_Reason";
-                setCursor(cursorEffect);
-            }
+//            if(qDota->getSearchReason()==Dota::ChainDeclared_Reason)
+//            {
+//                qDebug() << "currentTargetReason ChainDeclared_Reason";
+//                setCursor(cursorEffect);
+//            }
             if(qDota->getSearchReason()==Dota::BeEquiped_Reason)
             {
                 qDebug() << "currentTargetReason BeEquiped_Reason";
@@ -238,13 +238,13 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
                 qDota->attackSourceCard->canAttack = false;
                 qDota->beAttacked();
             }
-            else if(flag == Dota::ChainDeclared_Reason)
-            {
-                qDebug() << "currentTargetReason == Dota::ChainDeclared_Reason";
-                qDota->chainCard = card;
-                clearFinger();
-                qDota->chainDeclared();
-            }
+//            else if(flag == Dota::ChainDeclared_Reason)
+//            {
+//                qDebug() << "currentTargetReason == Dota::ChainDeclared_Reason";
+//                qDota->chainCard = card;
+//                clearFinger();
+//                qDota->chainDeclared();
+//            }
             else if(flag == Dota::BeEquiped_Reason)
             {
                 qDebug() << "currentTargetReason == Dota::BeEquiped_Reason";
@@ -273,14 +273,14 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
         case CardItem::EffectFromHand_Finger://暂时没过滤怪兽卡,发动魔法卡
             if(card->getKind() == Card::EquipSpell_Kind)
             {
-                card->beforeEquip();
+                card->beforeActive();
             }
             break;
         case CardItem::EffectFromFieldyard_Finger:
-            card->beforeActive();
+            card->active();
             break;
         case CardItem::EffectFromFieldground_Finger:
-            card->beforeActive();
+            card->active();
             break;
         case CardItem::SpecialSummon_Finger:
             card->specialSummonCard();
