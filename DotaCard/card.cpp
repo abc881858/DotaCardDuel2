@@ -187,6 +187,16 @@ void Card::setCurrentDEF(int value)
     currentDEF = value;
 }
 
+void Card::setFace(bool value)
+{
+    face = value;
+}
+
+void Card::setEnemy(bool value)
+{
+    enemy = value;
+}
+
 int Card::getLevel() const
 {
     return level;

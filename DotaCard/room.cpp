@@ -279,10 +279,10 @@ Room::Room(QObject* parent)
     addItem(dialog3);
     dialog3->setZValue(7);
     dialog3->hide();
-    connect(dialog3, &SelectDialog::selected, [=](int i){
+    connect(dialog3, &SelectDialog::selected, [=](int index){
         dialog3->hide();
         qDota->whoIsDoing = true;
-        qDebug() << "selected" << i;
+        qDota->specialSummonFromDeck(index);
     });
 }
 

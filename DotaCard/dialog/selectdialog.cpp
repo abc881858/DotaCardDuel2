@@ -11,10 +11,10 @@ SelectDialog::SelectDialog(const QString &filename)
 
     scrollArea = new QScrollArea;
     widget = new QWidget;
+
     layout = new QHBoxLayout;
     layout->setContentsMargins(15,0,15,0);
     layout->setSpacing(22);
-    widget->setLayout(layout);
 
     scrollArea->setWidget(widget);
     scrollArea->setStyleSheet("QScrollArea {background-color:transparent;}");
@@ -65,10 +65,12 @@ void SelectDialog::buildDialog()
                 button->setFixedSize(50,72);
                 button->setStyleSheet(QString("border-image: url(%1);").arg(card->getFieldPath()));
                 layout->addWidget(button);
-
+                button->setText(QString::number(j));
                 connect(button, &QPushButton::clicked, this, &SelectDialog::hideAnimation);
             }
         }
+
+        widget->setLayout(layout);
         widget->setFixedSize(72*i+30, 80);
         update();
     }
@@ -76,6 +78,8 @@ void SelectDialog::buildDialog()
 
 void SelectDialog::hideAnimation()
 {
+    auto *button = qobject_cast<QPushButton *>(sender());
+    int index = button->text().toInt();
     QPropertyAnimation *action = new QPropertyAnimation(this,"pos");
     action->setStartValue(QPointF(292,226));
     action->setEndValue(QPointF(292,-160));
@@ -83,7 +87,14 @@ void SelectDialog::hideAnimation()
     action->setEasingCurve(QEasingCurve::InQuad);
     action->start(QAbstractAnimation::DeleteWhenStopped);
     connect(action,&QPropertyAnimation::finished, [=](){
-        emit selected(i);
+        emit selected(index);
+        QLayoutItem *child;
+        while ((child = layout->takeAt(0)) != 0)
+        {
+            layout->removeWidget(child->widget());
+            child->widget()->setParent(0);
+            delete child;
+        }
         i = -1;
         j = -1;
     });

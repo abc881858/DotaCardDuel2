@@ -141,6 +141,9 @@ public:
     QList<Card*> equipSpellCards;//装备了几张魔法卡
     Card* equipMonsterCard;//被装备在哪张怪兽卡上
 
+    void setFace(bool value);
+    void setEnemy(bool value);
+
 protected:
     bool face; //表侧 里侧
     bool stand; //攻击 防守

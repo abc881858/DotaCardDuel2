@@ -1,4 +1,4 @@
-#ifndef STRUCTS_H
+﻿#ifndef STRUCTS_H
 #define STRUCTS_H
 
 #include <QVariant>
@@ -29,6 +29,8 @@ public:
     static const int REASON_enemyDestroyCard = -7;
     static const int REASON_destroyEnemyCard = 8;
     static const int REASON_enemyDestroyEnemyCard = -8;
+    static const int REASON_specialSummonDeckCard = 9;
+    static const int REASON_enemyspecialSummonDeckCard = -9;
 
     CardMoveStruct();
 

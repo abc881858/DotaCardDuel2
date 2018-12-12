@@ -209,6 +209,7 @@ public:
     void searchEquip(int targetIndex);
 
     void doActive();
+    void specialSummonFromDeck(int index);
 };
 
 #endif // DOTA_H

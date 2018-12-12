@@ -302,6 +302,25 @@ int Dota::testPlace(Card::AreaFlag flag)
     return -1;
 }
 
+void Dota::specialSummonFromDeck(int index)
+{
+    Card *card = deckCards.at(index);
+
+    CardMoveStruct move;
+    move.areaFrom = Card::Deck_Area;
+    move.areaTo = Card::Fieldyard_Area;
+    move.indexFrom = index;
+    move.indexTo = qDota->testPlace(Card::Fieldyard_Area);
+    move.reason = CardMoveStruct::REASON_specialSummonDeckCard;
+
+    card->setArea(Card::Fieldyard_Area);
+    card->setStand(true);
+    card->setFace(true);
+    card->setEnemy(false);
+
+    qDota->moveCard(move);
+}
+
 void Dota::searchEquip(int targetIndex)
 {
     //先到场地，发光，弹出对话框，点确定，选择卡，装备卡动画
@@ -340,7 +359,10 @@ void Dota::effectEquipSpellCard()
 {
     //TODO equipSpellCard 此刻也应该闪装备卡
     equipSpellCard->afterEquip();
-    equipSpellCard->active();
+    if(equipSpellCard->testEffectFromFieldground())
+    {
+        equipSpellCard->active();
+    }
     equipSpellCard = nullptr;
     equipMonsterCard = nullptr;
 }
@@ -517,6 +539,10 @@ void Dota::moveCard(CardMoveStruct move)
     else if(move.reason == CardMoveStruct::REASON_enemyDestroyEnemyCard)
     {
         card->destroyCard();
+    }
+    else if(move.reason == CardMoveStruct::REASON_enemyspecialSummonDeckCard)
+    {
+        card->enemySpecialSummonCard();
     }
     else
     {

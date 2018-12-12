@@ -25,6 +25,11 @@ bool HelmOfTheDominator::testEffectFromFieldground()
         return false;
     }
 
+    if(qDota->testPlace(Card::Fieldyard_Area) == -1)
+    {
+        return false;
+    }
+
     //一回合一次，选择自己卡组的一只3星以下的怪兽特殊召唤。
     //当这张装备卡从场上离开或再次使用该效果时，召唤怪兽破坏。
     if (qDota->phase == Dota::Main1_Phase ||
@@ -39,19 +44,19 @@ bool HelmOfTheDominator::testEffectFromFieldground()
 }
 
 //[CardItem::mousePressEvent] [EquipSpellCard::beforeActive]
-//[Dota::moveCard] [Room::moveCardItem]
+// ① [Dota::moveCard] [Dota::moveCardItem] [Room::moveCardItem] from hand to fieldground (need to do moveCardItemAnimation)
+// ② [Dota::showChainAnimation] [Room::showChainAnimation]
+//[Pixmap::doShineAnimation] [Dota::searchEquip]
+//[Dota::showInfoDialog] [Room::showInfoDialog] [InfoDialog::showAnimation] wait click equip-monster
 
-//from hand to fieldground (need to do moveCardItemAnimation)
-//[Dota::showChainAnimation] [Room::showChainAnimation]
-//[Dota::searchEquip] [Dota::showInfoDialog]
+//[CardItem::mousePressEvent] [Dota::beEquiped]
+//[[Dota::showEquipAnimation] [Room::showEquipAnimation]
+//[Pixmap::doEquipAnimation] [Dota::effectEquipSpellCard]
+// ① [EquipSpellCard::afterEquip]
+// ② [HelmOfTheDominator::active] [Dota::showWarningDialog] [Room::showWarningDialog] [WarningDialog::showAnimation]
+//[HelmOfTheDominator::doActive] { or [Dota::unActive] }
+//[Dota::doActive] [Dota::showSelectDialog] [Room::showSelectDialog] [SelectDialog::showAnimation]
 
-//[Room::showInfoDialog] wait click equip-monster
-//[Dota::beEquiped] [Dota::showEquipAnimation]
-//[Room::showEquipAnimation] [Pixmap::doEquipAnimation]
-//[Dota::effectEquipSpellCard] [this::afterEquip]
-
-//select fieldyard monster, show equipLinkAnimation
-//afterEquip, show fadeEquipAnimation
 void HelmOfTheDominator::active()
 {
     qDebug() << "try active HelmOfTheDominator";
