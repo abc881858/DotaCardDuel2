@@ -38,6 +38,20 @@ bool HelmOfTheDominator::testEffectFromFieldground()
     return false;
 }
 
+//[CardItem::mousePressEvent] [EquipSpellCard::beforeActive]
+//[Dota::moveCard] [Room::moveCardItem]
+
+//from hand to fieldground (need to do moveCardItemAnimation)
+//[Dota::showChainAnimation] [Room::showChainAnimation]
+//[Dota::searchEquip] [Dota::showInfoDialog]
+
+//[Room::showInfoDialog] wait click equip-monster
+//[Dota::beEquiped] [Dota::showEquipAnimation]
+//[Room::showEquipAnimation] [Pixmap::doEquipAnimation]
+//[Dota::effectEquipSpellCard] [this::afterEquip]
+
+//select fieldyard monster, show equipLinkAnimation
+//afterEquip, show fadeEquipAnimation
 void HelmOfTheDominator::active()
 {
     qDebug() << "try active HelmOfTheDominator";
@@ -49,6 +63,13 @@ void HelmOfTheDominator::active()
     emit qDota->showWarningDialog();
 }
 
+void HelmOfTheDominator::afterEquip()
+{
+    equipMonsterCard->setCurrentDEF(equipMonsterCard->getCurrentDEF()+300);
+}
+
+//press spellCard or first active
+//ask for
 void HelmOfTheDominator::doActive()
 {
     if(didEffect)
@@ -66,9 +87,4 @@ void HelmOfTheDominator::unActive()
 {
     canEffect = true;
     qDota->currentActiveCard = nullptr;
-}
-
-void HelmOfTheDominator::afterEquip()
-{
-    equipMonsterCard->setCurrentDEF(equipMonsterCard->getCurrentDEF()+300);
 }

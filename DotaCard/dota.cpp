@@ -309,7 +309,7 @@ void Dota::searchEquip(int targetIndex)
 
     equipSpellCard = fieldgroundCards[targetIndex];
 
-    whoIsDoing = true;
+    whoIsDoing = true; //TODO: moving WhoIsDoing
     emit showInfoDialog();
 }
 

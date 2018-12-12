@@ -85,7 +85,6 @@ public:
     virtual bool testNormalSummon();
     virtual bool testSetCard();
     virtual bool testEffectFromFieldyard();
-
     virtual bool testDefencePosition();
     virtual bool testAttackPosition();
     virtual bool testFlipSummon();
