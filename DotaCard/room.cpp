@@ -62,7 +62,8 @@ Room::Room(QObject* parent)
 
     textedit = new QTextEdit;
     textedit->setFrameStyle(0);
-    textedit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+//    textedit->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    textedit->setReadOnly(true);
     textedit->setStyleSheet("background-color: rgb(255, 240, 180);font-size:11pt;");
 
     textwidget = addWidget(textedit);
