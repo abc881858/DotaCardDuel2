@@ -7,7 +7,7 @@ class Phase : public QGraphicsObject
 {
     Q_OBJECT
 public:
-    Phase(QString name);
+    Phase(const QString& name);
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *);
 protected:

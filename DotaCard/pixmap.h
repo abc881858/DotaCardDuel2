@@ -22,24 +22,23 @@ protected:
     void timerEvent(QTimerEvent*);
 
 public:
-    void setPixmap(QString filename);
+    void setPixmap(const QString& filename);
     void doShineAnimation();
     void changePhaseAnimation();
     void effect();
     void actionAnimation();
     void swordAnimation(QPointF p1, QPointF p2);
-
     void doEquipAnimation(QPointF positionFrom, QPointF positionTo);
     void doEquipHoverAnimation();
     void doneEquipHoverAnimation();
 private:
-    QPropertyAnimation *hide_pix;
-    QPropertyAnimation *action_start;
-    QPropertyAnimation* animation;
-    QPropertyAnimation *fadeEquip;
+    QPropertyAnimation *hide_pix{};
+    QPropertyAnimation *action_start{};
+    QPropertyAnimation* animation{};
+    QPropertyAnimation *fadeEquip{};
 
-    int z;
-    int id;
+    int z{};
+    int id{};
 
 signals:
     void finishedDoShineAnimation();

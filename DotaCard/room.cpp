@@ -237,14 +237,6 @@ Room::Room(QObject* parent)
 //        word[l].hide();
 //    }
 
-    for(int i = 0; i < 5; ++i)
-    {
-        fieldyardItems[i] = nullptr;
-        fieldgroundItems[i] = nullptr;
-        enemyFieldyardItems[i] = nullptr;
-        enemyFieldgroundItems[i] = nullptr;
-    }
-
     item_shine = new Pixmap(":/png/shine");
     item_shine->setZValue(5);
     item_shine->setPos(-500,-500);
@@ -332,22 +324,19 @@ CardItem *Room::getCardItemFromIndex(int targetIndex, int areaIndex)
     {
         return fieldyardItems[targetIndex];
     }
-    else if (areaIndex == 4) //Fieldground_Area
+    if (areaIndex == 4) //Fieldground_Area
     {
         return fieldgroundItems[targetIndex];
     }
-    else if (areaIndex == 8) //EnemyFieldyard_Area
+    if (areaIndex == 8) //EnemyFieldyard_Area
     {
         return enemyFieldyardItems[targetIndex];
     }
-    else if (areaIndex == 9) //EnemyFieldground_Area
+    if (areaIndex == 9) //EnemyFieldground_Area
     {
         return enemyFieldgroundItems[targetIndex];
     }
-    else
-    {
-        return nullptr;
-    }
+    return nullptr;
 }
 
 void Room::showEquipAnimation(int from, int to)
@@ -430,7 +419,7 @@ void Room::showSelectDialog()
 
 void Room::hoverEnter()
 {
-    CardItem *item = qobject_cast<CardItem *>(sender());
+    auto *item = qobject_cast<CardItem *>(sender());
     bigImage->setPixmap(QString(":/image/%1").arg(item->getName()));
     //首先一张卡被hover，左上角大图肯定要更新
     //但对方的（除前后场的face-up卡）不该显示，我方卡组也不该显示
@@ -440,7 +429,7 @@ void Room::hoverEnter()
 
 void Room::createCardItem(int index)
 {
-    CardItem *item = new CardItem(qDota->getCardFromIndex(index));
+    auto *item = new CardItem(qDota->getCardFromIndex(index));
     addItem(item);
     deckItems << item;
     item->setPos(DeckPos);
@@ -451,7 +440,7 @@ void Room::createCardItem(int index)
 
 void Room::createEnemyCardItem(int index)
 {
-    CardItem *item = new CardItem(qDota->getEnemyCardFromIndex(index));
+    auto *item = new CardItem(qDota->getEnemyCardFromIndex(index));
     addItem(item);
     enemyDeckItems << item;
     item->setPos(EnemyDeckPos);

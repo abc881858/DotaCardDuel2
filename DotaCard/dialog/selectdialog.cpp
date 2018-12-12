@@ -32,7 +32,7 @@ SelectDialog::SelectDialog(const QString &filename)
 
 QRectF SelectDialog::boundingRect() const
 {
-    return QRectF(0, 0, pixmap.width(), pixmap.height());
+    return {0, 0, qreal(pixmap.width()), qreal(pixmap.height())};
 }
 
 void SelectDialog::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
@@ -61,7 +61,7 @@ void SelectDialog::buildDialog()
             if(card->getLevel() <= level)
             {
                 i++;
-                QPushButton *button = new QPushButton;
+                auto *button = new QPushButton;
                 button->setFixedSize(50,72);
                 button->setStyleSheet(QString("border-image: url(%1);").arg(card->getFieldPath()));
                 layout->addWidget(button);

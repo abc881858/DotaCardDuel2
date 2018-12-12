@@ -16,12 +16,12 @@ void Net::initialize()
 {
     client = new QWebSocket;
     client->open(QUrl("ws://localhost:7720"));
-//    client->open(QUrl("ws://47.101.204.243:7720"));
+    //    client->open(QUrl("ws://47.101.204.243:7720"));
     connect(client, SIGNAL(connected()), this, SLOT(connected()));
     connect(client, SIGNAL(binaryMessageReceived(QByteArray)), this, SLOT(readFromServer(QByteArray)));
 }
 
-void Net::write(QJsonObject jsonObject)
+void Net::write(const QJsonObject& jsonObject)
 {
     QJsonDocument jsonDoucment(jsonObject);
     QByteArray byteArray = jsonDoucment.toJson(QJsonDocument::Compact); //压缩的json
@@ -36,7 +36,7 @@ void Net::connected()
     write(jsonObject);
 }
 
-void Net::readFromServer(QByteArray json)
+void Net::readFromServer(const QByteArray& json)
 {
     QJsonDocument jsonDoucment = QJsonDocument::fromJson(json);
     QJsonObject object = jsonDoucment.object();
@@ -46,19 +46,18 @@ void Net::readFromServer(QByteArray json)
     {
         return;
     }
+    
+    request.prepend("request_");
+    QJsonObject parameter = object["parameter"].toObject();
+    if (parameter.isEmpty())
+    {
+        QMetaObject::invokeMethod(this, request.toLatin1().data());
+    }
     else
     {
-        request.prepend("request_");
-        QJsonObject parameter = object["parameter"].toObject();
-        if (parameter.isEmpty())
-        {
-            QMetaObject::invokeMethod(this, request.toLatin1().data());
-        }
-        else
-        {
-            QMetaObject::invokeMethod(this, request.toLatin1().data(), Q_ARG(QJsonObject, parameter));
-        }
+        QMetaObject::invokeMethod(this, request.toLatin1().data(), Q_ARG(QJsonObject, parameter));
     }
+    
 }
 
 void Net::sendMessage(int command)
@@ -68,7 +67,7 @@ void Net::sendMessage(int command)
     write(jsonObject);
 }
 
-void Net::sendDeck(QVariantList allISDN)
+void Net::sendDeck(const QVariantList& allISDN)
 {
     QJsonArray array = QJsonArray::fromVariantList(allISDN);
     QJsonObject jsonObject;
@@ -77,7 +76,7 @@ void Net::sendDeck(QVariantList allISDN)
     write(jsonObject);
 }
 
-void Net::sendEnemyDeck(QVariantList allISDN)
+void Net::sendEnemyDeck(const QVariantList& allISDN)
 {
     QJsonArray array = QJsonArray::fromVariantList(allISDN);
     QJsonObject jsonObject;
@@ -87,7 +86,7 @@ void Net::sendEnemyDeck(QVariantList allISDN)
 }
 
 ///////////
-void Net::moveCard(QJsonObject json)
+void Net::moveCard(const QJsonObject& json)
 {
     QJsonObject jsonObject;
     jsonObject.insert("request", QString("moveCard"));

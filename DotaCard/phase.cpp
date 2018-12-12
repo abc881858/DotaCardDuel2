@@ -1,10 +1,10 @@
-﻿#include "phase.h"
+#include "phase.h"
 #include <QPainter>
 #include <QTimerEvent>
 #include <QGraphicsSceneMouseEvent>
 #include <QDebug>
 
-Phase::Phase(QString name) : pixmap(QString("phase/%1.bmp").arg(name)),
+Phase::Phase(const QString& name) : pixmap(QString("phase/%1.bmp").arg(name)),
     targetRect(0,0,40,75), sourceRect(0,0,40,75), name(name), turn("blue"), x(0)
 {
     setAcceptHoverEvents(true);
@@ -17,7 +17,7 @@ Phase::Phase(QString name) : pixmap(QString("phase/%1.bmp").arg(name)),
 
 QRectF Phase::boundingRect() const
 {
-    return QRectF(0, 0, 40, 75);
+    return {0, 0, 40, 75};
 }
 
 void Phase::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)

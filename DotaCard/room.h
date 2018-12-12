@@ -22,11 +22,10 @@ class Room : public QGraphicsScene
 public:
     explicit Room(QObject* parent = nullptr);
 
-    Pixmap *sword[10];
-    Pixmap *equipFieldyard[10];
-    Pixmap *equipFieldground[10];
+    Pixmap *sword[10]{};
+    Pixmap *equipFieldyard[10]{};
+    Pixmap *equipFieldground[10]{};
     Pixmap *item_shine;
-//    Pixmap *item_enemy_shine;
     InfoDialog *dialog;
     WarningDialog *dialog2;
     SelectDialog *dialog3;
@@ -63,13 +62,13 @@ public:
 
     QList<CardItem*> handItems;
     QList<CardItem*> deckItems;
-    CardItem* fieldyardItems[5];
-    CardItem* fieldgroundItems[5];
+    CardItem* fieldyardItems[5]{};
+    CardItem* fieldgroundItems[5]{};
     QList<CardItem*> graveyardItems;
     QList<CardItem*> enemyDeckItems;
     QList<CardItem*> enemyHandItems;
-    CardItem* enemyFieldyardItems[5];
-    CardItem* enemyFieldgroundItems[5];
+    CardItem* enemyFieldyardItems[5]{};
+    CardItem* enemyFieldgroundItems[5]{};
     QList<CardItem*> enemyGraveyardItems;
 
     void adjustHandItems();

@@ -25,7 +25,7 @@ CentaurWarrunner::CentaurWarrunner()
 void CentaurWarrunner::standby()
 {
     //先调用基类的standby函数，初始化一些变量，例如 oneTurnOneAttack
-    Card::standby();
+    EffectMonsterCard::standby();
 
     //准备阶段自动做的事, 每回合一次在这初始化
     canEffect1 = true;

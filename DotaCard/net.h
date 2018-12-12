@@ -16,25 +16,25 @@ class Net : public QObject
 public:
     static Net* instance();
     void initialize();
-    void write(QJsonObject jsonObject);
+    void write(const QJsonObject& jsonObject);
     void sendMessage(int command);
 //    void doAddMyLP(int value);
 //    void doAddYourLP(int value);
-    void sendDeck(QVariantList allISDN);
-    void sendEnemyDeck(QVariantList allISDN);
+    void sendDeck(const QVariantList& allISDN);
+    void sendEnemyDeck(const QVariantList& allISDN);
     void sendBeAttacked(int sourceIndex, int targetIndex);
     void sendFinishChain();
 
     void sendBattleAnimationFinished();
     void sendChained(int targetIndex, int areaIndex);
 
-    void moveCard(QJsonObject json);
+    void moveCard(const QJsonObject& json);
     void sendBeEquiped(int equipSpellCardIndex, int equipMonsterCardIndex);
 private:
     QWebSocket* client;
 
 public slots:
-    void readFromServer(QByteArray json);
+    void readFromServer(const QByteArray& json);
     void connected();
 
 signals:

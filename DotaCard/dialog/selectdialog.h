@@ -18,7 +18,6 @@ class SelectDialog : public QGraphicsObject
 public:
     SelectDialog(const QString &filename);
     QPixmap pixmap;
-    Button *button;
     void showAnimation();
     void buildDialog();
     int area{0};

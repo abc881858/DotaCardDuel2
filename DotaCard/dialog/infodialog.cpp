@@ -41,7 +41,7 @@ InfoDialog::InfoDialog(const QString &filename)
 
 QRectF InfoDialog::boundingRect() const
 {
-    return QRectF(0, 0, pixmap.width(), pixmap.height());
+    return {0, 0, qreal(pixmap.width()), qreal(pixmap.height())};
 }
 
 void InfoDialog::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)

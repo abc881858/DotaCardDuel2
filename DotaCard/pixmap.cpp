@@ -1,5 +1,6 @@
 ﻿#include "pixmap.h"
 #include <QDebug>
+#include <utility>
 
 Pixmap::Pixmap(const QString &filename, bool center_as_origin)
     : pixmap(filename)
@@ -41,12 +42,12 @@ Pixmap::Pixmap(const QString &filename, bool center_as_origin)
 
 Pixmap::Pixmap(QPixmap q)
 {
-    this->pixmap=q;
+    this->pixmap=std::move(q);
 }
 
 QRectF Pixmap::boundingRect() const
 {
-    return QRectF(0, 0, pixmap.width(), pixmap.height());
+    return {0, 0, qreal(pixmap.width()), qreal(pixmap.height())};
 }
 
 void Pixmap::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
@@ -54,7 +55,7 @@ void Pixmap::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget 
     painter->drawPixmap(0, 0, pixmap);
 }
 
-void Pixmap::setPixmap(QString filename)
+void Pixmap::setPixmap(const QString &filename)
 {
     pixmap.load(filename);
 }
@@ -63,29 +64,29 @@ void Pixmap::doShineAnimation()
 {
     //  qDota->music->play("music/magic_active.wav");
 
-    QPropertyAnimation *fade1 = new QPropertyAnimation(this,"opacity");
+    auto *fade1 = new QPropertyAnimation(this,"opacity");
     fade1->setStartValue(0);
     fade1->setEndValue(1);
     fade1->setDuration(500);
-    QPropertyAnimation *fade2 = new QPropertyAnimation(this,"scale");
+    auto *fade2 = new QPropertyAnimation(this,"scale");
     fade2->setStartValue(0);
     fade2->setEndValue(1.2);
     fade2->setDuration(500);
-    QParallelAnimationGroup *group1 = new QParallelAnimationGroup;
+    auto *group1 = new QParallelAnimationGroup;
     group1->addAnimation(fade1);
     group1->addAnimation(fade2);
-    QPropertyAnimation *fade3 = new QPropertyAnimation(this,"opacity");
+    auto *fade3 = new QPropertyAnimation(this,"opacity");
     fade3->setStartValue(1);
     fade3->setEndValue(0);
     fade3->setDuration(500);
-    QPropertyAnimation *fade4 = new QPropertyAnimation(this,"scale");
+    auto *fade4 = new QPropertyAnimation(this,"scale");
     fade4->setStartValue(1.2);
     fade4->setEndValue(0);
     fade4->setDuration(500);
-    QParallelAnimationGroup *group2 = new QParallelAnimationGroup;
+    auto *group2 = new QParallelAnimationGroup;
     group2->addAnimation(fade3);
     group2->addAnimation(fade4);
-    QSequentialAnimationGroup *group = new QSequentialAnimationGroup;
+    auto *group = new QSequentialAnimationGroup;
     group->addAnimation(group1);
     group->addAnimation(group2);
     connect(group, &QParallelAnimationGroup::finished, this, &Pixmap::finishedDoShineAnimation);
@@ -133,25 +134,25 @@ void Pixmap::swordAnimation(QPointF p1, QPointF p2)
 
 void Pixmap::doEquipAnimation(QPointF positionFrom, QPointF positionTo)
 {
-    QPropertyAnimation *fade1 = new QPropertyAnimation(this,"opacity");
+    auto *fade1 = new QPropertyAnimation(this,"opacity");
     fade1->setStartValue(1);
     fade1->setEndValue(0);
     fade1->setDuration(1000);
     fade1->setEasingCurve(QEasingCurve::InCirc);
 
-    QPropertyAnimation *fade2 = new QPropertyAnimation(this,"scale");
+    auto *fade2 = new QPropertyAnimation(this,"scale");
     fade2->setStartValue(1);
     fade2->setKeyValueAt(0.5,2);
     fade2->setEndValue(1);
     fade2->setDuration(1000);
 
-    QPropertyAnimation *fade3 = new QPropertyAnimation(this,"pos");
+    auto *fade3 = new QPropertyAnimation(this,"pos");
     fade3->setStartValue(positionFrom);
     fade3->setEndValue(positionTo);
     fade3->setDuration(1000);
     fade3->setEasingCurve(QEasingCurve::InBack);
 
-    QParallelAnimationGroup *group = new QParallelAnimationGroup;//并行动画
+    auto *group = new QParallelAnimationGroup;//并行动画
     group->addAnimation(fade1);
     group->addAnimation(fade2);
     group->addAnimation(fade3);

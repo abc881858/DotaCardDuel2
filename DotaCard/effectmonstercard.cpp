@@ -142,5 +142,6 @@ bool EffectMonsterCard::testFlipSummon()
 
 void EffectMonsterCard::standby()
 {
+    Card::standby();
     canAttack = true;
 }

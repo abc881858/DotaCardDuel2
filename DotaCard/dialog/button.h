@@ -11,7 +11,7 @@ class Button : public QGraphicsObject
 public:
     Button(const QString &filename, bool center_as_origin = true);
     QPixmap pixmap;
-    void setPixmap(QString filename);
+    void setPixmap(const QString& filename);
 protected:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *);
     virtual QRectF boundingRect() const;

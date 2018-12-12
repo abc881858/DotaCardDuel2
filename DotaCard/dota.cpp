@@ -14,8 +14,7 @@ Dota* Dota::instance()
 void Dota::initialize()
 {
     qNet->initialize();
-    connect(qNet, &Net::request_moveCard, this, &Dota::response_moveCard);
-
+    connect(qNet, SIGNAL(request_moveCard(QJsonObject)), this, SLOT(response_moveCard(QJsonObject)));
     connect(qNet, SIGNAL(request_enemyBeEquiped(QJsonObject)), this, SLOT(response_enemyBeEquiped(QJsonObject)));
     connect(qNet, SIGNAL(request_enemyBeAttack(QJsonObject)), this, SLOT(response_enemyBeAttack(QJsonObject)));
     connect(qNet, SIGNAL(request_finishChain()), this, SLOT(response_finishChain()));
@@ -92,16 +91,13 @@ Dota::ReasonFlag Dota::getSearchReason()
 
 bool Dota::isSearchingTargetCard()
 {
-    if(!authenticateCardAreaList.isEmpty())
-    {
-        return true;
-    }
+    return (!authenticateCardAreaList.isEmpty());
+
 //    一般 target 都有 area，可以以小见大,窥一斑而知全豹
 //    if(authenticateCardActive)
 //    {
 //        return true;
 //    }
-    return false; //全部 authenticate 都不 need
 }
 
 void Dota::addAuthenticateCardArea(Card::AreaFlag flag)
@@ -842,9 +838,6 @@ void Dota::response_enemyChained(QJsonObject json)
 //    {
 //        item = enemyFieldgroundItems[targetIndex];
 //    }
-
-//    item_enemy_shine->setPos(item->pos() - QPoint(12,-1));
-//    item_enemy_shine->doShineAnimation();
 
     emit showChainAnimation(targetIndex, areaIndex);
 }

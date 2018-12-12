@@ -26,7 +26,7 @@ void Button::mousePressEvent(QGraphicsSceneMouseEvent *)
 
 QRectF Button::boundingRect() const
 {
-    return QRectF(0, 0, pixmap.width(), pixmap.height());
+    return QRectF{0, 0, qreal(pixmap.width()), qreal(pixmap.height())};
 }
 
 void Button::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
@@ -34,7 +34,7 @@ void Button::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget 
     painter->drawPixmap(0, 0, pixmap);
 }
 
-void Button::setPixmap(QString filename)
+void Button::setPixmap(const QString& filename)
 {
     pixmap.load(filename);
 }

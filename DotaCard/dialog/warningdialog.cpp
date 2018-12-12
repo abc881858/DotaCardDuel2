@@ -71,7 +71,7 @@ WarningDialog::WarningDialog(const QString &filename)
 
 QRectF WarningDialog::boundingRect() const
 {
-    return QRectF(0, 0, pixmap.width(), pixmap.height());
+    return {0, 0, qreal(pixmap.width()), qreal(pixmap.height())};
 }
 
 void WarningDialog::paint(QPainter *painter, const QStyleOptionGraphicsItem *, QWidget *)
