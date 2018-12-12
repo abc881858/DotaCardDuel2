@@ -30,7 +30,7 @@ public:
     WarningDialog *dialog2;
     SelectDialog *dialog3;
 
-//    QGraphicsTextItem word[10];
+    QGraphicsTextItem word[10];
 //    GraphicsPixmapObject* duifangxingdong;
     Pixmap* bp_pix;
 
@@ -109,6 +109,7 @@ public slots:
     void showInfoDialog();
     void showWarningDialog();
     void showSelectDialog();
+    void changeAtkDef(LpChangeStruct change);
 };
 
 #endif // ROOM_H

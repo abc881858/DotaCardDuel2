@@ -39,4 +39,16 @@ public:
 };
 Q_DECLARE_METATYPE(CardMoveStruct)
 
+class LpChangeStruct
+{
+public:
+    Card::AreaFlag area;
+    int index;
+    int atk;
+    int def;
+
+    LpChangeStruct();
+};
+Q_DECLARE_METATYPE(LpChangeStruct)
+
 #endif // STRUCTS_H

@@ -71,6 +71,8 @@ void HelmOfTheDominator::active()
 void HelmOfTheDominator::afterEquip()
 {
     equipMonsterCard->setCurrentDEF(equipMonsterCard->getCurrentDEF()+300);
+    qDota->resetAtkDef(equipMonsterCard);
+    //emit qDota->changeAtkDef(equipMonsterCard);
 }
 
 //press spellCard or first active

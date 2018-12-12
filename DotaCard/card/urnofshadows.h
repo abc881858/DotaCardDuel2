@@ -26,6 +26,7 @@ class UrnOfShadows : public EquipSpellCard
 public:
     Q_INVOKABLE UrnOfShadows();
     virtual void standby();
+    int marker{0};
 };
 
 #endif // URNOFSHADOWS_H

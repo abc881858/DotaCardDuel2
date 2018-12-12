@@ -183,6 +183,7 @@ signals:
     void addEnemyLP(int);
     void showWarningDialog();
     void showSelectDialog();
+    void changeAtkDef(LpChangeStruct);
 
 public:
     void setupConnect(QList<Card *> list, bool enemy);
@@ -210,6 +211,9 @@ public:
 
     void doActive();
     void specialSummonFromDeck(int index);
+    int getAtkFromIndex(int index, bool enemy=false);
+    int getDefFromIndex(int index, bool enemy=false);
+    void resetAtkDef(Card *card);
 };
 
 #endif // DOTA_H

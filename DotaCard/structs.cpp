@@ -101,3 +101,11 @@ CardMoveStruct CardMoveStruct::fromJson(QJsonObject json)
 
     return move;
 }
+
+LpChangeStruct::LpChangeStruct()
+{
+    area = Card::No_Area;
+    index = -1;
+    atk = -1;
+    def = -1;
+}

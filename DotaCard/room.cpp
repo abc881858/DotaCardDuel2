@@ -47,6 +47,7 @@ Room::Room(QObject* parent)
     connect(qDota, &Dota::showInfoDialog, this, &Room::showInfoDialog);
     connect(qDota, &Dota::showWarningDialog, this, &Room::showWarningDialog);
     connect(qDota, &Dota::showSelectDialog, this, &Room::showSelectDialog);
+    connect(qDota, &Dota::changeAtkDef, this, &Room::changeAtkDef);
 
     leftarea = new Pixmap(":/backdrop/left2");
     addItem(leftarea);
@@ -222,21 +223,23 @@ Room::Room(QObject* parent)
         equipFieldground[j]->hide();
     }
 
-//    for (int k = 0; k < 5; k++)
-//    {
-//        word[k].setPos(90 + 78 * k+256, 390);
-//        addItem(&word[k]);
-//        word[k].setDefaultTextColor(Qt::white);
-//        word[k].hide();
-//    }
+    for (int k = 0; k < 5; k++)
+    {
+        word[k].setPos(76 + 78 * k+256, 390);
+        addItem(&word[k]);
+        word[k].setDefaultTextColor(Qt::white);
+//        word[k].setPlainText("1000 / 1000");
+        word[k].hide();
+    }
 
-//    for (int l = 5; l < 10; l++)
-//    {
-//        word[l].setPos(402 - 78 * (l - 5)+256, 192);
-//        addItem(&word[l]);
-//        word[l].setDefaultTextColor(Qt::white);
-//        word[l].hide();
-//    }
+    for (int l = 5; l < 10; l++)
+    {
+        word[l].setPos(388 - 78 * (l - 5)+256, 192);
+        addItem(&word[l]);
+        word[l].setDefaultTextColor(Qt::white);
+//        word[l].setPlainText("1000 / 1000");
+        word[l].hide();
+    }
 
     item_shine = new Pixmap(":/png/shine");
     item_shine->setZValue(5);
@@ -418,6 +421,21 @@ void Room::showSelectDialog()
     dialog3->showAnimation();
 }
 
+void Room::changeAtkDef(LpChangeStruct change)
+{
+    int index = change.index;
+    int atk = change.atk;
+    int def = change.def;
+    if(change.area == Card::Fieldyard_Area)
+    {
+        word[index].setPlainText(QString("%1 / %2").arg(atk).arg(def));
+    }
+    else if(change.area == Card::EnemyFieldyard_Area)
+    {
+        word[5+index].setPlainText(QString("%1 / %2").arg(atk).arg(def));
+    }
+}
+
 void Room::hoverEnter()
 {
     auto *item = qobject_cast<CardItem *>(sender());
@@ -468,6 +486,7 @@ void Room::moveCardItem(CardMoveStruct move)
     case Card::Fieldyard_Area:
         item = fieldyardItems[indexFrom];
         fieldyardItems[indexFrom] = nullptr;
+        word[indexFrom].hide();
         break;
     case Card::Fieldground_Area:
         item = fieldgroundItems[indexFrom];
@@ -487,6 +506,7 @@ void Room::moveCardItem(CardMoveStruct move)
     case Card::EnemyFieldyard_Area:
         item = enemyFieldyardItems[indexFrom];
         enemyFieldyardItems[indexFrom] = nullptr;
+        word[5+indexFrom].hide();
         break;
     case Card::EnemyFieldground_Area:
         item = enemyFieldgroundItems[indexFrom];
@@ -516,6 +536,8 @@ void Room::moveCardItem(CardMoveStruct move)
         fieldyardItems[indexTo] = item;
         item->setPos(350+80*indexTo, 317);
         item->setZValue(2);
+        word[indexTo].setPlainText(QString("%1 / %2").arg(qDota->getAtkFromIndex(indexTo)).arg(qDota->getDefFromIndex(indexTo)));
+        word[indexTo].show();
         break;
     }
     case Card::Fieldground_Area:
@@ -544,6 +566,8 @@ void Room::moveCardItem(CardMoveStruct move)
         enemyFieldyardItems[indexTo] = item;
         item->setPos(EnemyFieldyardPos + QPointF(320 - 80 * indexTo, 0));
         item->setZValue(2);
+        word[5+indexTo].setPlainText(QString("%1 / %2").arg(qDota->getAtkFromIndex(indexTo,true)).arg(qDota->getDefFromIndex(indexTo,true)));
+        word[5+indexTo].show();
         break;
     }
     case Card::EnemyFieldground_Area:
