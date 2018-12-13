@@ -14,3 +14,9 @@ void UrnOfShadows::standby()
 {
     EquipSpellCard::standby();
 }
+
+void UrnOfShadows::afterEquip()
+{
+    equipMonsterCard->setCurrentDEF(equipMonsterCard->getCurrentDEF()+100);
+    qDota->resetAtkDef(equipMonsterCard);
+}

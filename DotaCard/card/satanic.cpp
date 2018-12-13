@@ -39,3 +39,10 @@ bool Satanic::testEffectFromFieldground()
     }
     return false;
 }
+
+void Satanic::afterEquip()
+{
+    equipMonsterCard->setCurrentATK(equipMonsterCard->getCurrentATK()+400);
+    equipMonsterCard->setCurrentDEF(equipMonsterCard->getCurrentDEF()+700);
+    qDota->resetAtkDef(equipMonsterCard);
+}

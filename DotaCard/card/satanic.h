@@ -25,6 +25,7 @@ public:
     virtual void active();
     virtual bool testEffectFromFieldground();
     bool canEffect;
+    virtual void afterEquip();
 };
 
 #endif // SATANIC_H

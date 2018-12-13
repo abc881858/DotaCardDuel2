@@ -17,8 +17,8 @@
 #define GraveyardPos QPointF(485+256, 330)
 #define EnemyDeckPos QPointF(5+256, 93)
 #define EnemyHandPos QPointF(17+256, -71)
-#define EnemyFieldyardPos QPointF(91+256, 213)
-#define EnemyFieldgroundPos QPointF(91+256, 105)
+#define EnemyFieldyardPos QPointF(78+256, 213)
+#define EnemyFieldgroundPos QPointF(80+256, 105)
 #define EnemyGraveyardPos QPointF(15+256, 200)
 
 Room::Room(QObject* parent)
@@ -171,25 +171,25 @@ Room::Room(QObject* parent)
     for (int i = 0; i < 5; i++)
     {
         sword[i] = new Pixmap(":/png/sword");
-        sword[i]->setPos(QPointF(80 * i, 0) + FieldyardPos);
+        sword[i]->setPos(QPointF(78 * i, 0) + FieldyardPos);
         sword[i]->setZValue(3);
         addItem(sword[i]);
         sword[i]->hide();
 
         connect(sword[i], &Pixmap::finishedSwordAnimation, [=]() {
             sword[i]->hide();
-            sword[i]->setPos(QPointF(80 * i, 0) + FieldyardPos);
+            sword[i]->setPos(QPointF(78 * i, 0) + FieldyardPos);
             sword[i]->setRotation(0);
         });
 
         equipFieldyard[i] = new Pixmap(":/png/zhuangbeika");
-        equipFieldyard[i]->setPos(QPointF(80 * i, 0) + FieldyardPos + QPoint(0,12));
+        equipFieldyard[i]->setPos(QPointF(78 * i, 0) + FieldyardPos + QPoint(0,12));
         equipFieldyard[i]->setZValue(4);
         addItem(equipFieldyard[i]);
         equipFieldyard[i]->hide();
 
         equipFieldground[i] = new Pixmap(":/png/zhuangbeika");
-        equipFieldground[i]->setPos(QPointF(80 * i, 0) + FieldgroundPos + QPoint(0,12));
+        equipFieldground[i]->setPos(QPointF(78 * i, 0) + FieldgroundPos + QPoint(0,12));
         equipFieldground[i]->setZValue(4);
         addItem(equipFieldground[i]);
         equipFieldground[i]->hide();
@@ -199,25 +199,25 @@ Room::Room(QObject* parent)
     {
         sword[j] = new Pixmap(":/png/sword");
         sword[j]->setRotation(180);
-        sword[j]->setPos(QPointF(320 - 80 * (j - 5), 0) + EnemyFieldyardPos);
+        sword[j]->setPos(QPointF(320 - 78 * (j - 5), 0) + EnemyFieldyardPos);
         sword[j]->setZValue(3);
         addItem(sword[j]);
         sword[j]->hide();
 
         connect(sword[j], &Pixmap::finishedSwordAnimation, [=]() {
             sword[j]->hide();
-            sword[j]->setPos(QPointF(320 - 80 * (j - 5), 0) + EnemyFieldyardPos);
+            sword[j]->setPos(QPointF(320 - 78 * (j - 5), 0) + EnemyFieldyardPos);
             sword[j]->setRotation(180);
         });
 
         equipFieldyard[j] = new Pixmap(":/png/zhuangbeika");
-        equipFieldyard[j]->setPos(QPointF(320 - 80 * (j - 5), 0) + EnemyFieldyardPos + QPoint(0,12));
+        equipFieldyard[j]->setPos(QPointF(320 - 78 * (j - 5), 0) + EnemyFieldyardPos + QPoint(0,12));
         equipFieldyard[j]->setZValue(4);
         addItem(equipFieldyard[j]);
         equipFieldyard[j]->hide();
 
         equipFieldground[j] = new Pixmap(":/png/zhuangbeika");
-        equipFieldground[j]->setPos(QPointF(320 - 80 * (j - 5), 0) + EnemyFieldgroundPos + QPoint(0,12));
+        equipFieldground[j]->setPos(QPointF(320 - 78 * (j - 5), 0) + EnemyFieldgroundPos + QPoint(0,12));
         equipFieldground[j]->setZValue(4);
         addItem(equipFieldground[j]);
         equipFieldground[j]->hide();
@@ -225,7 +225,7 @@ Room::Room(QObject* parent)
 
     for (int k = 0; k < 5; k++)
     {
-        word[k].setPos(76 + 78 * k+256, 390);
+        word[k].setPos(78 * k+340, 390);
         addItem(&word[k]);
         word[k].setDefaultTextColor(Qt::white);
 //        word[k].setPlainText("1000 / 1000");
@@ -234,7 +234,7 @@ Room::Room(QObject* parent)
 
     for (int l = 5; l < 10; l++)
     {
-        word[l].setPos(388 - 78 * (l - 5)+256, 192);
+        word[l].setPos(652 - 78 * (l - 5), 192);
         addItem(&word[l]);
         word[l].setDefaultTextColor(Qt::white);
 //        word[l].setPlainText("1000 / 1000");
@@ -534,7 +534,7 @@ void Room::moveCardItem(CardMoveStruct move)
     case Card::Fieldyard_Area:
     {
         fieldyardItems[indexTo] = item;
-        item->setPos(350+80*indexTo, 317);
+        item->setPos(350+78*indexTo, 317);
         item->setZValue(2);
         word[indexTo].setPlainText(QString("%1 / %2").arg(qDota->getAtkFromIndex(indexTo)).arg(qDota->getDefFromIndex(indexTo)));
         word[indexTo].show();
@@ -543,7 +543,7 @@ void Room::moveCardItem(CardMoveStruct move)
     case Card::Fieldground_Area:
     {
         fieldgroundItems[indexTo] = item;
-        item->setPos(350+80*indexTo, 424);
+        item->setPos(350+78*indexTo, 424);
         item->setZValue(2);
         break;
     }
@@ -564,7 +564,7 @@ void Room::moveCardItem(CardMoveStruct move)
     case Card::EnemyFieldyard_Area:
     {
         enemyFieldyardItems[indexTo] = item;
-        item->setPos(EnemyFieldyardPos + QPointF(320 - 80 * indexTo, 0));
+        item->setPos(EnemyFieldyardPos + QPointF(320 - 78 * indexTo, 0));
         item->setZValue(2);
         word[5+indexTo].setPlainText(QString("%1 / %2").arg(qDota->getAtkFromIndex(indexTo,true)).arg(qDota->getDefFromIndex(indexTo,true)));
         word[5+indexTo].show();
@@ -573,7 +573,7 @@ void Room::moveCardItem(CardMoveStruct move)
     case Card::EnemyFieldground_Area:
     {
         enemyFieldgroundItems[indexTo] = item;
-        item->setPos(EnemyFieldgroundPos + QPointF(320 - 80 * indexTo, 0));
+        item->setPos(EnemyFieldgroundPos + QPointF(320 - 78 * indexTo, 0));
         item->setZValue(2);
         break;
     }

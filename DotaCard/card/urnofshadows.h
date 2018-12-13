@@ -27,6 +27,7 @@ public:
     Q_INVOKABLE UrnOfShadows();
     virtual void standby();
     int marker{0};
+    virtual void afterEquip();
 };
 
 #endif // URNOFSHADOWS_H
