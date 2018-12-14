@@ -170,7 +170,7 @@ Card* Dota::getEnemyCardFromIndex(int index)
 //其实 card 到 Dota 应该就传 card 的，不该用 int int
 void Dota::resetAtkDef(Card* card)
 {
-    LpChangeStruct change;
+    AtkDefChangeStruct change;
     change.area = card->getArea();
     change.index = getCardIndex(card);
     change.atk = card->getCurrentATK();

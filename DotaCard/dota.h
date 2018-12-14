@@ -183,7 +183,7 @@ signals:
     void addEnemyLP(int);
     void showWarningDialog();
     void showSelectDialog();
-    void changeAtkDef(LpChangeStruct);
+    void changeAtkDef(AtkDefChangeStruct);
 
 public:
     void setupConnect(QList<Card *> list, bool enemy);

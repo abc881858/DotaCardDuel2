@@ -102,7 +102,7 @@ CardMoveStruct CardMoveStruct::fromJson(QJsonObject json)
     return move;
 }
 
-LpChangeStruct::LpChangeStruct()
+AtkDefChangeStruct::AtkDefChangeStruct()
 {
     area = Card::No_Area;
     index = -1;

@@ -109,7 +109,7 @@ public slots:
     void showInfoDialog();
     void showWarningDialog();
     void showSelectDialog();
-    void changeAtkDef(LpChangeStruct change);
+    void changeAtkDef(AtkDefChangeStruct change);
 };
 
 #endif // ROOM_H

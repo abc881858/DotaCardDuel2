@@ -421,7 +421,7 @@ void Room::showSelectDialog()
     dialog3->showAnimation();
 }
 
-void Room::changeAtkDef(LpChangeStruct change)
+void Room::changeAtkDef(AtkDefChangeStruct change)
 {
     int index = change.index;
     int atk = change.atk;
