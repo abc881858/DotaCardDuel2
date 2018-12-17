@@ -9,6 +9,16 @@ Satanic::Satanic()
     name = "Satanic";
     description = tr("Satanic");
     canEffect = true;
+
+    connect(qDota, &Dota::addEnemyLP, this, &Satanic::damage);
+}
+
+void Satanic::damage(int addEnemyLp)
+{
+    if(equipMonsterCard!=nullptr && equipMonsterCard==qDota->attackSourceCard)
+    {
+        emit qDota->addLP(-addEnemyLp/2);
+    }
 }
 
 void Satanic::standby()

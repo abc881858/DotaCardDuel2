@@ -89,6 +89,13 @@ void HelmOfTheDominator::doActive()
     qDota->doActive(); //显示 dialog3 特招对话框
 }
 
+void HelmOfTheDominator::gotoGraveyard()
+{
+    //这张卡从场上送去墓地时
+    //从卡组·墓地将一张“撒旦之邪力”加入手牌
+    //copy from active()
+}
+
 void HelmOfTheDominator::unActive()
 {
     canEffect = true;

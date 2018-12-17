@@ -21,6 +21,7 @@ public:
     virtual void unActive(){}
     virtual void doActive(){}
     virtual void beforeActive();
+    virtual void gotoGraveyard(){}
 };
 
 #endif // EQUIPSPELLCARD_H

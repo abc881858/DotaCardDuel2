@@ -32,6 +32,7 @@ public:
     virtual void afterEquip();
     virtual void unActive();
     virtual void doActive();
+    virtual void gotoGraveyard();
 };
 
 #endif // HELMOFTHEDOMINATOR_H

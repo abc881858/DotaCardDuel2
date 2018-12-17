@@ -101,6 +101,7 @@ public:
     virtual void specialSummonCard(){}
     virtual void summonCard(){}
     virtual void setCard(){}
+    virtual void gotoGraveyard(){}
 
     int getISDN() const;
     KindFlag getKind() const;

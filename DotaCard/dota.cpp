@@ -515,6 +515,7 @@ void Dota::moveCard(CardMoveStruct move)
         break;
     case Card::Graveyard_Area:
         graveyardCards << card;
+        emit card->gotoGraveyard();
         break;
 
     case Card::EnemyDeck_Area:

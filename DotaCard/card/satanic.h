@@ -26,6 +26,7 @@ public:
     virtual bool testEffectFromFieldground();
     bool canEffect;
     virtual void afterEquip();
+    void damage(int addEnemyLp);
 };
 
 #endif // SATANIC_H

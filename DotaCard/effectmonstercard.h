@@ -24,6 +24,7 @@ public:
     virtual void specialSummonCard();
     virtual void summonCard();
     virtual void setCard();
+    virtual void gotoGraveyard(){}
 };
 
 #endif // EFFECTMONSTERCARD_H
