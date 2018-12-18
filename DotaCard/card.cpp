@@ -96,7 +96,7 @@ bool Card::testAttack()
     return false;
 }
 
-void Card::beforeActive()
+void Card::beforeEquip()
 {
     area = Card::Fieldground_Area;
     stand = true;

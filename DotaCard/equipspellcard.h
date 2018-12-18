@@ -20,7 +20,7 @@ public:
     virtual void active(){}
     virtual void unActive(){}
     virtual void doActive(){}
-    virtual void beforeActive();
+    virtual void beforeEquip();
     virtual void gotoGraveyard(){}
 };
 

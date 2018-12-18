@@ -273,7 +273,7 @@ void CardItem::mousePressEvent(QGraphicsSceneMouseEvent *event)
         case CardItem::EffectFromHand_Finger://暂时没过滤怪兽卡,发动魔法卡
             if(card->getKind() == Card::EquipSpell_Kind)
             {
-                card->beforeActive();
+                card->beforeEquip();
             }
             break;
         case CardItem::EffectFromFieldyard_Finger:

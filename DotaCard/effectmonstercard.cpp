@@ -51,11 +51,6 @@ bool EffectMonsterCard::testEffectFromFieldyard()
     return false;
 }
 
-void EffectMonsterCard::beforeActive()
-{
-
-}
-
 void EffectMonsterCard::specialSummonCard()
 {
     CardMoveStruct move;

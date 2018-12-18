@@ -40,7 +40,7 @@ void EquipSpellCard::standby()
     //准备阶段自动做的事, 每回合一次在这初始化
 }
 
-void EquipSpellCard::beforeActive()
+void EquipSpellCard::beforeEquip()
 {
     CardMoveStruct move;
     move.areaFrom = Card::Hand_Area;
@@ -49,7 +49,7 @@ void EquipSpellCard::beforeActive()
     move.indexTo = qDota->testPlace(Card::Fieldground_Area);
     move.reason = CardMoveStruct::REASON_activeSpellCard;
 
-    Card::beforeActive();
+    Card::beforeEquip();
 
     qDota->moveCard(move);
 

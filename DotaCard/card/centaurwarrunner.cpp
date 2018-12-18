@@ -34,6 +34,10 @@ void CentaurWarrunner::standby()
 
 bool CentaurWarrunner::testEffectFromFieldyard()
 {
+    if(!qDota->whoIsDoing)
+    {
+        return false;
+    }
     if(area != Card::Fieldyard_Area)
     {
         return false;
@@ -43,7 +47,6 @@ bool CentaurWarrunner::testEffectFromFieldyard()
     {
         if(canEffect1)
         {
-//            canEffect1 = false;
             return true;
         }
     }
@@ -55,14 +58,13 @@ bool CentaurWarrunner::testEffectFromFieldyard()
     {
         if (canEffect2) //一回合一次
         {
-//            canEffect2 = false;
             return true;
         }
     }
     return false;
 }
 
-void CentaurWarrunner::beforeActive()
+void CentaurWarrunner::active()
 {
     qDebug() << "active CentaurWarrunner";
 }

@@ -91,7 +91,7 @@ public:
     virtual bool testEffectFromFieldground();
     virtual bool testAttack();
 
-    virtual void beforeActive();
+    virtual void beforeEquip();
     virtual void afterEquip(){}
 
     virtual void unActive(){}

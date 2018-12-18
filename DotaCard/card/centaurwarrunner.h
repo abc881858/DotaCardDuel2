@@ -25,7 +25,7 @@ public:
     Q_INVOKABLE CentaurWarrunner();
     virtual bool testEffectFromFieldyard();
     virtual void standby();
-    virtual void beforeActive();
+    virtual void active();
 
     bool canEffect1;
     bool canEffect2;
