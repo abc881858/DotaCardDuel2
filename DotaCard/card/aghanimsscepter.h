@@ -3,8 +3,8 @@
 
 #include "equipspellcard.h"
 
-/*
- * \brief 跳刀
+/* 遊戲王
+ * \brief 阿哈利姆神杖
  *
  */
 
