@@ -20,6 +20,7 @@ class Zeus : public EffectMonsterCard
     Q_OBJECT
 public:
     Q_INVOKABLE Zeus();
+    virtual bool testSpecialSummon();
 };
 
 #endif // ZEUS_H

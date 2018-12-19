@@ -1,4 +1,5 @@
 #include "zeus.h"
+#include "dota.h"
 
 Zeus::Zeus()
 {
@@ -14,4 +15,13 @@ Zeus::Zeus()
 
     currentATK = ATK;
     currentDEF = DEF;
+}
+
+bool Zeus::testSpecialSummon()
+{
+    if(qDota->hasMonster())
+    {
+        return true;
+    }
+    return false;
 }

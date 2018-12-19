@@ -67,4 +67,22 @@ bool CentaurWarrunner::testEffectFromFieldyard()
 void CentaurWarrunner::active()
 {
     qDebug() << "active CentaurWarrunner";
+    int effectNum = QMessageBox::question(nullptr, QString(tr("selecting")), QString(tr("Active Which Effect")), "CentaurWarrunner_1", "CentaurWarrunner_2");
+    switch(effectNum)
+    {
+    case 0:
+        //将这张卡作为祭品发动，强制结束对方的战斗阶段。
+        //若这张卡装备了“dota-跳刀”，
+        //则可以改为丢弃一张手牌发动
+        qDebug() << "CentaurWarrunner_1";
+        break;
+    case 1:
+        //你的每回合一次，在对方场合也可以发动
+        /* 你可以让自己场上名字带有“dota”的怪兽全部变为攻击表示或防守表示，
+        * 若这张卡装备了“dota-阿哈利姆神杖”时，
+        * 同时令自己场上名字带有“dota”的怪兽的攻击力（或防御力）上升自己
+        * 原本攻击力（或防御力）的一半。*/
+        qDebug() << "CentaurWarrunner_2";
+        break;
+    }
 }

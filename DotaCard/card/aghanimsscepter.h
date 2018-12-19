@@ -8,7 +8,6 @@
  *
  */
 
-
 class AghanimsScepter : public EquipSpellCard
 {
     Q_OBJECT

@@ -19,11 +19,12 @@ public:
     virtual bool testFlipSummon();
     virtual void standby();
     virtual bool testEffectFromFieldyard();
-    virtual void active(){}
     virtual void specialSummonCard();
     virtual void summonCard();
     virtual void setCard();
+    virtual void active(){}
     virtual void gotoGraveyard(){}
+    virtual bool testSpecialSummon(){return false;}
 
     bool canAttack;
 };
