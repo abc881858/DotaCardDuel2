@@ -95,7 +95,7 @@ public:
     virtual void afterEquip(){}
 
     virtual void unActive(){}
-    virtual void doActive(){}
+    virtual void doActive(int){}
     virtual void active(){}
 
     virtual void specialSummonCard(){}

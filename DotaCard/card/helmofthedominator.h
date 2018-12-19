@@ -31,7 +31,7 @@ public:
     bool didEffect;
     virtual void afterEquip();
     virtual void unActive();
-    virtual void doActive();
+    virtual void doActive(int);
     virtual void gotoGraveyard();
 };
 

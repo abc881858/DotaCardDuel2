@@ -75,6 +75,7 @@ void CentaurWarrunner::active()
         //若这张卡装备了“dota-跳刀”，
         //则可以改为丢弃一张手牌发动
         qDebug() << "CentaurWarrunner_1";
+        doActive(1);
         break;
     case 1:
         //你的每回合一次，在对方场合也可以发动
@@ -83,6 +84,19 @@ void CentaurWarrunner::active()
         * 同时令自己场上名字带有“dota”的怪兽的攻击力（或防御力）上升自己
         * 原本攻击力（或防御力）的一半。*/
         qDebug() << "CentaurWarrunner_2";
+        doActive(2);
         break;
+    }
+}
+
+void CentaurWarrunner::doActive(int activeId)
+{
+    if(activeId==1)
+    {
+
+    }
+    else if(activeId==2)
+    {
+
     }
 }

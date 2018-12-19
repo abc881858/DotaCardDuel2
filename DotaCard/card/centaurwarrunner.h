@@ -26,6 +26,7 @@ public:
     virtual bool testEffectFromFieldyard();
     virtual void standby();
     virtual void active();
+    virtual void doActive(int activeId);
 
     bool canEffect1;
     bool canEffect2;

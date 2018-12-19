@@ -270,7 +270,7 @@ Room::Room(QObject* parent)
     connect(dialog2, &WarningDialog::clicked_yes, [=](){
         dialog2->hide();
         qDota->whoIsDoing = true;
-        qDota->currentActiveCard->doActive();
+        qDota->currentActiveCard->doActive(1);
         //show scroll area
     });
     connect(dialog2, &WarningDialog::clicked_no, [=](){

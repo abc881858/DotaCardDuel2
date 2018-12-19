@@ -76,7 +76,7 @@ void HelmOfTheDominator::afterEquip()
 
 //press spellCard or first active
 //ask for
-void HelmOfTheDominator::doActive()
+void HelmOfTheDominator::doActive(int)
 {
     if(didEffect)
     {

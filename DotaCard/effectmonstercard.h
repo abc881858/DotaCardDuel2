@@ -25,6 +25,7 @@ public:
     virtual void active(){}
     virtual void gotoGraveyard(){}
     virtual bool testSpecialSummon(){return false;}
+    virtual void doActive(int){}
 
     bool canAttack;
 };
