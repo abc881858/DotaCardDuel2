@@ -60,7 +60,9 @@ SOURCES += \
     dialog/infodialog.cpp \
     card/satanic.cpp \
     dialog/warningdialog.cpp \
-    dialog/selectdialog.cpp
+    dialog/selectdialog.cpp \
+    card/blinkdagger.cpp \
+    card/aghanimsscepter.cpp
 
 HEADERS += \
     card.h \
@@ -96,7 +98,9 @@ HEADERS += \
     dialog/infodialog.h \
     card/satanic.h \
     dialog/warningdialog.h \
-    dialog/selectdialog.h
+    dialog/selectdialog.h \
+    card/blinkdagger.h \
+    card/aghanimsscepter.h
 
 RESOURCES += \
     dotacard.qrc
