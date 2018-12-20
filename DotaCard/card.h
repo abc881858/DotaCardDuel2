@@ -81,7 +81,7 @@ public:
     virtual void standby();
 
     virtual bool testEffectFromHand();
-    virtual bool testSpecialSummon();
+    virtual bool testSpecialSummon(){return false;}
     virtual bool testNormalSummon();
     virtual bool testSetCard();
     virtual bool testEffectFromFieldyard();

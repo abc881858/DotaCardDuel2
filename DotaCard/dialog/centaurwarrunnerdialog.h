@@ -1,27 +1,27 @@
-﻿#ifndef WARNINGDIALOG_H
-#define WARNINGDIALOG_H
+﻿#ifndef CENTAURWARRUNNERDIALOG_H
+#define CENTAURWARRUNNERDIALOG_H
 
 #include <QGraphicsObject>
 #include <QPixmap>
 #include <QPainter>
 #include "button.h"
 
-class WarningDialog : public QGraphicsObject
+class CentaurWarrunnerDialog : public QGraphicsObject
 {
     Q_OBJECT
 public:
-    WarningDialog(const QString &filename);
+    CentaurWarrunnerDialog(const QString &filename);
     QPixmap pixmap;
-    Button *buttonYes;
-    Button *buttonNo;
+    Button *button1;
+    Button *button2;
+    Button *button3;
     void showAnimation();
 protected:
     virtual void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *);
     virtual QRectF boundingRect() const;
 
 signals:
-    void clicked_yes();
-    void clicked_no();
+    void clicked_button(int);
 };
 
-#endif // WARNINGDIALOG_H
+#endif // CENTAURWARRUNNERDIALOG_H

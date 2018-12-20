@@ -48,6 +48,7 @@ Room::Room(QObject* parent)
     connect(qDota, &Dota::showWarningDialog, this, &Room::showWarningDialog);
     connect(qDota, &Dota::showSelectDialog, this, &Room::showSelectDialog);
     connect(qDota, &Dota::changeAtkDef, this, &Room::changeAtkDef);
+    connect(qDota, &Dota::showCentaurWarrunnerDialog, this, &Room::showCentaurWarrunnerDialog);
 
     leftarea = new Pixmap(":/backdrop/left2");
     addItem(leftarea);
@@ -287,6 +288,17 @@ Room::Room(QObject* parent)
         dialog3->hide();
         qDota->whoIsDoing = true;
         qDota->specialSummonFromDeck(index);
+        qDota->currentActiveCard = nullptr;
+    });
+
+    dialog4 = new CentaurWarrunnerDialog(":/png/centaurwarrunner4");
+    addItem(dialog4);
+    dialog4->setZValue(7);
+    dialog4->hide();
+    connect(dialog4, &CentaurWarrunnerDialog::clicked_button, [=](int index){
+        dialog4->hide();
+        qDota->whoIsDoing = true;
+        qDota->currentActiveCard->doActive(index);
     });
 }
 
@@ -410,6 +422,12 @@ void Room::showWarningDialog()
 {
     dialog2->show();
     dialog2->showAnimation();
+}
+
+void Room::showCentaurWarrunnerDialog()
+{
+    dialog4->show();
+    dialog4->showAnimation();
 }
 
 void Room::showSelectDialog()

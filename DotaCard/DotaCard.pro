@@ -25,6 +25,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 # You can also select to disable deprecated APIs only up to a certain version of Qt.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
+INCLUDEPATH += card dialog
+
 SOURCES += \
         main.cpp \
     card.cpp \
@@ -62,7 +64,8 @@ SOURCES += \
     dialog/warningdialog.cpp \
     dialog/selectdialog.cpp \
     card/blinkdagger.cpp \
-    card/aghanimsscepter.cpp
+    card/aghanimsscepter.cpp \
+    dialog/centaurwarrunnerdialog.cpp
 
 HEADERS += \
     card.h \
@@ -100,7 +103,8 @@ HEADERS += \
     dialog/warningdialog.h \
     dialog/selectdialog.h \
     card/blinkdagger.h \
-    card/aghanimsscepter.h
+    card/aghanimsscepter.h \
+    dialog/centaurwarrunnerdialog.h
 
 RESOURCES += \
     dotacard.qrc

@@ -12,9 +12,10 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include "structs.h"
-#include "dialog/infodialog.h"
-#include "dialog/warningdialog.h"
-#include "dialog/selectdialog.h"
+#include "infodialog.h"
+#include "warningdialog.h"
+#include "selectdialog.h"
+#include "centaurwarrunnerdialog.h"
 
 class Room : public QGraphicsScene
 {
@@ -29,6 +30,7 @@ public:
     InfoDialog *dialog;
     WarningDialog *dialog2;
     SelectDialog *dialog3;
+    CentaurWarrunnerDialog *dialog4;
 
     QGraphicsTextItem word[10];
 //    GraphicsPixmapObject* duifangxingdong;
@@ -110,6 +112,7 @@ public slots:
     void showWarningDialog();
     void showSelectDialog();
     void changeAtkDef(AtkDefChangeStruct change);
+    void showCentaurWarrunnerDialog();
 };
 
 #endif // ROOM_H

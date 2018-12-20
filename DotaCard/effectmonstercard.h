@@ -1,4 +1,4 @@
-#ifndef EFFECTMONSTERCARD_H
+﻿#ifndef EFFECTMONSTERCARD_H
 #define EFFECTMONSTERCARD_H
 
 #include "card.h"

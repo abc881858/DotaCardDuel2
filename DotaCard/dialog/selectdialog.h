@@ -4,7 +4,7 @@
 #include <QGraphicsObject>
 #include <QPixmap>
 #include <QPainter>
-#include "dialog/button.h"
+#include "button.h"
 #include <QScrollArea>
 #include <QGraphicsProxyWidget>
 #include <QHBoxLayout>

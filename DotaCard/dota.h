@@ -184,6 +184,7 @@ signals:
     void showWarningDialog();
     void showSelectDialog();
     void changeAtkDef(AtkDefChangeStruct);
+    void showCentaurWarrunnerDialog();
 
 public:
     void setupConnect(QList<Card *> list, bool enemy);

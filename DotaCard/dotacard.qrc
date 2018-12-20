@@ -25,6 +25,9 @@
         <file alias="ForceStaff">image/field/ForceStaff.jpg</file>
         <file alias="GemOfTrueSight">image/field/GemOfTrueSight.jpg</file>
         <file alias="UrnOfShadows">image/field/UrnOfShadows.jpg</file>
+        <file alias="AghanimsScepter">image/field/AghanimsScepter.jpg</file>
+        <file alias="BlinkDagger">image/field/BlinkDagger.jpg</file>
+        <file alias="Satanic">image/field/Satanic.jpg</file>
     </qresource>
     <qresource prefix="/hand">
         <file alias="NULL">image/hand/NULL.jpg</file>
@@ -42,6 +45,9 @@
         <file alias="ForceStaff">image/hand/ForceStaff.jpg</file>
         <file alias="GemOfTrueSight">image/hand/GemOfTrueSight.jpg</file>
         <file alias="UrnOfShadows">image/hand/UrnOfShadows.jpg</file>
+        <file alias="AghanimsScepter">image/hand/AghanimsScepter.jpg</file>
+        <file alias="BlinkDagger">image/hand/BlinkDagger.jpg</file>
+        <file alias="Satanic">image/hand/Satanic.jpg</file>
     </qresource>
     <qresource prefix="/image">
         <file alias="NULL">image/image/NULL.jpg</file>
@@ -59,6 +65,9 @@
         <file alias="ForceStaff">image/image/ForceStaff.jpg</file>
         <file alias="GemOfTrueSight">image/image/GemOfTrueSight.jpg</file>
         <file alias="UrnOfShadows">image/image/UrnOfShadows.jpg</file>
+        <file alias="AghanimsScepter">image/image/AghanimsScepter.jpg</file>
+        <file alias="BlinkDagger">image/image/BlinkDagger.jpg</file>
+        <file alias="Satanic">image/image/Satanic.jpg</file>
     </qresource>
     <qresource prefix="/png">
         <file>image/png/b.png</file>
@@ -94,6 +103,11 @@
         <file alias="enable_no">image/png/enable_no.png</file>
         <file alias="enable_yes">image/png/enable_yes.png</file>
         <file alias="jiansuo">image/png/jiansuo.png</file>
+        <file alias="centaurwarrunner1">image/png/centaurwarrunner1.png</file>
+        <file alias="centaurwarrunner2">image/png/centaurwarrunner2.png</file>
+        <file alias="centaurwarrunner3">image/png/centaurwarrunner3.png</file>
+        <file alias="centaurwarrunner4">image/png/dial_base.png</file>
+        <file alias="centaurwarrunner0">image/png/button_none.png</file>
     </qresource>
     <qresource prefix="/backdrop">
         <file>image/backdrop/beijing.jpg</file>

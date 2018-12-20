@@ -1,4 +1,4 @@
-#include "zeus.h"
+﻿#include "zeus.h"
 #include "dota.h"
 
 Zeus::Zeus()
@@ -19,9 +19,24 @@ Zeus::Zeus()
 
 bool Zeus::testSpecialSummon()
 {
-    if(qDota->hasMonster())
+    if(area != Card::Hand_Area)
     {
-        return true;
+        return false;
     }
+
+    if(qDota->testPlace(Card::Fieldyard_Area) == -1)
+    {
+        return false;
+    }
+
+    if(qDota->phase == Dota::Main1_Phase
+        || qDota->phase == Dota::Main2_Phase)
+    {
+        if(qDota->hasMonster())
+        {
+            return true;
+        }
+    }
+
     return false;
 }

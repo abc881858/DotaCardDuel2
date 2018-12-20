@@ -44,15 +44,6 @@ bool Card::testEffectFromHand()
     return false;
 }
 
-bool Card::testSpecialSummon()
-{
-    if(area != Card::Hand_Area)
-    {
-        return false;
-    }
-    return false;
-}
-
 bool Card::testNormalSummon()
 {
     return false;

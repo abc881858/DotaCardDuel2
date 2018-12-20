@@ -1,4 +1,4 @@
-#include "blinkdagger.h"
+﻿#include "blinkdagger.h"
 
 BlinkDagger::BlinkDagger()
 {
