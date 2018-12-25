@@ -31,6 +31,10 @@ public:
     static const int REASON_enemyDestroyEnemyCard = -8;
     static const int REASON_specialSummonDeckCard = 9;
     static const int REASON_enemyspecialSummonDeckCard = -9;
+    static const int REASON_destroyByEquipMonster = 10;
+    static const int REASON_destroyByEnemyEquipMonster = 11;
+    static const int REASON_enemyDestroyByEquipMonster = -10;
+    static const int REASON_enemyDestroyByEnemyEquipMonster = -11;
 
     CardMoveStruct();
 

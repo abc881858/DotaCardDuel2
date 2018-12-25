@@ -103,6 +103,9 @@ public:
     virtual void setCard(){}
     virtual void gotoGraveyard(){}
 
+    virtual void destroyByEquipMonster(){}
+    virtual void destroyByEnemyEquipMonster(){}
+
     int getISDN() const;
     KindFlag getKind() const;
 

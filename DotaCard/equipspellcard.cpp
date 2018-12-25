@@ -59,3 +59,31 @@ void EquipSpellCard::beforeEquip()
 //    qNet->sendChained(move.indexTo, Card::Fieldground_Area); // 考虑下提前发送Net连锁动画
 
 }
+
+void EquipSpellCard::destroyByEquipMonster()
+{
+    CardMoveStruct move;
+    move.areaFrom = Card::Fieldground_Area;
+    move.areaTo = Card::Graveyard_Area;
+    move.indexFrom = qDota->getCardIndex(this);
+    move.indexTo = -1;
+    move.reason = CardMoveStruct::REASON_destroyCard;
+
+    destroyCard();
+
+    qDota->moveCard(move);
+}
+
+void EquipSpellCard::destroyByEnemyEquipMonster()
+{
+    CardMoveStruct move;
+    move.areaFrom = Card::EnemyFieldground_Area;
+    move.areaTo = Card::EnemyGraveyard_Area;
+    move.indexFrom = qDota->getCardIndex(this);
+    move.indexTo = -1;
+    move.reason = CardMoveStruct::REASON_destroyEnemyCard;
+
+    enemyDestroyCard();
+
+    qDota->moveCard(move);
+}

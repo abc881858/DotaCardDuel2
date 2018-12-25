@@ -22,6 +22,8 @@ public:
     virtual void doActive(int){}
     virtual void beforeEquip();
     virtual void gotoGraveyard(){}
+    virtual void destroyByEquipMonster();
+    virtual void destroyByEnemyEquipMonster();
 };
 
 #endif // EQUIPSPELLCARD_H

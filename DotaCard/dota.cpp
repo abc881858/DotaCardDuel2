@@ -574,6 +574,14 @@ void Dota::moveCard(CardMoveStruct move)
     {
         card->enemySpecialSummonCard();
     }
+    else if(move.reason == CardMoveStruct::REASON_enemyDestroyByEquipMonster)
+    {
+        card->drawCard();
+    }
+    else if(move.reason == CardMoveStruct::REASON_enemyDestroyByEnemyEquipMonster)
+    {
+        card->enemyDrawCard();
+    }
     else
     {
         // reason == CardMoveStruct::REASON_unknown
@@ -630,16 +638,7 @@ void Dota::response_finishChain()
                     {
                         if(spell->getArea() == Card::Fieldground_Area)
                         {
-                            CardMoveStruct move;
-                            move.areaFrom = Card::Fieldground_Area;
-                            move.areaTo = Card::Graveyard_Area;
-                            move.indexFrom = getCardIndex(spell);
-                            move.indexTo = -1;
-                            move.reason = CardMoveStruct::REASON_destroyCard;
-
-                            spell->destroyCard();
-
-                            moveCard(move);
+                            spell->destroyByEquipMonster();
                         }
                     }
                 }
@@ -665,16 +664,7 @@ void Dota::response_finishChain()
                     {
                         if(spell->getArea() == Card::EnemyFieldground_Area)
                         {
-                            CardMoveStruct move;
-                            move.areaFrom = Card::EnemyFieldground_Area;
-                            move.areaTo = Card::EnemyGraveyard_Area;
-                            move.indexFrom = getCardIndex(spell);
-                            move.indexTo = -1;
-                            move.reason = CardMoveStruct::REASON_destroyEnemyCard;
-
-                            spell->enemyDestroyCard();
-
-                            moveCard(move);
+                            spell->destroyByEnemyEquipMonster();
                         }
                     }
                 }
@@ -702,13 +692,7 @@ void Dota::response_finishChain()
                     {
                         if(spell->getArea() == Card::EnemyFieldground_Area)
                         {
-                            CardMoveStruct move;
-                            move.areaFrom = Card::EnemyFieldground_Area;
-                            move.areaTo = Card::EnemyGraveyard_Area;
-                            move.indexFrom = getCardIndex(spell);
-                            move.indexTo = -1;
-                            move.reason = CardMoveStruct::REASON_destroyEnemyCard;
-                            moveCard(move);
+                            spell->destroyByEnemyEquipMonster();
                         }
                     }
                 }

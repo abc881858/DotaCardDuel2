@@ -19,6 +19,8 @@ public:
     Q_INVOKABLE GemOfTrueSight();
     virtual void standby();
     virtual void active();
+    virtual void destroyByEquipMonster();
+    virtual void destroyByEnemyEquipMonster();
 };
 
 #endif // GEMOFTRUESIGHT_H
