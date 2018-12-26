@@ -16,6 +16,7 @@ class AghanimsScepter : public EquipSpellCard
     Q_OBJECT
 public:
     Q_INVOKABLE AghanimsScepter();
+    virtual void afterEquip();
 };
 
 #endif // AGHANIMSSCEPTER_H

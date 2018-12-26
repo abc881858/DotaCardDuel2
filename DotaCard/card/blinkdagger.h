@@ -18,6 +18,7 @@ class BlinkDagger : public EquipSpellCard
     Q_OBJECT
 public:
     Q_INVOKABLE BlinkDagger();
+    virtual void afterEquip();
 };
 
 #endif // BLINKDAGGER_H
