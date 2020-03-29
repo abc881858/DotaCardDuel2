@@ -1,8 +1,6 @@
-DotaCardDuel2
+DotaCard
 
 Qt: download.qt.io
-
-runtime: release -> test.7z
 
 
 ![image](https://raw.githubusercontent.com/abc881858/DotaCardDuel2/master/Clipboard_20181226.png)
