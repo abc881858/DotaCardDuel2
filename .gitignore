@@ -1,42 +1,51 @@
+# C++ objects and libs
+*.slo
+*.lo
+*.o
+*.a
+*.la
+*.lai
+*.so
+*.dll
+*.dylib
 
-DotaCard/debug/
+# Qt-es
+object_script.*.Release
+object_script.*.Debug
+*_plugin_import.cpp
+/.qmake.cache
+/.qmake.stash
+*.pro.user
+*.pro.user.*
+*.qbs.user
+*.qbs.user.*
+*.moc
+moc_*.cpp
+moc_*.h
+qrc_*.cpp
+ui_*.h
+*.qmlc
+*.jsc
+Makefile*
+*build-*
 
-DotaCard/debug2/music/
+# Qt unit tests
+target_wrapper.*
 
-DotaCard/debug2/
+# QtCreator
+*.autosave
 
-DotaCard/music/
+# QtCreator Qml
+*.qmlproject.user
+*.qmlproject.user.*
 
-DotaCard/title/
+# QtCreator CMake
+CMakeLists.txt.user*
 
-DotaCard/phase/
-
-DotaCard/phase_name/
-
-DotaCard/DotaCard\.pro\.user
-
-DotaCard/\.qmake\.stash
-
-*.bat
-
-*.qm
-
-*.txt
-
-*.jpg
-
-*.bmp
-
-*.cur
-
-DotaCard/Makefile
-
-*.Debug
-
-*.Release
+build/.qmake.stash
 
 build/
 
-DotaCard/debug2/
+CI/exe/
 
-*.autosave
+CI/tool/

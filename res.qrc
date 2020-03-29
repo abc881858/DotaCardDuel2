@@ -1,0 +1,74 @@
+<RCC>
+    <qresource prefix="/">
+        <file>image/beijing.jpg</file>
+    </qresource>
+    <qresource prefix="/info">
+        <file alias="meleecreepgood">image/info/meleecreepgood.png</file>
+        <file alias="NULL">image/info/NULL.png</file>
+        <file alias="meleecreepbad">image/info/meleecreepbad.png</file>
+        <file alias="pugna">image/info/pugna.png</file>
+    </qresource>
+    <qresource prefix="/hand">
+        <file alias="meleecreepgood">image/hand/meleecreepgood.png</file>
+        <file alias="NULL">image/hand/NULL.png</file>
+        <file alias="meleecreepbad">image/hand/meleecreepbad.png</file>
+        <file alias="pugna">image/hand/pugna.png</file>
+    </qresource>
+    <qresource prefix="/area">
+        <file alias="meleecreepgood">image/area/meleecreepgood.png</file>
+        <file alias="NULL">image/area/NULL.png</file>
+        <file alias="meleecreepbad">image/area/meleecreepbad.png</file>
+        <file alias="pugna">image/area/pugna.png</file>
+    </qresource>
+    <qresource prefix="/menu">
+        <file alias="menu_main_1">image/menu/menu_main_1.png</file>
+        <file alias="menu_main_2">image/menu/menu_main_2.png</file>
+        <file alias="menu_main_3">image/menu/menu_main_3.png</file>
+        <file alias="menu_main_4">image/menu/menu_main_4.png</file>
+        <file alias="menu_main_0">image/menu/menu_main_0.png</file>
+    </qresource>
+    <qresource prefix="/training">
+        <file alias="black">image/training/black.jpg</file>
+        <file alias="0">image/training/0.png</file>
+        <file alias="1">image/training/1.png</file>
+        <file alias="2">image/training/2.png</file>
+        <file alias="3">image/training/3.png</file>
+    </qresource>
+    <qresource prefix="/solo">
+        <file alias="0">image/solo/0.png</file>
+        <file alias="1">image/solo/1.png</file>
+        <file alias="2">image/solo/2.png</file>
+        <file alias="3">image/solo/3.png</file>
+        <file alias="4">image/solo/4.png</file>
+        <file alias="5">image/solo/5.png</file>
+        <file alias="99">image/solo/99.png</file>
+    </qresource>
+    <qresource prefix="/exam">
+        <file alias="0">image/exam/0.png</file>
+        <file alias="1">image/exam/1.png</file>
+        <file alias="2">image/exam/2.png</file>
+        <file alias="3">image/exam/3.png</file>
+        <file alias="4">image/exam/4.png</file>
+        <file alias="5">image/exam/5.png</file>
+        <file alias="6">image/exam/6.png</file>
+        <file alias="7">image/exam/7.png</file>
+    </qresource>
+    <qresource prefix="/exam1">
+        <file alias="0">image/exam1/beijing.jpg</file>
+        <file alias="1">image/exam1/deck_shuf1.png</file>
+        <file alias="2">image/exam1/deck_shuf2.png</file>
+        <file alias="3">image/exam1/deck_shuf3.png</file>
+        <file alias="4">image/exam1/deck_shuf4.png</file>
+        <file alias="5">image/exam1/deck_shuf5.png</file>
+    </qresource>
+    <qresource prefix="/cursor">
+        <file alias="1">image/cursor/1.png</file>
+        <file alias="2">image/cursor/2.png</file>
+        <file alias="3">image/cursor/3.png</file>
+        <file alias="4">image/cursor/4.png</file>
+        <file alias="5">image/cursor/5.png</file>
+        <file alias="6">image/cursor/6.png</file>
+        <file alias="7">image/cursor/7.png</file>
+        <file alias="8">image/cursor/8.png</file>
+    </qresource>
+</RCC>
